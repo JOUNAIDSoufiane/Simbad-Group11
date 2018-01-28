@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+
+	<classpathentry exported="true" kind="lib" path="lib/j3dcore.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/j3dutils.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jogamp-fat-test.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jogamp-fat.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jogl-all.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/simbad-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/vecmath.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
