@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_4T2hEDN6Eem-24BjLweG-w" name="RootElement">
+  <packagedElement xmi:type="uml:Package" xmi:id="_D9sSADN7Eem-24BjLweG-w" name="RoboSearch">
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_CrL_8DOJEem-24BjLweG-w" name="Start Mission">
+      <include xmi:type="uml:Include" xmi:id="_IcDLUDOJEem-24BjLweG-w" addition="_GkUNoDOJEem-24BjLweG-w"/>
+      <include xmi:type="uml:Include" xmi:id="_VShHcDOJEem-24BjLweG-w" addition="_Km22ADOJEem-24BjLweG-w"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_GkUNoDOJEem-24BjLweG-w" name="Generate Map"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_Km22ADOJEem-24BjLweG-w" name="Explore Environment">
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_RQ1asDOJEem-24BjLweG-w" name="ExtensionPoint1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_OGmTUDOJEem-24BjLweG-w" name="Take Picture of Box">
+      <extend xmi:type="uml:Extend" xmi:id="_RQv7IDOJEem-24BjLweG-w" extendedCase="_Km22ADOJEem-24BjLweG-w" extensionLocation="_RQ1asDOJEem-24BjLweG-w"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_SIs20DOJEem-24BjLweG-w" name="Maintain Map"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="__NR5MDOJEem-24BjLweG-w" name="Information Sharing"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_hYpUIDN7Eem-24BjLweG-w" name="Operator"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_i9M3IDN7Eem-24BjLweG-w" name="Central Station"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_-6O20DOIEem-24BjLweG-w" name="File System"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Fg8FEDOJEem-24BjLweG-w" memberEnd="_FhFPADOJEem-24BjLweG-w _FhF2EDOJEem-24BjLweG-w">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_FhBkoDOJEem-24BjLweG-w" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_FhCLsDOJEem-24BjLweG-w" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_FhFPADOJEem-24BjLweG-w" name="start mission" type="_CrL_8DOJEem-24BjLweG-w" association="_Fg8FEDOJEem-24BjLweG-w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_FhF2EDOJEem-24BjLweG-w" name="operator" type="_hYpUIDN7Eem-24BjLweG-w" association="_Fg8FEDOJEem-24BjLweG-w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_JJHssDOJEem-24BjLweG-w" memberEnd="_JJITwDOJEem-24BjLweG-w _JJITwTOJEem-24BjLweG-w">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_JJHssTOJEem-24BjLweG-w" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_JJHssjOJEem-24BjLweG-w" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_JJITwDOJEem-24BjLweG-w" name="file system" type="_-6O20DOIEem-24BjLweG-w" association="_JJHssDOJEem-24BjLweG-w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_JJITwTOJEem-24BjLweG-w" name="generate map" type="_GkUNoDOJEem-24BjLweG-w" association="_JJHssDOJEem-24BjLweG-w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_NAMr8DOJEem-24BjLweG-w" memberEnd="_NAN6EDOJEem-24BjLweG-w _NAN6ETOJEem-24BjLweG-w">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_NANTADOJEem-24BjLweG-w" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_NANTATOJEem-24BjLweG-w" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_NAN6EDOJEem-24BjLweG-w" name="explore environment" type="_Km22ADOJEem-24BjLweG-w" association="_NAMr8DOJEem-24BjLweG-w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_NAN6ETOJEem-24BjLweG-w" name="central station" type="_i9M3IDN7Eem-24BjLweG-w" association="_NAMr8DOJEem-24BjLweG-w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_UEX5UDOJEem-24BjLweG-w" memberEnd="_UEZugDOJEem-24BjLweG-w _UEZugTOJEem-24BjLweG-w">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_UEZHcDOJEem-24BjLweG-w" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_UEZHcTOJEem-24BjLweG-w" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_UEZugDOJEem-24BjLweG-w" name="maintain map" type="_SIs20DOJEem-24BjLweG-w" association="_UEX5UDOJEem-24BjLweG-w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_UEZugTOJEem-24BjLweG-w" name="explore environment" type="_Km22ADOJEem-24BjLweG-w" association="_UEX5UDOJEem-24BjLweG-w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_UhONYDOJEem-24BjLweG-w" memberEnd="_UhO0cDOJEem-24BjLweG-w _UhO0cTOJEem-24BjLweG-w">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_UhONYTOJEem-24BjLweG-w" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_UhONYjOJEem-24BjLweG-w" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_UhO0cDOJEem-24BjLweG-w" name="file system" type="_-6O20DOIEem-24BjLweG-w" association="_UhONYDOJEem-24BjLweG-w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_UhO0cTOJEem-24BjLweG-w" name="maintain map" type="_SIs20DOJEem-24BjLweG-w" association="_UhONYDOJEem-24BjLweG-w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Bo0HgDOKEem-24BjLweG-w" memberEnd="_Bo1VoDOKEem-24BjLweG-w _Bo1VoTOKEem-24BjLweG-w">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Bo0ukDOKEem-24BjLweG-w" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Bo0ukTOKEem-24BjLweG-w" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Bo1VoDOKEem-24BjLweG-w" name="file system" type="_-6O20DOIEem-24BjLweG-w" association="_Bo0HgDOKEem-24BjLweG-w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Bo1VoTOKEem-24BjLweG-w" name="information sharing" type="__NR5MDOJEem-24BjLweG-w" association="_Bo0HgDOKEem-24BjLweG-w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_CL_tEDOKEem-24BjLweG-w" memberEnd="_CMAUITOKEem-24BjLweG-w _CMAUIjOKEem-24BjLweG-w">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CL_tETOKEem-24BjLweG-w" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_CMAUIDOKEem-24BjLweG-w" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_CMAUITOKEem-24BjLweG-w" name="central station" type="_i9M3IDN7Eem-24BjLweG-w" association="_CL_tEDOKEem-24BjLweG-w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_CMAUIjOKEem-24BjLweG-w" name="information sharing" type="__NR5MDOJEem-24BjLweG-w" association="_CL_tEDOKEem-24BjLweG-w"/>
+  </packagedElement>
+</uml:Model>
