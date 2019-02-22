@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_4T2hEDN6Eem-24BjLweG-w" name="RootElement">
   <packagedElement xmi:type="uml:Package" xmi:id="_D9sSADN7Eem-24BjLweG-w" name="RoboSearch">
-    <packagedElement xmi:type="uml:UseCase" xmi:id="_CrL_8DOJEem-24BjLweG-w" name="Start Mission">
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_CrL_8DOJEem-24BjLweG-w" name="   Start Mission   ">
       <include xmi:type="uml:Include" xmi:id="_VShHcDOJEem-24BjLweG-w" addition="_Km22ADOJEem-24BjLweG-w"/>
     </packagedElement>
     <packagedElement xmi:type="uml:UseCase" xmi:id="_Km22ADOJEem-24BjLweG-w" name="Explore Environment">
@@ -9,11 +9,11 @@
     </packagedElement>
     <packagedElement xmi:type="uml:UseCase" xmi:id="_SIs20DOJEem-24BjLweG-w" name="Information Storing"/>
     <packagedElement xmi:type="uml:UseCase" xmi:id="__NR5MDOJEem-24BjLweG-w" name="Information Sharing"/>
-    <packagedElement xmi:type="uml:UseCase" xmi:id="_ytjaYDOPEem-24BjLweG-w" name="Information Retrieval"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_ytjaYDOPEem-24BjLweG-w" name="   Information Retrieval   "/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Actor" xmi:id="_hYpUIDN7Eem-24BjLweG-w" name="Operator"/>
-  <packagedElement xmi:type="uml:Actor" xmi:id="_i9M3IDN7Eem-24BjLweG-w" name="Central Station"/>
-  <packagedElement xmi:type="uml:Actor" xmi:id="_-6O20DOIEem-24BjLweG-w" name="File System"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_hYpUIDN7Eem-24BjLweG-w" name="   Operator   "/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_i9M3IDN7Eem-24BjLweG-w" name="   Central Station   "/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_-6O20DOIEem-24BjLweG-w" name="   File Server   "/>
   <packagedElement xmi:type="uml:Association" xmi:id="_Fg8FEDOJEem-24BjLweG-w" memberEnd="_FhFPADOJEem-24BjLweG-w _FhF2EDOJEem-24BjLweG-w">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_FhBkoDOJEem-24BjLweG-w" source="org.eclipse.papyrus">
       <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_FhCLsDOJEem-24BjLweG-w" key="nature" value="UML_Nature"/>
