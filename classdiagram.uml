@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_8TZ_MDwzEemgBaKBb33t8g" name="RootElement">
+  <packagedElement xmi:type="uml:Class" xmi:id="_C6dywDw0EemgBaKBb33t8g" name="Robot">
+    <generalization xmi:type="uml:Generalization" xmi:id="_unv5wD6fEemMj_xw1Pw9FA" general="_2Bai8D3DEemHvZj1G01vhw"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Y4ctADw0EemgBaKBb33t8g" name="name" isStatic="true">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_lzwF0Dw0EemgBaKBb33t8g" name="position" type="_tVNFEDw0EemgBaKBb33t8g"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_bueCcDw1EemgBaKBb33t8g" name="camera" visibility="private" type="_4znzsDw1EemgBaKBb33t8g"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_hNkIYDw1EemgBaKBb33t8g" name="sonars" visibility="private" type="_jvaaEDw1EemgBaKBb33t8g"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Mjw9YDw2EemgBaKBb33t8g" name="camera_image" visibility="private" type="_JZbvYDw2EemgBaKBb33t8g"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_kZeOQDw2EemgBaKBb33t8g" name="dumper" visibility="private" type="_jvaaEDw1EemgBaKBb33t8g"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_pAJecDw2EemgBaKBb33t8g" name="behavior_pattern" visibility="public">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_zc4O8D6aEemMj_xw1Pw9FA" name="Robot">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_2SkCoD6aEemMj_xw1Pw9FA" name="position" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_4JcrwD6aEemMj_xw1Pw9FA" name="name">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_KYDKMD6bEemMj_xw1Pw9FA" name="central_station" type="_J7oS8Dw1EemgBaKBb33t8g"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_tVNFEDw0EemgBaKBb33t8g" name="Coordinates">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_vevkcDw0EemgBaKBb33t8g" name="x" isStatic="true">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_4WkqID6MEemMj_xw1Pw9FA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_4WxecD6MEemMj_xw1Pw9FA" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_zgY08Dw0EemgBaKBb33t8g" name="y" isStatic="true">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_LJPI0D6WEemMj_xw1Pw9FA" name="Coordinates">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_QIBXAD6WEemMj_xw1Pw9FA" name="x">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_ScD2MD6WEemMj_xw1Pw9FA" name="y">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_J7oS8Dw1EemgBaKBb33t8g" name="CentralStation">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_8Nuh4D6MEemMj_xw1Pw9FA" name="robots" visibility="private" type="_C6dywDw0EemgBaKBb33t8g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ChC6ED6NEemMj_xw1Pw9FA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ChFWUD6NEemMj_xw1Pw9FA" value="2"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_inkKkD6NEemMj_xw1Pw9FA" name="behavior_patterns" visibility="private" isStatic="true">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_9B2RAD6NEemMj_xw1Pw9FA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_9B57YD6NEemMj_xw1Pw9FA" value="*"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_J5huED6OEemMj_xw1Pw9FA" name="file_server" visibility="private" type="_eaKk0D3DEemHvZj1G01vhw"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_S2Os4D6aEemMj_xw1Pw9FA" name="robots_positions" visibility="private" type="_tVNFEDw0EemgBaKBb33t8g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Vb2rUD6aEemMj_xw1Pw9FA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Vb4ggD6aEemMj_xw1Pw9FA" value="2"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_fL3qUD6OEemMj_xw1Pw9FA" name="start_mission">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_1r6TUD6PEemMj_xw1Pw9FA" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_gJEngD6QEemMj_xw1Pw9FA" name="position_color_found" type="_tVNFEDw0EemgBaKBb33t8g" direction="out"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_ryqg0D6QEemMj_xw1Pw9FA" name="found_obstacle">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_-josgD6QEemMj_xw1Pw9FA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_BkAGMD6REemMj_xw1Pw9FA" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_U3tWED6SEemMj_xw1Pw9FA" name="CentralStation"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_83HOYD6SEemMj_xw1Pw9FA" name="done_mapping"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_jvaaEDw1EemgBaKBb33t8g" name="RangeSensorBelt (Template)">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_NsjIMD6YEemMj_xw1Pw9FA" name="oneHasHit" isQuery="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_U-j9QD6YEemMj_xw1Pw9FA" name="is_true" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_VlidsD6YEemMj_xw1Pw9FA" name="hasHit" concurrency="concurrent" isQuery="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_dCsy0D6YEemMj_xw1Pw9FA" name="which_sensor">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_mKPmID6YEemMj_xw1Pw9FA" name="is_true" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_gKhfYD6YEemMj_xw1Pw9FA" name="getMeasurements" isQuery="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG1tsD6YEemMj_xw1Pw9FA" name="which_sensor">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_0PGoAD6YEemMj_xw1Pw9FA" name="distance" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_4znzsDw1EemgBaKBb33t8g" name="CameraSensor (Template)">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_mEYT8D3CEemHvZj1G01vhw" name="createCompatibleImage" visibility="public">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_rttEID6XEemMj_xw1Pw9FA" name="buffered_image" type="_JZbvYDw2EemgBaKBb33t8g" direction="return"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_tarjUD6XEemMj_xw1Pw9FA" name="copyVisionImage" visibility="public">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_FE4u0D6YEemMj_xw1Pw9FA" name="robot_vision" type="_JZbvYDw2EemgBaKBb33t8g"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_JZbvYDw2EemgBaKBb33t8g" name="BufferedImage (Template)">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_U2cN8D6WEemMj_xw1Pw9FA" name="getRGB" isQuery="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_eu3EkD6WEemMj_xw1Pw9FA" name="RGB" type="_4p4PcD3CEemHvZj1G01vhw" direction="return"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_CtpnID6XEemMj_xw1Pw9FA" name="x_pixel">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_LTusID6XEemMj_xw1Pw9FA" name="y_pixel">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_MjRBYD6XEemMj_xw1Pw9FA" name="getHeight" isQuery="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_YJhS0D6XEemMj_xw1Pw9FA" name="pixel_height" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_Znd3gD6XEemMj_xw1Pw9FA" name="getWidth" isQuery="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_g4fOED6XEemMj_xw1Pw9FA" name="pixel_width" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_4p4PcD3CEemHvZj1G01vhw" name="Color">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_BqRR4D3DEemHvZj1G01vhw" name="red" isStatic="true">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_EenBwD3DEemHvZj1G01vhw" name="green" isStatic="true">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_G791AD3DEemHvZj1G01vhw" name="blue" isStatic="true">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_zg3JUD6VEemMj_xw1Pw9FA" name="Color">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_6OdCsD6VEemMj_xw1Pw9FA" name="red">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_CM4R0D6WEemMj_xw1Pw9FA" name="green">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_Fcav8D6WEemMj_xw1Pw9FA" name="blue">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_KqofID3DEemHvZj1G01vhw" name="Object">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_P6RMwD3DEemHvZj1G01vhw" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_HNBtwD6dEemMj_xw1Pw9FA" value="2"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_HNExED6dEemMj_xw1Pw9FA" value="3"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_TcHi4D3DEemHvZj1G01vhw" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_n-vJ8D6VEemMj_xw1Pw9FA" name="Object">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_suoAgD6VEemMj_xw1Pw9FA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_wRgRYD6VEemMj_xw1Pw9FA" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_eaKk0D3DEemHvZj1G01vhw" name="FileServer">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_o0M5sD6SEemMj_xw1Pw9FA" name="unvisited" visibility="public" type="_tVNFEDw0EemgBaKBb33t8g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qu8IED6SEemMj_xw1Pw9FA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_qu_ycD6SEemMj_xw1Pw9FA" value="*"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_A71BAD6TEemMj_xw1Pw9FA" name="blocked" type="_tVNFEDw0EemgBaKBb33t8g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_CVMnsD6TEemMj_xw1Pw9FA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_CVPD8D6TEemMj_xw1Pw9FA" value="*"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_yn-EYD6TEemMj_xw1Pw9FA" name="objects" type="_KqofID3DEemHvZj1G01vhw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ScVYcD6VEemMj_xw1Pw9FA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ScxdUD6VEemMj_xw1Pw9FA" value="*"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_YJAAUD6VEemMj_xw1Pw9FA" name="update_blocked">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_dyXckD6VEemMj_xw1Pw9FA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_et7s8D6VEemMj_xw1Pw9FA" name="FileServer">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_NUCaMD6bEemMj_xw1Pw9FA" name="central_station" type="_J7oS8Dw1EemgBaKBb33t8g"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_ibjWoD3DEemHvZj1G01vhw" name="RobotFactory (Template)">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_-1G9YD6YEemMj_xw1Pw9FA" name="addBumperbeltsensor">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_ImdisD6ZEemMj_xw1Pw9FA" name="robot" type="_2Bai8D3DEemHvZj1G01vhw"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_OS7WQD6ZEemMj_xw1Pw9FA" name="bumper_belt" type="_jvaaEDw1EemgBaKBb33t8g" direction="return"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_QJhEcD6ZEemMj_xw1Pw9FA" name="addSonarbeltsensor">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_UZ8-4D6ZEemMj_xw1Pw9FA" name="robot" type="_2Bai8D3DEemHvZj1G01vhw"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_bBkMED6ZEemMj_xw1Pw9FA" name="sonar_belt" type="_jvaaEDw1EemgBaKBb33t8g" direction="return"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_cZQXwD6ZEemMj_xw1Pw9FA" name="addCamerasensor">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_hR6IwD6ZEemMj_xw1Pw9FA" name="robot" type="_2Bai8D3DEemHvZj1G01vhw"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_mYKQ4D6ZEemMj_xw1Pw9FA" name="camera_sensor" type="_4znzsDw1EemgBaKBb33t8g" direction="return"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_w0QhkD3DEemHvZj1G01vhw" name="SimpleAgent (Template)">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_Af_8cD6aEemMj_xw1Pw9FA" name="getCoords">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_KvrcgD6aEemMj_xw1Pw9FA" name="reserved_variable" type="_tVNFEDw0EemgBaKBb33t8g"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_2Bai8D3DEemHvZj1G01vhw" name="Agent (Template)">
+    <generalization xmi:type="uml:Generalization" xmi:id="_wWCnkD6fEemMj_xw1Pw9FA" general="_w0QhkD3DEemHvZj1G01vhw"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_qozmsD6ZEemMj_xw1Pw9FA" name="setTranslationalVelocity">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_u-1y0D6ZEemMj_xw1Pw9FA" name="velocity">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_3nsfAD6ZEemMj_xw1Pw9FA" name="setRotationalVelocity">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_6Zl-4D6ZEemMj_xw1Pw9FA" name="velocity">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_7RnzED6ZEemMj_xw1Pw9FA" name="initBehavior"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_-J3ykD6ZEemMj_xw1Pw9FA" name="performBehavior"/>
+  </packagedElement>
+  <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_Qy8lgDw0EemgBaKBb33t8g">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Qy9MkDw0EemgBaKBb33t8g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+    </eAnnotations>
+    <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+  </profileApplication>
+  <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_-dvqcD6REemMj_xw1Pw9FA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-eQn0D6REemMj_xw1Pw9FA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/PapyrusJava/1#/"/>
+    </eAnnotations>
+    <appliedProfile xmi:type="uml:Profile" href="pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml#_j9REUByGEduN1bTiWJ0lyw"/>
+  </profileApplication>
+</uml:Model>
