@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_4T2hEDN6Eem-24BjLweG-w" name="RootElement">
   <packagedElement xmi:type="uml:Package" xmi:id="_D9sSADN7Eem-24BjLweG-w" name="RoboSearch">
-    <packagedElement xmi:type="uml:UseCase" xmi:id="_CrL_8DOJEem-24BjLweG-w" name="   Start Mission   ">
-      <include xmi:type="uml:Include" xmi:id="_VShHcDOJEem-24BjLweG-w" addition="_Km22ADOJEem-24BjLweG-w"/>
-    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_CrL_8DOJEem-24BjLweG-w" name="   Start Mission   "/>
     <packagedElement xmi:type="uml:UseCase" xmi:id="_Km22ADOJEem-24BjLweG-w" name="Explore Environment">
       <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_RQ1asDOJEem-24BjLweG-w" name="ExtensionPoint1"/>
+      <include xmi:type="uml:Include" xmi:id="_AGtdYD-EEemSGundwHL_rg" addition="_CrL_8DOJEem-24BjLweG-w"/>
+      <include xmi:type="uml:Include" xmi:id="_AyuO0D-EEemSGundwHL_rg" addition="_SIs20DOJEem-24BjLweG-w"/>
     </packagedElement>
     <packagedElement xmi:type="uml:UseCase" xmi:id="_SIs20DOJEem-24BjLweG-w" name="Information Storing"/>
     <packagedElement xmi:type="uml:UseCase" xmi:id="__NR5MDOJEem-24BjLweG-w" name="Information Sharing"/>
@@ -27,13 +27,6 @@
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_NAN6EDOJEem-24BjLweG-w" name="explore environment" type="_Km22ADOJEem-24BjLweG-w" association="_NAMr8DOJEem-24BjLweG-w"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_NAN6ETOJEem-24BjLweG-w" name="central station" type="_i9M3IDN7Eem-24BjLweG-w" association="_NAMr8DOJEem-24BjLweG-w"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_UEX5UDOJEem-24BjLweG-w" memberEnd="_UEZugDOJEem-24BjLweG-w _UEZugTOJEem-24BjLweG-w">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_UEZHcDOJEem-24BjLweG-w" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_UEZHcTOJEem-24BjLweG-w" key="nature" value="UML_Nature"/>
-    </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_UEZugDOJEem-24BjLweG-w" name="maintain map" type="_SIs20DOJEem-24BjLweG-w" association="_UEX5UDOJEem-24BjLweG-w"/>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_UEZugTOJEem-24BjLweG-w" name="explore environment" type="_Km22ADOJEem-24BjLweG-w" association="_UEX5UDOJEem-24BjLweG-w"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_UhONYDOJEem-24BjLweG-w" memberEnd="_UhO0cDOJEem-24BjLweG-w _UhO0cTOJEem-24BjLweG-w">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_UhONYTOJEem-24BjLweG-w" source="org.eclipse.papyrus">
