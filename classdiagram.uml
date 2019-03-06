@@ -2,16 +2,17 @@
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_8TZ_MDwzEemgBaKBb33t8g" name="RootElement">
   <packagedElement xmi:type="uml:Class" xmi:id="_C6dywDw0EemgBaKBb33t8g" name="Robot">
     <generalization xmi:type="uml:Generalization" xmi:id="_unv5wD6fEemMj_xw1Pw9FA" general="_2Bai8D3DEemHvZj1G01vhw"/>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_Y4ctADw0EemgBaKBb33t8g" name="name" isStatic="true">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Y4ctADw0EemgBaKBb33t8g" name="name" visibility="private" isStatic="true">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_lzwF0Dw0EemgBaKBb33t8g" name="position" type="_tVNFEDw0EemgBaKBb33t8g"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_lzwF0Dw0EemgBaKBb33t8g" name="position" visibility="private" type="_tVNFEDw0EemgBaKBb33t8g"/>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_bueCcDw1EemgBaKBb33t8g" name="camera" visibility="private" type="_4znzsDw1EemgBaKBb33t8g"/>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_hNkIYDw1EemgBaKBb33t8g" name="sonars" visibility="private" type="_jvaaEDw1EemgBaKBb33t8g"/>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_Mjw9YDw2EemgBaKBb33t8g" name="camera_image" visibility="private" type="_JZbvYDw2EemgBaKBb33t8g"/>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_kZeOQDw2EemgBaKBb33t8g" name="dumper" visibility="private" type="_jvaaEDw1EemgBaKBb33t8g"/>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_pAJecDw2EemgBaKBb33t8g" name="behavior_pattern" visibility="public">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_pAJecDw2EemgBaKBb33t8g" name="behavior_pattern" visibility="private">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_uTxC8EABEemuXditDJMcHg"/>
     </ownedAttribute>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_zc4O8D6aEemMj_xw1Pw9FA" name="Robot">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_2SkCoD6aEemMj_xw1Pw9FA" name="position" type="_tVNFEDw0EemgBaKBb33t8g"/>
@@ -19,6 +20,21 @@
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
       </ownedParameter>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_KYDKMD6bEemMj_xw1Pw9FA" name="central_station" type="_J7oS8Dw1EemgBaKBb33t8g"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_-rEzIEACEemuXditDJMcHg" name="get_name" isQuery="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_Lz1ZIEADEemuXditDJMcHg" name="name" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_YSzbQEADEemuXditDJMcHg" name="update_bahavior">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_ky77AEADEemuXditDJMcHg" name="behavior_pattern">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_u5QDsEADEemuXditDJMcHg" name="get_behavior" isQuery="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_-h7owEADEemuXditDJMcHg" name="behavior_pattern" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      </ownedParameter>
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:DataType" xmi:id="_tVNFEDw0EemgBaKBb33t8g" name="Coordinates">
@@ -203,6 +219,26 @@
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_7RnzED6ZEemMj_xw1Pw9FA" name="initBehavior"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_-J3ykD6ZEemMj_xw1Pw9FA" name="performBehavior"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_I3ExQD_8EemuXditDJMcHg" name="controls" memberEnd="_I3F_YD_8EemuXditDJMcHg _I3F_YT_8EemuXditDJMcHg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_I3FYUD_8EemuXditDJMcHg" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_I3FYUT_8EemuXditDJMcHg" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_I3F_YT_8EemuXditDJMcHg" name="centralstation" type="_J7oS8Dw1EemgBaKBb33t8g" association="_I3ExQD_8EemuXditDJMcHg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VtAscD_9EemuXditDJMcHg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VtMSoD_9EemuXditDJMcHg" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_I3F_YD_8EemuXditDJMcHg" name="robot" type="_C6dywDw0EemgBaKBb33t8g" aggregation="composite" association="_I3ExQD_8EemuXditDJMcHg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_kI3HcD_8EemuXditDJMcHg" value="2"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_kI-cMD_8EemuXditDJMcHg" value="2"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_-tSBUD_8EemuXditDJMcHg" name="stores informations" memberEnd="_-tSoYj_8EemuXditDJMcHg _-tSoYz_8EemuXditDJMcHg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-tSoYD_8EemuXditDJMcHg" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_-tSoYT_8EemuXditDJMcHg" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_-tSoYz_8EemuXditDJMcHg" name="centralstation" type="_J7oS8Dw1EemgBaKBb33t8g" association="_-tSBUD_8EemuXditDJMcHg"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_-tSoYj_8EemuXditDJMcHg" name="fileserver" type="_eaKk0D3DEemHvZj1G01vhw" aggregation="composite" association="_-tSBUD_8EemuXditDJMcHg"/>
   </packagedElement>
   <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_Qy8lgDw0EemgBaKBb33t8g">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Qy9MkDw0EemgBaKBb33t8g" source="http://www.eclipse.org/uml2/2.0.0/UML">
