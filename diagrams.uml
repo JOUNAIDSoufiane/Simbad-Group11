@@ -77,7 +77,7 @@
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_ryqg0D6QEemMj_xw1Pw9FA" name="found_obstacle">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_-josgD6QEemMj_xw1Pw9FA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_BkAGMD6REemMj_xw1Pw9FA" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_nRa1EEHDEemEmtFEDh8rlQ" name="image" type="_JZbvYDw2EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_U3tWED6SEemMj_xw1Pw9FA" name="CentralStation"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_83HOYD6SEemMj_xw1Pw9FA" name="done_mapping"/>
