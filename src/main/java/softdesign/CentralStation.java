@@ -39,6 +39,10 @@ public class CentralStation {
 	/**
 	 * 
 	 */
+	private int obstacle_counter = 0;
+	/**
+	 * 
+	 */
 	public static CentralStation getinstance() {
 		return central_station;
 	}
@@ -81,8 +85,17 @@ public class CentralStation {
 		
 		Color objColor = new Color(red,green,blue);
 		
-		Object found = new Object(coordinates,objColor); // needs to be added to the file server
+		Coordinates obstacle_coords = new Coordinates(coordinates.x,coordinates.y);
 		
+		Object found = new Object(obstacle_coords,objColor) ; // needs to be added to the file server
+		
+		file_server.objects[obstacle_counter] = found;
+		System.out.println(file_server.objects[obstacle_counter].coordinates_array[0].x);
+		
+		obstacle_counter++;
+		
+		
+				
  	if(red > 250 && green < 50 && blue < 50) //these values are used to truly find red and not black
 		{
 			System.out.println("Picture taken " + red);

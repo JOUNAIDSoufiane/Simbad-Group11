@@ -27,4 +27,8 @@ public class Coordinates {
 		this.x = x;
 		this.y = y;
 	}
+	public Coordinates(Coordinates copy) {
+		this.x = copy.x;
+		this.y = copy.y;
+	}
 };

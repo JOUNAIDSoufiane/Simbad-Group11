@@ -21,7 +21,7 @@ public class FileServer {
 	/**
 	 * 
 	 */
-	public Object[] objects;
+	public Object[] objects = new Object[10000];
 
 	/**
 	 * 

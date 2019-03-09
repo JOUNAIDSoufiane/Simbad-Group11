@@ -5,9 +5,6 @@
 
 package main.java.softdesign;
 
-
-import javax.vecmath.Point3d;
-
 /************************************************************/
 /**
 * 
@@ -16,13 +13,14 @@ public class Object {
 	/**
 	 * 
 	 */
-	public Coordinates[] coordinates;
+	public Coordinates[] coordinates_array = new Coordinates[10000];
 
 	/**
 	 * 
-	 * @param coordinates 
+	 * @param obstacle_coords 
 	 * @param color 
 	 */
-	public Object(Point3d coordinates, Color color) {
+	public Object(Coordinates obstacle_coords, Color color) {
+		this.coordinates_array[0] = obstacle_coords;
 	}
 };
