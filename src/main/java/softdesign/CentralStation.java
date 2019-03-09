@@ -50,8 +50,10 @@ public class CentralStation {
 	 * @param count
 	 */
 	public Robot deploy_robot(Vector3d position, String name, int count) {
-		robots[count-1] = new Robot(position, name, central_station);
-		robots[count -1].initBehavior();
+		robots[count - 1] = new Robot(position, name, central_station);
+		robots[count - 1].initBehavior();
+		robots_positions[count - 1] = new Coordinates(position.x, position.y);
+		file_server.remove_coordinates(new Coordinates(position.x, position.y));
 		return robots[count - 1];
 	}
 	
@@ -100,6 +102,7 @@ public class CentralStation {
 	 */
 	public CentralStation() {
 		robots = new Robot[10];
+		robots_positions = new Coordinates[10];
 		behavior_patterns = new String[7];
 		behavior_patterns[0] = "search";
 		behavior_patterns[1] = "follow_wall";
@@ -109,7 +112,7 @@ public class CentralStation {
 		behavior_patterns[5] = "turn_left";
 		behavior_patterns[6] = "found";
 		file_server = new FileServer(central_station);
-		System.out.print(file_server.unvisited[0].y);
+		
 	}
 
 	/**

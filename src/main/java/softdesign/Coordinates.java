@@ -12,11 +12,11 @@ public class Coordinates {
 	/**
 	 * 
 	 */
-	public static double x;
+	public double x;
 	/**
 	 * 
 	 */
-	public static double y;
+	public double y;
 
 	/**
 	 * 
@@ -24,7 +24,7 @@ public class Coordinates {
 	 * @param y 
 	 */
 	public Coordinates(double x, double y) {
-		Coordinates.x = x;
-		Coordinates.y = y;
+		this.x = x;
+		this.y = y;
 	}
 };

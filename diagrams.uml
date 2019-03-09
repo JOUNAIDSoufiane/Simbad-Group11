@@ -38,7 +38,7 @@
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:DataType" xmi:id="_tVNFEDw0EemgBaKBb33t8g" name="Coordinates">
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_vevkcDw0EemgBaKBb33t8g" name="x" isStatic="true">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_vevkcDw0EemgBaKBb33t8g" name="x">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_4WkqID6MEemMj_xw1Pw9FA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_4WxecD6MEemMj_xw1Pw9FA" value="1"/>
@@ -198,6 +198,9 @@
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_et7s8D6VEemMj_xw1Pw9FA" name="FileServer">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_NUCaMD6bEemMj_xw1Pw9FA" name="central_station" type="_J7oS8Dw1EemgBaKBb33t8g"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_KXcjkEKIEem97IxHPBydwA" name="remove_coordinates" visibility="public">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_dVErMEKIEem97IxHPBydwA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_ibjWoD3DEemHvZj1G01vhw" name="RobotFactory (Template)">
