@@ -109,6 +109,7 @@ public class CentralStation {
 		behavior_patterns[5] = "turn_left";
 		behavior_patterns[6] = "found";
 		file_server = new FileServer(central_station);
+		System.out.print(file_server.unvisited[0].y);
 	}
 
 	/**

@@ -48,10 +48,10 @@
     </ownedAttribute>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_LJPI0D6WEemMj_xw1Pw9FA" name="Coordinates">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_QIBXAD6WEemMj_xw1Pw9FA" name="x">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
       </ownedParameter>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_ScD2MD6WEemMj_xw1Pw9FA" name="y">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
       </ownedParameter>
     </ownedOperation>
   </packagedElement>

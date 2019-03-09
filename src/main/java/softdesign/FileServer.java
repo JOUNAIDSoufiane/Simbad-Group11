@@ -13,7 +13,7 @@ public class FileServer {
 	/**
 	 * 
 	 */
-	public Coordinates[] unvisited;
+	public Coordinates[] unvisited = new Coordinates[1];
 	/**
 	 * 
 	 */
@@ -35,5 +35,9 @@ public class FileServer {
 	 * @param central_station 
 	 */
 	public FileServer(CentralStation central_station) {
+		
+		unvisited[0] = new Coordinates(2,3);
+		
+		
 	}
 };

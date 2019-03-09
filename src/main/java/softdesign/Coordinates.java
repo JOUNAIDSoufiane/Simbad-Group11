@@ -23,6 +23,8 @@ public class Coordinates {
 	 * @param x 
 	 * @param y 
 	 */
-	public Coordinates(int x, int y) {
+	public Coordinates(double x, double y) {
+		Coordinates.x = x;
+		Coordinates.y = y;
 	}
 };
