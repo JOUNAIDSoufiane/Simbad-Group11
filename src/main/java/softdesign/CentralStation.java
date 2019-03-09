@@ -4,10 +4,10 @@
 
 package main.java.softdesign;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 
 /************************************************************/
@@ -19,6 +19,10 @@ public class CentralStation {
 	 * 
 	 */
 	private Robot[] robots;
+	/**
+	 * 
+	 */
+	private static CentralStation central_station = new CentralStation();
 	/**
 	 * 
 	 */
@@ -34,10 +38,30 @@ public class CentralStation {
 
 	/**
 	 * 
+	 */
+	public static CentralStation getinstance() {
+		return central_station;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @param name
+	 * @param count
+	 */
+	public Robot deploy_robot(Vector3d position, String name, int count) {
+		robots[count-1] = new Robot(position, name, central_station);
+		robots[count -1].initBehavior();
+		return robots[count - 1];
+	}
+	
+	/**
+	 * 
 	 * @param color 
 	 * @param position_color_found 
 	 */
 	public void start_mission(Color color, Coordinates position_color_found) {
+		
 	}
 
 	/**
@@ -75,6 +99,16 @@ public class CentralStation {
 	 * 
 	 */
 	public CentralStation() {
+		robots = new Robot[10];
+		behavior_patterns = new String[7];
+		behavior_patterns[0] = "search";
+		behavior_patterns[1] = "follow_wall";
+		behavior_patterns[2] = "spiral";
+		behavior_patterns[3] = "stop";
+		behavior_patterns[4] = "turn_right";
+		behavior_patterns[5] = "turn_left";
+		behavior_patterns[6] = "found";
+		file_server = new FileServer(central_station);
 	}
 
 	/**

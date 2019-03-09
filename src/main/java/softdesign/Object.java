@@ -5,7 +5,6 @@
 
 package main.java.softdesign;
 
-import java.awt.Color;
 
 import javax.vecmath.Point3d;
 

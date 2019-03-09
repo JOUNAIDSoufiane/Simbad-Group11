@@ -56,6 +56,9 @@
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_J7oS8Dw1EemgBaKBb33t8g" name="CentralStation">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_7lofcEJjEemeiqsZ2UFmDQ" name="central_station" visibility="private" isStatic="true" type="_J7oS8Dw1EemgBaKBb33t8g">
+      <defaultValue xmi:type="uml:Expression" xmi:id="_EbRqcEJkEemeiqsZ2UFmDQ" type="_J7oS8Dw1EemgBaKBb33t8g"/>
+    </ownedAttribute>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_8Nuh4D6MEemMj_xw1Pw9FA" name="robots" visibility="private" type="_C6dywDw0EemgBaKBb33t8g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ChC6ED6NEemMj_xw1Pw9FA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ChFWUD6NEemMj_xw1Pw9FA" value="2"/>
@@ -71,6 +74,7 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Vb4ggD6aEemMj_xw1Pw9FA" value="2"/>
       <qualifier xmi:type="uml:Property" xmi:id="_uG6O4EBSEemEmtFEDh8rlQ" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_GAYnEEJkEemeiqsZ2UFmDQ" name="getinstance" isStatic="true"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_fL3qUD6OEemMj_xw1Pw9FA" name="start_mission">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_1r6TUD6PEemMj_xw1Pw9FA" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_gJEngD6QEemMj_xw1Pw9FA" name="position_color_found" type="_tVNFEDw0EemgBaKBb33t8g" direction="out"/>
@@ -81,6 +85,15 @@
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_U3tWED6SEemMj_xw1Pw9FA" name="CentralStation"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_83HOYD6SEemMj_xw1Pw9FA" name="done_mapping"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_F-1cAEJxEem97IxHPBydwA" name="deploy_robot">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_ubqQIEJxEem97IxHPBydwA" name="position" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_xTjDQEJxEem97IxHPBydwA" name="name">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_zWi1wEJxEem97IxHPBydwA" name="count">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_jvaaEDw1EemgBaKBb33t8g" name="RangeSensorBelt (Template)">
     <ownedOperation xmi:type="uml:Operation" xmi:id="_NsjIMD6YEemMj_xw1Pw9FA" name="oneHasHit" isQuery="true">

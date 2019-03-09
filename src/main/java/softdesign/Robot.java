@@ -59,7 +59,7 @@ public class Robot extends Agent
 	public Robot(Vector3d position, String name, CentralStation central_station) {
 		
 		super(position,name);
-		
+		Robot.name = name;
 		CS = central_station;
 		
         // Add bumpers
