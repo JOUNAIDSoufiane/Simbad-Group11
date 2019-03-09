@@ -13,7 +13,11 @@ public class FileServer {
 	/**
 	 * 
 	 */
-	public Coordinates[] unvisited = new Coordinates[10201];
+	private static FileServer file_server = new FileServer();
+	/**
+	 * 
+	 */
+	private Coordinates[] unvisited = new Coordinates[10201];
 	/**
 	 * 
 	 */
@@ -23,6 +27,13 @@ public class FileServer {
 	 */
 	public Object[] objects = new Object[10000];
 
+	/**
+	 * 
+	 * @param coordinates 
+	 */
+	public static FileServer getinstance() {
+		return file_server;
+	}
 	/**
 	 * 
 	 * @param coordinates 
@@ -52,7 +63,7 @@ public class FileServer {
 	 * 
 	 * @param central_station 
 	 */
-	public FileServer(CentralStation central_station) {
+	public FileServer() {
 		
 		//initialize unvisited array with all possible coordinates
 		int count = 0;
