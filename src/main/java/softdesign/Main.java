@@ -21,13 +21,16 @@ public class Main {
         // creation of the environment containing all obstacles and robots
         EnvironmentDescription environment = new Environment();
         
+        //getting instance of Central Station
         CentralStation CS = CentralStation.getinstance();
+        
+        //Creating variable to store coordinates of object once it's found
         Coordinates position_color_found = new Coordinates(0,0);
         
         
         // adding two robots
-        Robot robot1 = CS.deploy_robot(new Vector3d(0, 0, 0), "Robot 1", 1);
-        Robot robot2 = CS.deploy_robot(new Vector3d(-2, 0, -2), "Robot 2", 2);
+        Robot robot1 = CS.deploy_robot(new Vector3d(0, 0, 0), "Robot 1");
+        Robot robot2 = CS.deploy_robot(new Vector3d(-2, 0, -2), "Robot 2");
         
 
         // add the two robots to the environment

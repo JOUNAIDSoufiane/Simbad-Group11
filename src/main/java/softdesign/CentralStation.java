@@ -10,6 +10,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 
+
 /************************************************************/
 /**
 * 
@@ -53,12 +54,20 @@ public class CentralStation {
 	 * @param name
 	 * @param count
 	 */
-	public Robot deploy_robot(Vector3d position, String name, int count) {
-		robots[count - 1] = new Robot(position, name, central_station);
-		robots[count - 1].initBehavior();
-		robots_positions[count - 1] = new Coordinates(position.x, position.z);
+	public Robot deploy_robot(Vector3d position, String name) {
+		//parse name to find robot's number
+		int i = Integer.parseInt(name.replaceAll("\\D", ""));
+		
+		//instantiate new robot and add it to the robots array
+		robots[i - 1] = new Robot(position, name, central_station);
+		robots[i - 1].initBehavior();
+		
+		//store robot's position
+		robots_positions[i - 1] = new Coordinates(position.x, position.z);
+		
+		//remove the robot's current position 
 		file_server.remove_coordinates(new Coordinates(position.x, position.z));
-		return robots[count - 1];
+		return robots[i - 1];
 	}
 	
 	/**
@@ -114,8 +123,13 @@ public class CentralStation {
 	 * 
 	 */
 	public CentralStation() {
+		//instantiating the robots array to hold  maximum of 10 robots
 		robots = new Robot[10];
+		
+		//instantiating array to store current position of robots as coordinates for maximum 10 robots
 		robots_positions = new Coordinates[10];
+		
+		//instantiatng array with all possible behavior patterns
 		behavior_patterns = new String[7];
 		behavior_patterns[0] = "search";
 		behavior_patterns[1] = "follow_wall";
@@ -124,6 +138,8 @@ public class CentralStation {
 		behavior_patterns[4] = "turn_right";
 		behavior_patterns[5] = "turn_left";
 		behavior_patterns[6] = "found";
+		
+		//getting instance of File Server
 		file_server = FileServer.getinstance();
 		
 	}

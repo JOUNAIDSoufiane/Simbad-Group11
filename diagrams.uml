@@ -94,9 +94,6 @@
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_xTjDQEJxEem97IxHPBydwA" name="name">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedParameter>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_zWi1wEJxEem97IxHPBydwA" name="count">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-      </ownedParameter>
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_jvaaEDw1EemgBaKBb33t8g" name="RangeSensorBelt (Template)">
