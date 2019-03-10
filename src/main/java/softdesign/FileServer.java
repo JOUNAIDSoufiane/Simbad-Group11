@@ -21,7 +21,7 @@ public class FileServer {
 	/**
 	 * 
 	 */
-	public Coordinates[] blocked;
+	public Coordinates[] blocked = new Coordinates[10000];
 	/**
 	 * 
 	 */
@@ -39,8 +39,8 @@ public class FileServer {
 	 * @param coordinates 
 	 */
 	public void update_blocked(Coordinates coordinates) {
+		
 	}
-	
 	/**
 	 * 
 	 * @param coordinates

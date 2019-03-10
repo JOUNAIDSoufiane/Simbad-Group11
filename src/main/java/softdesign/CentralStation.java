@@ -6,7 +6,6 @@ package main.java.softdesign;
 
 import java.awt.image.BufferedImage;
 
-import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 
@@ -37,10 +36,6 @@ public class CentralStation {
 	 */
 	private Coordinates[] robots_positions;
 
-	/**
-	 * 
-	 */
-	private int obstacle_counter = 0;
 	/**
 	 * 
 	 */
@@ -85,23 +80,18 @@ public class CentralStation {
 	 * @param color 
 	 * @return 
 	 */
-	public boolean found_obstacle(Point3d coordinates, BufferedImage cameraImage) {
+	public boolean found_obstacle(Coordinates coordinates, BufferedImage cameraImage) {
 		
 		int color = cameraImage.getRGB(cameraImage.getHeight()/2, cameraImage.getWidth()/2);
 		int blue = color & 0xff;
 		int green = (color & 0xff00) >> 8;
 		int red = (color & 0xff0000) >> 16;
 		
-		Color objColor = new Color(red,green,blue);
 		
-		Coordinates obstacle_coords = new Coordinates(coordinates.x,coordinates.y);
+		// TODO : implement object mapping here
 		
-		Object found = new Object(obstacle_coords,objColor) ; // needs to be added to the file server
+		file_server.update_blocked(coordinates);
 		
-		file_server.objects[obstacle_counter] = found;
-		System.out.println(file_server.objects[obstacle_counter].coordinates_array[0].x);
-		
-		obstacle_counter++;
 		
 		
 				
@@ -129,7 +119,7 @@ public class CentralStation {
 		//instantiating array to store current position of robots as coordinates for maximum 10 robots
 		robots_positions = new Coordinates[10];
 		
-		//instantiatng array with all possible behavior patterns
+		//Instantiating array with all possible behavior patterns
 		behavior_patterns = new String[7];
 		behavior_patterns[0] = "search";
 		behavior_patterns[1] = "follow_wall";

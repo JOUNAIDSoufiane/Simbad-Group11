@@ -209,7 +209,7 @@ public class Robot extends Agent
     public boolean foundCube()
     {
 		camera.copyVisionImage(camera_image);
-		return CS.found_obstacle(position,camera_image);
+		return CS.found_obstacle(new Coordinates(position.x,position.y),camera_image);
     }
     
 	public String get_behavior() {
