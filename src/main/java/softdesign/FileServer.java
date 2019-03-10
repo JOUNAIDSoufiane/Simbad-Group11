@@ -46,17 +46,11 @@ public class FileServer {
 	 * @param coordinates
 	 */
 	public void remove_coordinates(Coordinates coordinates) {
-		
-		if (coordinates.x > 0)
-			coordinates.x *= -1;
-		if (coordinates.y > 0)
-			coordinates.y *= -1;
-		
 		//replace already visited coordinate in array with coordinate 99,99
 		int location = (int) (((25 + coordinates.x) / 0.5 * 101) + (25 + coordinates.y) / 0.5); 
+
 		unvisited[location].x = 99;
 		unvisited[location].y = 99;
-				
 	}
 	
 	/**

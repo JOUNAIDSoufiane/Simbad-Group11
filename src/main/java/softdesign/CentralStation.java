@@ -56,8 +56,8 @@ public class CentralStation {
 	public Robot deploy_robot(Vector3d position, String name, int count) {
 		robots[count - 1] = new Robot(position, name, central_station);
 		robots[count - 1].initBehavior();
-		robots_positions[count - 1] = new Coordinates(position.x, position.y);
-		file_server.remove_coordinates(new Coordinates(position.x, position.y));
+		robots_positions[count - 1] = new Coordinates(position.x, position.z);
+		file_server.remove_coordinates(new Coordinates(position.x, position.z));
 		return robots[count - 1];
 	}
 	
