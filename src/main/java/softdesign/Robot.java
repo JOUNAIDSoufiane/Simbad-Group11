@@ -64,6 +64,7 @@ public class Robot extends Agent
 		
         // Add sonars
         sonars = RobotFactory.addSonarBeltSensor(this, 8);
+        sonars.setUpdatePerSecond(1000);
         //add camera
         camera = RobotFactory.addCameraSensor(this);
         // reserve space for image capture
@@ -80,7 +81,7 @@ public class Robot extends Agent
 
     public void initBehavior() {
         System.out.println("I exist and my name is " + this.get_name());
-        behavior_pattern = "go_straight";
+        behavior_pattern = "turn_left";
     }
     
     /**
@@ -97,9 +98,8 @@ public class Robot extends Agent
 		this.setRotationalVelocity(0);
 		this.setTranslationalVelocity(0.5);
 		
-		if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.7 ) {
-			//central_station.found_obstacle(this, sonars.hasHit(2) ,sonars.hasHit(6));
-			this.turn_left();
+		if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.6) {
+			central_station.found_obstacle(this, sonars.hasHit(2), sonars.hasHit(1) ,sonars.hasHit(6), sonars.hasHit(7));
 		}
     }
     /**
@@ -329,12 +329,6 @@ public class Robot extends Agent
 	        this.setRotationalVelocity(0);
 		}
 		
-		//once the cube is found, rover stops
-		if(behavior_pattern == "found")
-		{
-			this.setTranslationalVelocity(0);
-	        this.setRotationalVelocity(0);
-		}
 }
 	
 	/**

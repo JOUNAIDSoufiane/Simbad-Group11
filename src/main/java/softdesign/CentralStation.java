@@ -138,7 +138,9 @@ public class CentralStation {
 		
 	}
 	
-	public void found_obstacle(Robot robot, boolean sonar_left,boolean sonar_right){
+	public void found_obstacle(Robot robot, boolean sonar_left, boolean sonar_front_left, boolean sonar_right, boolean sonar_front_right){
+		
+		// TODO implement paterns
 		if (sonar_left && sonar_right){
 			robot.turn_around();
 		}
@@ -149,8 +151,13 @@ public class CentralStation {
 			robot.turn_left();
 		}
 		else if (!sonar_left && !sonar_right)
-		{
-			robot.turn_left();
+		{	
+			if(sonar_front_left)
+				robot.turn_right();
+			else if(sonar_front_right)
+				robot.turn_left();
+			else	
+				robot.turn_around();
 		}
 	}
 
