@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import simbad.sim.RangeSensorBelt;
+
 
 
 /************************************************************/
@@ -91,13 +93,16 @@ public class CentralStation {
 	 * @param position
 	 */
 	public void update_coordinates(Robot robot, Point3d position) {
-		//TODO remove robot from parameter when done debugging (only used for output
 		Coordinates coordinate = new Coordinates(position.x, position.z);
 		
 		if (!file_server.visited(coordinate)) {
 			file_server.remove_coordinates(coordinate);
 			System.out.println("I am " + robot.get_name() + " and I am at coordinate " + coordinate.x + "," + coordinate.y);
 		}
+		
+		// TODO : implement movement pattern
+		
+		robot.move();		
 	}
 	/**
 	 * 
@@ -105,7 +110,7 @@ public class CentralStation {
 	 * @param color 
 	 * @return 
 	 */
-	public boolean found_obstacle(Coordinates coordinates, BufferedImage cameraImage) {
+	public boolean found_object(Coordinates coordinates, BufferedImage cameraImage) {
 		
 		int color = cameraImage.getRGB(cameraImage.getHeight()/2, cameraImage.getWidth()/2);
 		int blue = color & 0xff;
@@ -113,9 +118,8 @@ public class CentralStation {
 		int red = (color & 0xff0000) >> 16;
 		
 		
-		// TODO : implement object mapping here
+		// TODO : implement obstacle avoidance here 
 		
-		file_server.update_blocked(coordinates);
 		
 		
 		
@@ -132,6 +136,22 @@ public class CentralStation {
 		}
 	
 		
+	}
+	
+	public void found_obstacle(Robot robot, boolean sonar_left,boolean sonar_right){
+		if (sonar_left && sonar_right){
+			robot.turn_around();
+		}
+		else if (sonar_left && !sonar_right){
+			robot.turn_right();
+		}
+		else if (!sonar_left && sonar_right){
+			robot.turn_left();
+		}
+		else if (!sonar_left && !sonar_right)
+		{
+			robot.turn_left();
+		}
 	}
 
 	/**
