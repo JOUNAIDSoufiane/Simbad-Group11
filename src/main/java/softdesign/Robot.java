@@ -82,7 +82,7 @@ public class Robot extends Agent
 
     public void initBehavior() {
         System.out.println("I exist and my name is " + this.get_name());
-        behavior_pattern = "follow_wall";
+        behavior_pattern = "go_straight";
     }
     
     /**
@@ -103,161 +103,189 @@ public class Robot extends Agent
 		this.getCoords(position);
 		central_station.update_coordinates(this, position);
 		
-		if(behavior_pattern == "search")
-		{
-			
-			if(bumper.oneHasHit())
-			{
-				this.setTranslationalVelocity(-0.5);
-			}
-			
-			//avoid in front
-			else if(sonars.hasHit(0) && sonars.getMeasurement(0) < range_of_sonars)
-			{
-				if(this.foundCube() == true)
-				{
-					this.setTranslationalVelocity(0.3);
-	    			this.setRotationalVelocity(0);
-	    			behavior_pattern = "found";
-				}
-				else
-				{
-					this.setTranslationalVelocity(-0.5);
-	    			this.setRotationalVelocity(0.8);
-				}
-				
-			}
-			
-			//avoid front left
-			else if(sonars.hasHit(1) && sonars.getMeasurement(1) < range_of_sonars)
-			{
-				if(this.foundCube() == true)
-				{
-					this.setTranslationalVelocity(0.3);
-	    			this.setRotationalVelocity(0.5);
-	    			behavior_pattern = "found";
-				}
-				else
-				{
-					this.setTranslationalVelocity(-0.3);
-	    			this.setRotationalVelocity(-0.5);
-				}
-			}
-			
-			//avoid left
-			else if(sonars.hasHit(2) && sonars.getMeasurement(2) < range_of_sonars)
-			{
-				if(this.foundCube() == true)
-				{
-					this.setTranslationalVelocity(0.3);
-	    			this.setRotationalVelocity(0.8);
-	    			behavior_pattern = "found";
-				}
-				else
-				{
-					this.setTranslationalVelocity(0.1);
-	    			this.setRotationalVelocity(-0.5);
-				}
-				
-			}
-			
-			//avoid front right
-			else if(sonars.hasHit(7) && sonars.getMeasurement(7) < range_of_sonars)
-			{
-				if(this.foundCube() == true)
-				{
-					this.setTranslationalVelocity(0.3);
-	    			this.setRotationalVelocity(-0.5);
-	    			behavior_pattern = "found";
-				}
-				else
-				{
-					this.setTranslationalVelocity(-0.3);
-	    			this.setRotationalVelocity(0.5);
-				}
-			}
-			
-			//avoid right
-			else if(sonars.hasHit(6) && sonars.getMeasurement(6) < range_of_sonars)
-			{
-				if(this.foundCube() == true)
-				{
-					this.setTranslationalVelocity(0.3);
-	    			this.setRotationalVelocity(-0.8);
-	    			behavior_pattern = "found";
-				}
-				else
-				{
-					this.setTranslationalVelocity(0.1);
-	    			this.setRotationalVelocity(0.5);
-				}
-			}
-			
-	    	else {
-	    		// the robot's speed is always 0.5 m/s
-	            this.setTranslationalVelocity(0.5);
-	            this.setRotationalVelocity(0);
-	    	}
-		}
-	
-		
-		if(behavior_pattern == "follow_wall") {
-			
-			if(bumper.oneHasHit()) {
-				this.setTranslationalVelocity(-0.1);
-			} else {
-				this.setTranslationalVelocity(0.5);
-			}
-			
-			if (sonars.hasHit(0)) {
-				//turn right
-				if(sonars.getMeasurement(0) <= 0.7 && !sonars.hasHit(6)) {
-					this.setTranslationalVelocity(0);
-					this.setRotationalVelocity(-1.5);
-				} else if(sonars.getMeasurement(0) <= 0.7 && !sonars.hasHit(2)) {
-					//turn left
-					this.setTranslationalVelocity(0);
-					this.setRotationalVelocity(1.5);
-				}
-			}
-			if(!sonars.hasHit(0)){
-				if(sonars.hasHit(1) && sonars.hasHit(2) && sonars.hasHit(3)) {
-					if(sonars.hasHit(1) && sonars.getMeasurement(1) < 0.7) {
-						//move away from wall
-						this.setRotationalVelocity(-0.1);
-					}
-					if(sonars.hasHit(1) && sonars.getMeasurement(1) > 0.7) {
-						//move closer to wall
-						this.setRotationalVelocity(0.1);
-					}
-				}
-				
-				if(!sonars.hasHit(1) && !sonars.hasHit(2) && sonars.hasHit(3)) {
-					this.setRotationalVelocity(0.5);
-				}
-			}
-			
-//			if(!sonars.hasHit(0) && sonars.hasHit(2) && sonars.hasHit(1) && sonars.hasHit(3)) {
-//				this.setTranslationalVelocity(0.5);
-//				this.setRotationalVelocity(0);
+//		if(behavior_pattern == "search")
+//		{
 //			
-//				if(sonars.hasHit(1) && sonars.getMeasurement(1) < 0.7) {
-//					this.setRotationalVelocity(-0.1);
+//			if(bumper.oneHasHit())
+//			{
+//				this.setTranslationalVelocity(-0.5);
+//			}
+//			
+//			//avoid in front
+//			else if(sonars.hasHit(0) && sonars.getMeasurement(0) < range_of_sonars)
+//			{
+//				if(this.foundCube() == true)
+//				{
+//					this.setTranslationalVelocity(0.3);
+//	    			this.setRotationalVelocity(0);
+//	    			behavior_pattern = "found";
 //				}
-//				if(sonars.hasHit(1) && sonars.getMeasurement(1) > 0.7) {
-//					this.setRotationalVelocity(0.1);
+//				else
+//				{
+//					this.setTranslationalVelocity(-0.5);
+//	    			this.setRotationalVelocity(0.8);
+//				}
+//				
+//			}
+//			
+//			//avoid front left
+//			else if(sonars.hasHit(1) && sonars.getMeasurement(1) < range_of_sonars)
+//			{
+//				if(this.foundCube() == true)
+//				{
+//					this.setTranslationalVelocity(0.3);
+//	    			this.setRotationalVelocity(0.5);
+//	    			behavior_pattern = "found";
+//				}
+//				else
+//				{
+//					this.setTranslationalVelocity(-0.3);
+//	    			this.setRotationalVelocity(-0.5);
 //				}
 //			}
-//			if(!sonars.hasHit(0) && !sonars.hasHit(2) && sonars.hasHit(3)) {
-//				this.setTranslationalVelocity(0);
-//				this.setRotationalVelocity(1.5);
+//			
+//			//avoid left
+//			else if(sonars.hasHit(2) && sonars.getMeasurement(2) < range_of_sonars)
+//			{
+//				if(this.foundCube() == true)
+//				{
+//					this.setTranslationalVelocity(0.3);
+//	    			this.setRotationalVelocity(0.8);
+//	    			behavior_pattern = "found";
+//				}
+//				else
+//				{
+//					this.setTranslationalVelocity(0.1);
+//	    			this.setRotationalVelocity(-0.5);
+//				}
+//				
 //			}
-//			if(!sonars.hasHit(0) && sonars.hasHit(1) && sonars.hasHit(2)) {
-//				this.setTranslationalVelocity(0.5);
-//				this.setRotationalVelocity(0);
+//			
+//			//avoid front right
+//			else if(sonars.hasHit(7) && sonars.getMeasurement(7) < range_of_sonars)
+//			{
+//				if(this.foundCube() == true)
+//				{
+//					this.setTranslationalVelocity(0.3);
+//	    			this.setRotationalVelocity(-0.5);
+//	    			behavior_pattern = "found";
+//				}
+//				else
+//				{
+//					this.setTranslationalVelocity(-0.3);
+//	    			this.setRotationalVelocity(0.5);
+//				}
 //			}
-			
+//			
+//			//avoid right
+//			else if(sonars.hasHit(6) && sonars.getMeasurement(6) < range_of_sonars)
+//			{
+//				if(this.foundCube() == true)
+//				{
+//					this.setTranslationalVelocity(0.3);
+//	    			this.setRotationalVelocity(-0.8);
+//	    			behavior_pattern = "found";
+//				}
+//				else
+//				{
+//					this.setTranslationalVelocity(0.1);
+//	    			this.setRotationalVelocity(0.5);
+//				}
+//			}
+//			
+//	    	else {
+//	    		// the robot's speed is always 0.5 m/s
+//	            this.setTranslationalVelocity(0.5);
+//	            this.setRotationalVelocity(0);
+//	    	}
+//		}
+//	
+		if(behavior_pattern == "go_straight") {
+			this.setRotationalVelocity(0);
+			this.setTranslationalVelocity(0.5);
+			if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.7 ) {
+				if(sonars.hasHit(6))
+					behavior_pattern = "turn_left";
+				else
+					behavior_pattern = "turn_right";
+			}
+			if(sonars.hasHit(1) && sonars.hasHit(2) && sonars.hasHit(3)) {
+				if(sonars.hasHit(1) && sonars.getMeasurement(1) < 0.7) {
+					//move away from wall
+					this.setTranslationalVelocity(0.5);
+					this.setRotationalVelocity(-0.1);
+				}
+				if(sonars.hasHit(1) && sonars.getMeasurement(1) > 0.7) {
+					//move closer to wall
+					this.setRotationalVelocity(0.1);
+				}
+			}
 		}
+		
+		if(behavior_pattern == "turn_left") {
+			this.setTranslationalVelocity(0);
+			this.setRotationalVelocity(1);
+			if(!sonars.hasHit(0)) {
+				behavior_pattern = "go_straight";
+			}
+		}
+		
+		if(behavior_pattern == "turn_right") {
+			this.setTranslationalVelocity(0);
+			this.setRotationalVelocity(-1);
+			if(!sonars.hasHit(0)) {
+				behavior_pattern = "go_straight";
+			}
+		}
+		
+		
+//		if(behavior_pattern == "follow_wall") {
+//			
+//			if(bumper.oneHasHit()) {
+//				this.setTranslationalVelocity(-0.1);
+//			} else {
+//				this.setTranslationalVelocity(0.5);
+//			}
+//			
+//			if (sonars.hasHit(0)) {
+//				//turn right
+//				if(sonars.hasHit(2) && sonars.hasHit(6)) {
+//					this.setTranslationalVelocity(0);
+//					this.setRotationalVelocity(1);
+//				}
+//				else if(sonars.getMeasurement(0) <= 0.7 && !sonars.hasHit(6)) {
+//					this.setTranslationalVelocity(0);
+//					this.setRotationalVelocity(-1.5);
+//				} else if(sonars.getMeasurement(0) <= 0.7 && !sonars.hasHit(2)) {
+//					//turn left
+//					this.setTranslationalVelocity(0);
+//					this.setRotationalVelocity(2);
+//				}
+//			}
+//			if(!sonars.hasHit(0)){
+//				if(sonars.hasHit(1) && sonars.hasHit(2) && sonars.hasHit(3)) {
+//					if(sonars.hasHit(1) && sonars.getMeasurement(1) < 0.7) {
+//						//move away from wall
+//						this.setTranslationalVelocity(0.5);
+//						this.setRotationalVelocity(-0.1);
+//					}
+//					if(sonars.hasHit(1) && sonars.getMeasurement(1) > 0.7) {
+//						//move closer to wall
+//						this.setRotationalVelocity(0.1);
+//					}
+//				}
+//				
+//				else if(!sonars.hasHit(2) && sonars.hasHit(3)) {
+//					this.setTranslationalVelocity(0.1);
+//					this.setRotationalVelocity(0.5);
+//				}
+//				
+//				else if(sonars.hasHit(2) && sonars.hasHit(4) && sonars.hasHit(6)) {
+//					this.setTranslationalVelocity(0.5);
+//				}
+//			}
+//			
+//		}
 		
 		if(behavior_pattern == "stop") {
 			this.setTranslationalVelocity(0);

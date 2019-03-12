@@ -91,7 +91,7 @@ public class CentralStation {
 	 * @param position
 	 */
 	public void update_coordinates(Robot robot, Point3d position) {
-		// TODO remove robot from parameter when done debugging (only used for output)
+		//TODO remove robot from parameter when done debugging (only used for output
 		Coordinates coordinate = new Coordinates(position.x, position.z);
 		
 		if (!file_server.visited(coordinate)) {
@@ -145,14 +145,12 @@ public class CentralStation {
 		robots_positions = new Coordinates[2];
 		
 		//Instantiating array with all possible behavior patterns
-		behavior_patterns = new String[7];
-		behavior_patterns[0] = "search";
-		behavior_patterns[1] = "follow_wall";
-		behavior_patterns[2] = "spiral";
+		behavior_patterns = new String[5];
+		behavior_patterns[0] = "go_straigt";
+		behavior_patterns[1] = "turn_right";
+		behavior_patterns[2] = "turn_left";
 		behavior_patterns[3] = "stop";
-		behavior_patterns[4] = "turn_right";
-		behavior_patterns[5] = "turn_left";
-		behavior_patterns[6] = "found";
+		behavior_patterns[4] = "found";
 		
 		//getting instance of File Server
 		file_server = FileServer.getinstance();
