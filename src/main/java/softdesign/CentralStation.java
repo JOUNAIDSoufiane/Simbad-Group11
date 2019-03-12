@@ -6,6 +6,7 @@ package main.java.softdesign;
 
 import java.awt.image.BufferedImage;
 
+import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 
@@ -51,18 +52,26 @@ public class CentralStation {
 	 */
 	public Robot deploy_robot(Vector3d position, String name) {
 		//parse name to find robot's number
-		int i = Integer.parseInt(name.replaceAll("\\D", ""));
+		int robots_number = Integer.parseInt(name.replaceAll("\\D", ""));
+		
+		//check if coordinate has already been visited
+		while (file_server.visited(new Coordinates(position.x, position.z))) {
+			System.out.println("Coordinate already explored, moving Robot");
+			
+			//TODO implement a way to change position to a useful coordinate (for now it's just a number)
+			position.x = 9;
+		}
 		
 		//instantiate new robot and add it to the robots array
-		robots[i - 1] = new Robot(position, name, central_station);
-		robots[i - 1].initBehavior();
+		robots[robots_number - 1] = new Robot(position, name);
+		robots[robots_number - 1].initBehavior();
 		
 		//store robot's position
-		robots_positions[i - 1] = new Coordinates(position.x, position.z);
+		robots_positions[robots_number - 1] = new Coordinates(position.x, position.z);
 		
 		//remove the robot's current position 
 		file_server.remove_coordinates(new Coordinates(position.x, position.z));
-		return robots[i - 1];
+		return robots[robots_number - 1];
 	}
 	
 	/**
@@ -70,10 +79,26 @@ public class CentralStation {
 	 * @param color 
 	 * @param position_color_found 
 	 */
-	public void start_mission(Color color, Coordinates position_color_found) {
+	public Coordinates start_mission(Color color) {
+		//TODO return target box (for now just dummy position)
+		return new Coordinates(0,0);
 		
 	}
-
+	
+	/**
+	 * 
+	 * @param robot
+	 * @param position
+	 */
+	public void update_coordinates(Robot robot, Point3d position) {
+		// TODO remove robot from parameter when done debugging (only used for output)
+		Coordinates coordinate = new Coordinates(position.x, position.z);
+		
+		if (!file_server.visited(coordinate)) {
+			file_server.remove_coordinates(coordinate);
+			System.out.println("I am " + robot.get_name() + " and I am at coordinate " + coordinate.x + "," + coordinate.y);
+		}
+	}
 	/**
 	 * 
 	 * @param coordinates 
@@ -112,12 +137,12 @@ public class CentralStation {
 	/**
 	 * 
 	 */
-	public CentralStation() {
-		//instantiating the robots array to hold  maximum of 10 robots
-		robots = new Robot[10];
+	private CentralStation() {
+		//instantiating the robots array to hold maximum of 2 robots
+		robots = new Robot[2];
 		
-		//instantiating array to store current position of robots as coordinates for maximum 10 robots
-		robots_positions = new Coordinates[10];
+		//instantiating array to store current position of robots as coordinates for maximum 2 robots
+		robots_positions = new Coordinates[2];
 		
 		//Instantiating array with all possible behavior patterns
 		behavior_patterns = new String[7];

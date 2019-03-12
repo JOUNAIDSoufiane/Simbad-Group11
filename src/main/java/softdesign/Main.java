@@ -24,13 +24,9 @@ public class Main {
         //getting instance of Central Station
         CentralStation CS = CentralStation.getinstance();
         
-        //Creating variable to store coordinates of object once it's found
-        Coordinates position_color_found = new Coordinates(0,0);
-        
-        
         // adding two robots
         Robot robot1 = CS.deploy_robot(new Vector3d(0, 0, 0), "Robot 1");
-        Robot robot2 = CS.deploy_robot(new Vector3d(-2, 0, -2), "Robot 2");
+        Robot robot2 = CS.deploy_robot(new Vector3d(0, 0, 0), "Robot 2");
         
 
         // add the two robots to the environment
@@ -38,7 +34,9 @@ public class Main {
         environment.add(robot2);
         
         
-        CS.start_mission(new Color(255,0,0) , position_color_found);
+//        Coordinates position_color_found = CS.start_mission(new Color(255,0,0));
+//        
+//        System.out.println("Box found at Coordinates: " + position_color_found.x + "," + position_color_found.y);
         
         // here we create an instance of the whole Simbad simulator and we assign the newly created environment 
         Simbad frame = new Simbad(environment, false);

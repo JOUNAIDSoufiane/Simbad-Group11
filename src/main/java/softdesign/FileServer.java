@@ -41,6 +41,7 @@ public class FileServer {
 	public void update_blocked(Coordinates coordinates) {
 		
 	}
+	
 	/**
 	 * 
 	 * @param coordinates
@@ -55,9 +56,17 @@ public class FileServer {
 	
 	/**
 	 * 
+	 * @param coordinates
+	 */
+	public boolean visited(Coordinates coordinates) {
+		return unvisited[(int) (((25 + coordinates.x) / 0.5 * 101) + (25 + coordinates.y) / 0.5)].x == 99;
+	}
+	
+	/**
+	 * 
 	 * @param central_station 
 	 */
-	public FileServer() {
+	private FileServer() {
 		
 		//initialize unvisited array with all possible coordinates
 		int count = 0;

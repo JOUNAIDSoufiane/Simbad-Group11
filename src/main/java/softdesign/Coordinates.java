@@ -24,8 +24,9 @@ public class Coordinates {
 	 * @param y 
 	 */
 	public Coordinates(double x, double y) {
-		this.x = x;
-		this.y = y;
+		//rounding coordinates to nearest .5 decimal to correspond to implemented grid pattern size
+		this.x = Math.round(x * 2) / 2.0;
+		this.y = Math.round(y * 2) / 2.0;
 	}
 	public Coordinates(Coordinates copy) {
 		this.x = copy.x;
