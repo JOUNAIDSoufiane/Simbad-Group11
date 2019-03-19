@@ -21,6 +21,7 @@ public class Robot extends Agent
 	 * 
 	 */
 				private Point3d position = new Point3d();
+				private Coordinates prev_coordinates;
 
 	/**
 				 * 
@@ -36,11 +37,6 @@ public class Robot extends Agent
 				 * 
 				 */
 				private BufferedImage camera_image;
-
-	/**
-				 * 
-				 */
-				private int timer = 0;
 
 	/**
 				 * 
@@ -61,6 +57,7 @@ public class Robot extends Agent
 		super(position,name);
 		this.name = name;
 		this.central_station = CentralStation.getinstance();
+		prev_coordinates = new Coordinates(position.x, position.z);
 		
         // Add sonars
         sonars = RobotFactory.addSonarBeltSensor(this, 8);
@@ -70,7 +67,7 @@ public class Robot extends Agent
         // reserve space for image capture
         camera_image = camera.createCompatibleImage();
 	}
-
+	
 	/**
 	 * 
 	 * @return 
@@ -81,7 +78,6 @@ public class Robot extends Agent
 
     public void initBehavior() {
         System.out.println("I exist and my name is " + this.get_name());
-        behavior_pattern = "turn_left";
     }
     
     /**
@@ -98,8 +94,31 @@ public class Robot extends Agent
 		this.setRotationalVelocity(0);
 		this.setTranslationalVelocity(0.5);
 		
-		if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.6) {
-			central_station.found_obstacle(this, sonars.hasHit(2), sonars.hasHit(1) ,sonars.hasHit(6), sonars.hasHit(7));
+		//Detecting object in front, front right while next to wall, front left while next to wall (make sure it can or can't go through the gap between wall and object)
+		if((sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) 
+				|| (sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.4 && sonars.getMeasurement(2) <= 0.5)
+				|| (sonars.hasHit(1) && sonars.getMeasurement(1) <= 0.4 &&  sonars.getMeasurement(6) <= 0.5)) {
+			central_station.found_obstacle(this, sonars);
+		}
+		
+		//Wall following code 
+		if(behavior_pattern == "follow_wall") {
+			//turn left when possible
+			if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
+				turn_left();
+		}
+		
+		//FIXME spiral robot code (so far works until robot hits wall or object) XXX Code is still very buggy lol 
+		else if(behavior_pattern == "spiral") {
+			central_station.control_spiral(this);
+		}
+		
+		else if(behavior_pattern == "spiral_down") {
+			this.getCoords(position);
+			Coordinates coordinates = new Coordinates(position.x, position.z);
+			if(coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y) {
+				central_station.spiral_down(this, coordinates, prev_coordinates);
+			}
 		}
     }
     /**
@@ -107,7 +126,7 @@ public class Robot extends Agent
 	 */  
     public void turn_left(){ 
 		this.setTranslationalVelocity(0);
-		this.rotateY(1.57); // 90 degrees
+		this.rotateY(1.5707963268); // 90 degrees
 			
     }
     /**
@@ -115,7 +134,7 @@ public class Robot extends Agent
 	 */  
     public void turn_right(){
 		this.setTranslationalVelocity(0);
-		this.rotateY(4.71); // 270 degrees
+		this.rotateY(4.7123889804); // 270 degrees
 		
     }
     /**
@@ -123,7 +142,7 @@ public class Robot extends Agent
 	 */     
     public void turn_around(){ 
 		this.setTranslationalVelocity(0);
-		this.rotateY(3.14); // 180 degrees
+		this.rotateY(3.1415926536); // 180 degrees
     }
     
     public void stop(){
@@ -134,199 +153,18 @@ public class Robot extends Agent
     
     
 	public void performBehavior() {
-				
-		// TODO implement that update_coordinates is only called when robot changed coordinates (now CS is checking if coordinates were new)
-		this.getCoords(position);
-		central_station.update_coordinates(this, position);
 		
-//		if(behavior_pattern == "search")
-//		{
-//			
-//			if(bumper.oneHasHit())
-//			{
-//				this.setTranslationalVelocity(-0.5);
-//			}
-//			
-//			//avoid in front
-//			else if(sonars.hasHit(0) && sonars.getMeasurement(0) < range_of_sonars)
-//			{
-//				if(this.foundCube() == true)
-//				{
-//					this.setTranslationalVelocity(0.3);
-//	    			this.setRotationalVelocity(0);
-//	    			behavior_pattern = "found";
-//				}
-//				else
-//				{
-//					this.setTranslationalVelocity(-0.5);
-//	    			this.setRotationalVelocity(0.8);
-//				}
-//				
-//			}
-//			
-//			//avoid front left
-//			else if(sonars.hasHit(1) && sonars.getMeasurement(1) < range_of_sonars)
-//			{
-//				if(this.foundCube() == true)
-//				{
-//					this.setTranslationalVelocity(0.3);
-//	    			this.setRotationalVelocity(0.5);
-//	    			behavior_pattern = "found";
-//				}
-//				else
-//				{
-//					this.setTranslationalVelocity(-0.3);
-//	    			this.setRotationalVelocity(-0.5);
-//				}
-//			}
-//			
-//			//avoid left
-//			else if(sonars.hasHit(2) && sonars.getMeasurement(2) < range_of_sonars)
-//			{
-//				if(this.foundCube() == true)
-//				{
-//					this.setTranslationalVelocity(0.3);
-//	    			this.setRotationalVelocity(0.8);
-//	    			behavior_pattern = "found";
-//				}
-//				else
-//				{
-//					this.setTranslationalVelocity(0.1);
-//	    			this.setRotationalVelocity(-0.5);
-//				}
-//				
-//			}
-//			
-//			//avoid front right
-//			else if(sonars.hasHit(7) && sonars.getMeasurement(7) < range_of_sonars)
-//			{
-//				if(this.foundCube() == true)
-//				{
-//					this.setTranslationalVelocity(0.3);
-//	    			this.setRotationalVelocity(-0.5);
-//	    			behavior_pattern = "found";
-//				}
-//				else
-//				{
-//					this.setTranslationalVelocity(-0.3);
-//	    			this.setRotationalVelocity(0.5);
-//				}
-//			}
-//			
-//			//avoid right
-//			else if(sonars.hasHit(6) && sonars.getMeasurement(6) < range_of_sonars)
-//			{
-//				if(this.foundCube() == true)
-//				{
-//					this.setTranslationalVelocity(0.3);
-//	    			this.setRotationalVelocity(-0.8);
-//	    			behavior_pattern = "found";
-//				}
-//				else
-//				{
-//					this.setTranslationalVelocity(0.1);
-//	    			this.setRotationalVelocity(0.5);
-//				}
-//			}
-//			
-//	    	else {
-//	    		// the robot's speed is always 0.5 m/s
-//	            this.setTranslationalVelocity(0.5);
-//	            this.setRotationalVelocity(0);
-//	    	}
-//		}
-//	
+		if(behavior_pattern != "stop") {
+			//Robot starts moving straight
+			move();
 			
-//		if(behavior_pattern == "go_straight") {
-//			this.setRotationalVelocity(0);
-//			this.setTranslationalVelocity(0.5);
-//			if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.7 ) {
-//				if(sonars.hasHit(6))
-//					behavior_pattern = "turn_left";
-//				else
-//					behavior_pattern = "turn_right";
-//			}
-//			if(sonars.hasHit(1) && sonars.hasHit(2) && sonars.hasHit(3)) {
-//				if(sonars.hasHit(1) && sonars.getMeasurement(1) < 0.7) {
-//					//move away from wall
-//					this.setTranslationalVelocity(0.5);
-//					this.setRotationalVelocity(-0.1);
-//				}
-//				if(sonars.hasHit(1) && sonars.getMeasurement(1) > 0.7) {
-//					//move closer to wall
-//					this.setRotationalVelocity(0.1);
-//				}
-//			}
-//		}
-//		
-//		if(behavior_pattern == "turn_left") {
-//			this.setTranslationalVelocity(0);
-//			this.setRotationalVelocity(1);
-//			if(!sonars.hasHit(0)) {
-//				behavior_pattern = "go_straight";
-//			}
-//		}
-//		
-//		if(behavior_pattern == "turn_right") {
-//			this.setTranslationalVelocity(0);
-//			this.setRotationalVelocity(-1);
-//			if(!sonars.hasHit(0)) {
-//				behavior_pattern = "go_straight";
-//			}
-//		}
-		
-		
-//		if(behavior_pattern == "follow_wall") {
-//			
-//			if(bumper.oneHasHit()) {
-//				this.setTranslationalVelocity(-0.1);
-//			} else {
-//				this.setTranslationalVelocity(0.5);
-//			}
-//			
-//			if (sonars.hasHit(0)) {
-//				//turn right
-//				if(sonars.hasHit(2) && sonars.hasHit(6)) {
-//					this.setTranslationalVelocity(0);
-//					this.setRotationalVelocity(1);
-//				}
-//				else if(sonars.getMeasurement(0) <= 0.7 && !sonars.hasHit(6)) {
-//					this.setTranslationalVelocity(0);
-//					this.setRotationalVelocity(-1.5);
-//				} else if(sonars.getMeasurement(0) <= 0.7 && !sonars.hasHit(2)) {
-//					//turn left
-//					this.setTranslationalVelocity(0);
-//					this.setRotationalVelocity(2);
-//				}
-//			}
-//			if(!sonars.hasHit(0)){
-//				if(sonars.hasHit(1) && sonars.hasHit(2) && sonars.hasHit(3)) {
-//					if(sonars.hasHit(1) && sonars.getMeasurement(1) < 0.7) {
-//						//move away from wall
-//						this.setTranslationalVelocity(0.5);
-//						this.setRotationalVelocity(-0.1);
-//					}
-//					if(sonars.hasHit(1) && sonars.getMeasurement(1) > 0.7) {
-//						//move closer to wall
-//						this.setRotationalVelocity(0.1);
-//					}
-//				}
-//				
-//				else if(!sonars.hasHit(2) && sonars.hasHit(3)) {
-//					this.setTranslationalVelocity(0.1);
-//					this.setRotationalVelocity(0.5);
-//				}
-//				
-//				else if(sonars.hasHit(2) && sonars.hasHit(4) && sonars.hasHit(6)) {
-//					this.setTranslationalVelocity(0.5);
-//				}
-//			}
-//			
-//		}
-		
-		if(behavior_pattern == "stop") {
-			this.setTranslationalVelocity(0);
-	        this.setRotationalVelocity(0);
+			//robot sends its position to central station whenever its position has changed coordinates
+			this.getCoords(position);
+			Coordinates coordinates = new Coordinates(position.x, position.z);
+			if(coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y) {
+				central_station.update_coordinates(this, coordinates);
+				prev_coordinates = coordinates;
+			}
 		}
 		
 }
