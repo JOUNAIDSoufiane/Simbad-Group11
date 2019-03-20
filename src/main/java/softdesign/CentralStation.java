@@ -34,7 +34,7 @@ public class CentralStation {
 	/**
 	 * 
 	 */
-	private Coordinates[] robots_positions;
+	private Coordinates[] starting_positions;
 
 	/**
 	 * 
@@ -58,7 +58,7 @@ public class CentralStation {
 		robots[robots_number - 1].initBehavior();
 		
 		//store robot's position
-		robots_positions[robots_number - 1] = new Coordinates(position.x, position.z);
+		starting_positions[robots_number - 1] = new Coordinates(position.x, position.z);
 		
 		//remove the robot's current position 
 		file_server.remove_coordinates(new Coordinates(position.x, position.z));
@@ -74,11 +74,13 @@ public class CentralStation {
 		
 		//Set each robot's behavior pattern
 		robots[0].set_behavior(behavior_patterns[0]);
-		
-		//robots[1].set_behavior(behavior_patterns[0]);
+		robots[1].set_behavior(behavior_patterns[0]);
 		
 	}
 	
+	public Coordinates[] get_starting_positions() {
+		return starting_positions;
+	}
 	//FIXME implement everything visited what to do
 	public void spiral(Robot robot, Coordinates coordinates, Coordinates prev) {
 		Coordinates next_coordinates, xplus, xminus, yplus, yminus, left;
@@ -212,7 +214,7 @@ public class CentralStation {
 		robots = new Robot[2];
 		
 		//instantiating array to store current position of robots as coordinates for maximum 2 robots
-		robots_positions = new Coordinates[2];
+		starting_positions = new Coordinates[2];
 		
 		//Instantiating array with all possible behavior patterns
 		behavior_patterns = new String[4];

@@ -22,7 +22,7 @@ public class Robot extends Agent
 	 */
 				private Point3d position = new Point3d();
 				private Coordinates prev_coordinates;
-				private Coordinates starting_coordinates;
+				private Coordinates[] starting_coordinates;
 
 	/**
 				 * 
@@ -59,7 +59,6 @@ public class Robot extends Agent
 		this.name = name;
 		this.central_station = CentralStation.getinstance();
 		prev_coordinates = new Coordinates(position.x, position.z);
-		starting_coordinates = prev_coordinates;
 		
         // Add sonars
         sonars = RobotFactory.addSonarBeltSensor(this, 8);
@@ -110,9 +109,12 @@ public class Robot extends Agent
 				turn_left();
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
-			if(coordinates.x == starting_coordinates.x && coordinates.y == starting_coordinates.y && this.getOdometer() > 1) {
-				behavior_pattern = "spiral";
-				turn_right();
+			starting_coordinates = central_station.get_starting_positions();
+			for (int i = 0; i < starting_coordinates.length; i++) {
+				if(coordinates.x == starting_coordinates[i].x && coordinates.y == starting_coordinates[i].y && this.getOdometer() > 1) {
+					behavior_pattern = "spiral";
+					turn_right();
+				}
 			}
 		}
 		

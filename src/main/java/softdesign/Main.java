@@ -64,13 +64,13 @@ public class Main {
         new StopButton();
         
         // adding two robots
-        Robot robot1 = CS.deploy_robot(new Vector3d(5.0, 0, -7.0), "Robot 1");
-        //Robot robot2 = CS.deploy_robot(new Vector3d(-2, 0, 4), "Robot 2");
+        Robot robot1 = CS.deploy_robot(new Vector3d(5, 0, -6.55), "Robot 1");
+        Robot robot2 = CS.deploy_robot(new Vector3d(-7, 0, 4.95), "Robot 2");
         
 
         // add the two robots to the environment
         environment.add(robot1);
-        //environment.add(robot2);
+        environment.add(robot2);
         
         CS.start_mission(new Color(255,0,0));
         
