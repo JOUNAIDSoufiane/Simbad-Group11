@@ -57,24 +57,20 @@ public class Environment extends EnvironmentDescription {
         Wall room1Wall3 = new Wall(new Vector3d(6.25, 0, -7.5), 6, 1, this);
         room1Wall3.setColor(new Color3f(Color.BLUE));
         add(room1Wall3);
-        
-        Wall room2Wall1 = new Wall(new Vector3d(0, 0, -10), 5, 1, this);
-        room2Wall1.setColor(new Color3f(Color.BLUE));
-        room2Wall1.rotate90(1);
-        add(room2Wall1);
-        
-        Wall room2Wall2 = new Wall(new Vector3d(8, 0, -4), 7, 1, this);
+
+        Wall room2Wall2 = new Wall(new Vector3d(7.5, 0, -4), 7, 1, this);
         room2Wall2.setColor(new Color3f(Color.BLUE));
         room2Wall2.rotate90(1);
         add(room2Wall2);
         
-        Wall room2Wall3 = new Wall(new Vector3d(8.35, 0, -0.5), 1, 1, this);
-        room2Wall3.setColor(new Color3f(Color.BLUE));
-        add(room2Wall3);
+        //XXX WTF Adding any of these two causes the robot to crash into wall in different locations
+//        Wall room2Wall3 = new Wall(new Vector3d(8.35, 0, -0.5), 1, 1, this);
+//        room2Wall3.setColor(new Color3f(Color.BLUE));
+//        add(room2Wall3);
         
-        Wall room2Wall4 = new Wall(new Vector3d(12, 0, -0.5), 1, 1, this);
-        room2Wall4.setColor(new Color3f(Color.BLUE));
-        add(room2Wall4);
+//        Wall room2Wall4 = new Wall(new Vector3d(12, 0, -0.5), 1, 1, this);
+//        room2Wall4.setColor(new Color3f(Color.BLUE));
+//        add(room2Wall4);
         
         Wall room3Wall1 = new Wall(new Vector3d(-8.5, 0, 4), 8, 1, this);
         room3Wall1.setColor(new Color3f(Color.BLUE));
@@ -89,7 +85,7 @@ public class Environment extends EnvironmentDescription {
         room3Wall3.rotate90(1);
         add(room3Wall3);
         
-        Wall room3Wall4 = new Wall(new Vector3d(-4.5, 0, -2.65), 3, 1, this);
+        Wall room3Wall4 = new Wall(new Vector3d(-4.5, 0, -2.5), 3, 1, this);
         room3Wall4.setColor(new Color3f(Color.BLUE));
         room3Wall4.rotate90(1);
         add(room3Wall4);
@@ -116,25 +112,26 @@ public class Environment extends EnvironmentDescription {
         Wall1.rotate90(1);
         add(Wall1);
         
-        Box box1 = new Box(new Vector3d(10.5, 0, -10.5), new Vector3f(1, 1, 1), this);
-        box1.setColor(new Color3f(Color.GREEN));
-        add(box1);
-        
-        Box box2 = new Box(new Vector3d(-10, 0, 1), new Vector3f(1, 1, 1), this);
-        box2.setColor(new Color3f(Color.BLACK));
-        add(box2);
-        
-        Box box3 = new Box(new Vector3d(5, 0, 5), new Vector3f(2, 1, 2), this);
-        box3.setColor(new Color3f(Color.ORANGE));
-        add(box3);
-        
-        Box button = new Box(new Vector3d(-9, 0, -9), new Vector3f(3, 1, 3), this);
-        button.setColor(new Color3f(Color.RED));
-        add(button);
-        
-        Arch arch1 = new Arch(new Vector3d(-5, 0, 9), this);
-        arch1.rotate90(1);
-        add(arch1);
+//        
+//        Box box1 = new Box(new Vector3d(10.5, 0, -10.5), new Vector3f(1, 1, 1), this);
+//        box1.setColor(new Color3f(Color.GREEN));
+//        add(box1);
+//        
+//        Box box2 = new Box(new Vector3d(-10, 0, 1), new Vector3f(1, 1, 1), this);
+//        box2.setColor(new Color3f(Color.BLACK));
+//        add(box2);
+//        
+//        Box box3 = new Box(new Vector3d(5, 0, 5), new Vector3f(2, 1, 2), this);
+//        box3.setColor(new Color3f(Color.ORANGE));
+//        add(box3);
+//        
+//        Box button = new Box(new Vector3d(-9, 0, -9), new Vector3f(3, 1, 3), this);
+//        button.setColor(new Color3f(Color.RED));
+//        add(button);
+//        
+//        Arch arch1 = new Arch(new Vector3d(-5, 0, 9), this);
+//        arch1.rotate90(1);
+//        add(arch1);
         
     }
 	

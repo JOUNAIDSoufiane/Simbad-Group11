@@ -19,14 +19,6 @@ public class CentralStation {
 	 */
 	private Robot[] robots;
 	
-	//variable to store distance robot in spiral is supposed to travel before turning
-	private double Odometer_count = 0.0;
-	
-	//variable for robot in spiral to count right turns (distance to travel after every 2nd right turn will increase)
-	private int right_turns = 0;
-	
-	//variable for robot in spiral to multiply the travel distance the robot needs before turning right
-	private int distance_multiplier = 1;
 	/**
 	 * 
 	 */
@@ -60,15 +52,7 @@ public class CentralStation {
 	public Robot deploy_robot(Vector3d position, String name) {
 		//parse name to find robot's number
 		int robots_number = Integer.parseInt(name.replaceAll("\\D", ""));
-		
-		//check if coordinate has already been visited
-		while (file_server.visited(new Coordinates(position.x, position.z))) {
-			System.out.println("Coordinate already explored, moving Robot");
-			
-			//TODO implement a way to change position to a useful coordinate (for now it's just a number)
-			position.x = 9;
-		}
-		
+	
 		//instantiate new robot and add it to the robots array
 		robots[robots_number - 1] = new Robot(position, name);
 		robots[robots_number - 1].initBehavior();
@@ -86,48 +70,49 @@ public class CentralStation {
 	 * @param color 
 	 * @param position_color_found 
 	 */
-	public Coordinates start_mission(Color color) {
-		//TODO return target box (for now just dummy position)
+	public void start_mission(Color color) {
 		
 		//Set each robot's behavior pattern
 		robots[0].set_behavior(behavior_patterns[0]);
 		
-		//TODO might be new pattern
-		robots[1].set_behavior(behavior_patterns[1]);
-		
-		return new Coordinates(0,0);
+		//robots[1].set_behavior(behavior_patterns[0]);
 		
 	}
 	
-	
-	public void spiral_down(Robot robot, Coordinates coordinates, Coordinates prev) {
-		Coordinates next_coordinates, xplus, xminus, yplus, yminus;
-		
+	//FIXME implement everything visited what to do
+	public void spiral(Robot robot, Coordinates coordinates, Coordinates prev) {
+		Coordinates next_coordinates, xplus, xminus, yplus, yminus, left;
+
 		xplus = new Coordinates(coordinates.x + 0.5, coordinates.y);
 		xminus = new Coordinates(coordinates.x - 0.5, coordinates.y);
 		yplus = new Coordinates(coordinates.x, coordinates.y + 0.5);
 		yminus = new Coordinates(coordinates.x, coordinates.y - 0.5);
 		
-		if(file_server.visited(xplus) && file_server.visited(xminus) && file_server.visited(yplus) && file_server.visited(yminus)) {
-			//If all coordinates around robot have been visited, stop robot
-			robot.stop();
-			robot.set_behavior(behavior_patterns[3]);
-		}
-		else {
-			if(coordinates.x - prev.x > 0)
+
+			if(coordinates.x - prev.x > 0) {
 				next_coordinates = xplus;
-			else if(coordinates.x - prev.x < 0)
+				left = yminus;
+			}
+			else if(coordinates.x - prev.x < 0) {
 				next_coordinates = xminus;
-			else if(coordinates.y - prev.y > 0)
+				left = yplus;
+			}
+			else if(coordinates.y - prev.y > 0) {
 				next_coordinates = yplus;
-			else
+				left = xplus;
+			}
+			else {
 				next_coordinates = yminus;
+				left = xminus;
+			}
 			
-			if (file_server.visited(next_coordinates))
+			if (!file_server.visited(left)) {
+				System.out.println(!file_server.visited(left) + "  " + left.x + ", " + left.y);
+				robot.turn_left();
+			}
+			else if (file_server.visited(next_coordinates))
 					robot.turn_right();
 		}
-	}
-	
 	
 	/**
 	 * 
@@ -171,17 +156,8 @@ public class CentralStation {
 	
 	public void found_obstacle(Robot robot, RangeSensorBelt sonars){
 		
-		//Stop spiral robot if it encounters an object TODO implement what to do when spiral encounters object or wall
-		if(sonars.hasHit(0) && sonars.getMeasurement(0) < 0.5 && robot.get_behavior() == "spiral") {
-			robot.stop();
-			//TODO Set next behavior of robot (currently stops)
-			robot.set_behavior(behavior_patterns[3]);
-		}
-		
-		//TODO Implement call to foundCube when encountering box (Object mapping)
-		
 		//Hitting dead end 
-		else if (sonars.hasHit(2) && sonars.hasHit(6) && sonars.hasHit(0)){
+		if (sonars.hasHit(2) && sonars.hasHit(6) && sonars.hasHit(0)){
 			//If there's no space on either side, turn around
 			if (sonars.getMeasurement(6) < 0.5 && sonars.getMeasurement(2) < 0.5)
 				robot.turn_around();
@@ -228,22 +204,6 @@ public class CentralStation {
 		}
 	}
 
-	//Controlling Spiraling Robot TODO works until object or wall encountered (could reset all variables and make OD_COUNT = robot's OD to restart spiral)
-	public void control_spiral(Robot robot) {
-		
-		//After every 2nd right turn increase the distance the robot will travel by 0.5 before it will turn right again
-		if(right_turns % 2 == 0 && right_turns != 0){
-			right_turns = 0;
-			distance_multiplier++;
-			Odometer_count+=1;
-		}
-		//Compare value robot is supposed to travel to robot's Odometer and turn right once robot's Odometer reached expected value
-		else if((robot.getOdometer() - Odometer_count >= 0.5)) {
-			Odometer_count = Odometer_count + 0.5 * distance_multiplier;
-			right_turns++;
-			robot.turn_right();
-		}
-	}
 	/**
 	 * 
 	 */
@@ -255,12 +215,11 @@ public class CentralStation {
 		robots_positions = new Coordinates[2];
 		
 		//Instantiating array with all possible behavior patterns
-		behavior_patterns = new String[5];
+		behavior_patterns = new String[4];
 		behavior_patterns[0] = "follow_wall";
 		behavior_patterns[1] = "spiral";
-		behavior_patterns[2] = "spiral_down";
-		behavior_patterns[3] = "stop";
-		behavior_patterns[4] = "found";
+		behavior_patterns[2] = "stop";
+		behavior_patterns[3] = "found";
 		
 		//getting instance of File Server
 		file_server = FileServer.getinstance();

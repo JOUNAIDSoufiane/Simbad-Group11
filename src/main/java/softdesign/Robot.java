@@ -22,6 +22,7 @@ public class Robot extends Agent
 	 */
 				private Point3d position = new Point3d();
 				private Coordinates prev_coordinates;
+				private Coordinates starting_coordinates;
 
 	/**
 				 * 
@@ -58,6 +59,7 @@ public class Robot extends Agent
 		this.name = name;
 		this.central_station = CentralStation.getinstance();
 		prev_coordinates = new Coordinates(position.x, position.z);
+		starting_coordinates = prev_coordinates;
 		
         // Add sonars
         sonars = RobotFactory.addSonarBeltSensor(this, 8);
@@ -106,18 +108,21 @@ public class Robot extends Agent
 			//turn left when possible
 			if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
 				turn_left();
-		}
-		
-		//FIXME spiral robot code (so far works until robot hits wall or object) XXX Code is still very buggy lol 
-		else if(behavior_pattern == "spiral") {
-			central_station.control_spiral(this);
-		}
-		
-		else if(behavior_pattern == "spiral_down") {
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
-			if(coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y) {
-				central_station.spiral_down(this, coordinates, prev_coordinates);
+			if(coordinates.x == starting_coordinates.x && coordinates.y == starting_coordinates.y && this.getOdometer() > 1) {
+				behavior_pattern = "spiral";
+				turn_right();
+			}
+		}
+		
+		
+		else if(behavior_pattern == "spiral") {
+			this.getCoords(position);
+			Coordinates coordinates = new Coordinates(position.x, position.z);
+			
+			if((coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y)) {
+				central_station.spiral(this, coordinates, prev_coordinates);
 			}
 		}
     }
@@ -182,4 +187,5 @@ public class Robot extends Agent
 	public String get_behavior() {
 		return behavior_pattern;
 	}
+
 };
