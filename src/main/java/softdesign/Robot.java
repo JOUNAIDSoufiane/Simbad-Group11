@@ -170,6 +170,7 @@ public class Robot extends Agent
 				turn_right();
 			}
 			
+			
 		}
     }
     /**
