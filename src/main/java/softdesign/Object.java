@@ -13,7 +13,7 @@ public class Object {
 	/**
 	 * 
 	 */
-	public Coordinates[] coordinates_array = new Coordinates[10000];
+	public Coordinates[] coordinates_array;
 
 	/**
 	 * 
@@ -21,6 +21,6 @@ public class Object {
 	 * @param color 
 	 */
 	public Object(Coordinates obstacle_coords, Color color) {
-		this.coordinates_array[0] = obstacle_coords;
+		coordinates_array = new Coordinates[2601];
 	}
 };

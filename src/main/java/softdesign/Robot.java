@@ -1,6 +1,5 @@
 package main.java.softdesign;
 
-
 import java.awt.image.BufferedImage;
 
 import javax.vecmath.Point3d;
@@ -95,13 +94,15 @@ public class Robot extends Agent
 		this.setRotationalVelocity(0);
 		this.setTranslationalVelocity(0.5);
 		
-		//Detecting object in front, front right while next to wall, front left while next to wall (make sure it can or can't go through the gap between wall and object)
-		if((sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) 
-				|| (sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.4 && sonars.getMeasurement(2) <= 0.5)
-				|| (sonars.hasHit(1) && sonars.getMeasurement(1) <= 0.4 &&  sonars.getMeasurement(6) <= 0.5)) {
-			central_station.found_obstacle(this, sonars);
+		if(behavior_pattern != "around_obstacle") {
+			//Detecting object in front, front right while next to wall, front left while next to wall (make sure it can or can't go through the gap between wall and object)
+			if((sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) 
+					|| (sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.4 && sonars.getMeasurement(2) <= 0.5)
+					|| (sonars.hasHit(1) && sonars.getMeasurement(1) <= 0.4 &&  sonars.getMeasurement(6) <= 0.5)) {
+				central_station.found_obstacle(this, sonars);
+			}
 		}
-		
+			
 		//Wall following code 
 		if(behavior_pattern == "follow_wall") {
 			//turn left when possible
@@ -130,9 +131,32 @@ public class Robot extends Agent
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
 			
+			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) {
+				turn_right();
+				behavior_pattern = "around_obstacle";
+			}
+			
 			if((coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y)) {
 				central_station.spiral(this, coordinates, prev_coordinates);
 			}
+		}
+		
+		else if(behavior_pattern == "around_obstacle") {
+			//TODO Return to spiral behavior when next coord in front is free
+			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3))
+				turn_left();
+			else if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(2) && !sonars.hasHit(4))
+				turn_left();
+			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) {
+				foundCube();
+				turn_right();
+			}
+			this.getCoords(position);
+			Coordinates coordinates = new Coordinates(position.x, position.z);
+			if((coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y)) {
+				central_station.map_object(coordinates, prev_coordinates);
+			}
+			
 		}
     }
     /**

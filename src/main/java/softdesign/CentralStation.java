@@ -19,7 +19,6 @@ public class CentralStation {
 	 * 
 	 */
 	private Robot[] robots;
-	
 	/**
 	 * 
 	 */
@@ -84,35 +83,15 @@ public class CentralStation {
 	}
 	
 	public void spiral(Robot robot, Coordinates coordinates, Coordinates prev) {
-		Coordinates next_coordinates, xplus, xminus, yplus, yminus, left;
+		Coordinates next_coordinates = get_next_coordinates(coordinates, prev), left = get_left_coordinates(coordinates, prev);
 
-		xplus = new Coordinates(coordinates.x + 0.5, coordinates.y);
-		xminus = new Coordinates(coordinates.x - 0.5, coordinates.y);
-		yplus = new Coordinates(coordinates.x, coordinates.y + 0.5);
-		yminus = new Coordinates(coordinates.x, coordinates.y - 0.5);
-		if(file_server.visited(xplus) && file_server.visited(xminus) && file_server.visited(yplus) && file_server.visited(yminus)) {
+		if(file_server.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && file_server.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
+				&& file_server.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && file_server.visited(new Coordinates(coordinates.x, coordinates.y - 0.5))) {
 			robot.stop();
 			robot.set_behavior(behavior_patterns[3]);
 			if(robots[0].get_behavior() == behavior_patterns[3] && robots[1].get_behavior() == behavior_patterns[3])
 				done_mapping();
 		} else {
-			if(coordinates.x - prev.x > 0) {
-				next_coordinates = xplus;
-				left = yminus;
-			}
-			else if(coordinates.x - prev.x < 0) {
-				next_coordinates = xminus;
-				left = yplus;
-			}
-			else if(coordinates.y - prev.y > 0) {
-				next_coordinates = yplus;
-				left = xplus;
-			}
-			else {
-				next_coordinates = yminus;
-				left = xminus;
-			}
-			
 			if (!file_server.visited(left))
 				robot.turn_left();
 			else if (file_server.visited(next_coordinates))
@@ -127,32 +106,51 @@ public class CentralStation {
 	 */
 	public void update_coordinates(Robot robot, Coordinates coordinates) {
 		
-		if (!file_server.visited(coordinates)) {
+		if (!file_server.visited(coordinates))
 			file_server.remove_coordinates(coordinates);
-			//System.out.println("I am " + robot.get_name() + " and I am at coordinate " + coordinates.x + "," + coordinates.y);
-		} 
 				
+	}
+	
+	private Coordinates get_left_coordinates(Coordinates coordinates, Coordinates prev) {
+
+		if(coordinates.x - prev.x > 0) 
+			return new Coordinates(coordinates.x, coordinates.y - 0.5);
+		else if(coordinates.x - prev.x < 0)
+			return new Coordinates(coordinates.x, coordinates.y + 0.5);
+		else if(coordinates.y - prev.y > 0)
+			return new Coordinates(coordinates.x + 0.5, coordinates.y);
+		else
+			return new Coordinates(coordinates.x - 0.5, coordinates.y);
+		
+	}
+	
+	private Coordinates get_next_coordinates(Coordinates coordinates, Coordinates prev) {
+	
+		if(coordinates.x - prev.x > 0)
+			return new Coordinates(coordinates.x + 0.5, coordinates.y);
+		else if(coordinates.x - prev.x < 0)
+			return new Coordinates(coordinates.x - 0.5, coordinates.y);
+		else if(coordinates.y - prev.y > 0)
+			return new Coordinates(coordinates.x, coordinates.y + 0.5);
+		else
+			return new Coordinates(coordinates.x, coordinates.y - 0.5);
+		
 	}
 	
 	//removes coordinates to left of robot from unvisited array
 	public void remove_left_coords(Coordinates coordinates, Coordinates prev) {
-		Coordinates xplus, xminus, yplus, yminus, left;
-
-		xplus = new Coordinates(coordinates.x + 0.5, coordinates.y);
-		xminus = new Coordinates(coordinates.x - 0.5, coordinates.y);
-		yplus = new Coordinates(coordinates.x, coordinates.y + 0.5);
-		yminus = new Coordinates(coordinates.x, coordinates.y - 0.5);
-		
-		if(coordinates.x - prev.x > 0) 
-			left = yminus;
-		else if(coordinates.x - prev.x < 0)
-			left = yplus;
-		else if(coordinates.y - prev.y > 0)
-			left = xplus;
-		else
-			left = xminus;
+		Coordinates left = get_left_coordinates(coordinates, prev);
 		if (!file_server.visited(left))
 			file_server.remove_coordinates(left);
+	}
+	
+	public void map_object(Coordinates coordinates, Coordinates prev) {
+		Coordinates  left = get_left_coordinates(coordinates, prev);
+		
+		
+		//TODO map out box, calculate all coordinates it's on, remove those from unvisited
+		System.out.println(left.x + ", " + left.y);
+		
 	}
 	/**
 	 * 
@@ -170,7 +168,6 @@ public class CentralStation {
 	 	if(red > 250 && green < 50 && blue < 50) //these values are used to truly find red and not black
 		{
 			System.out.println("Picture taken " + red);
-			done_mapping();
 			return true;
 		}
 		
@@ -179,7 +176,6 @@ public class CentralStation {
 			return false;
 		}
 	
-		
 	}
 	
 	public void found_obstacle(Robot robot, RangeSensorBelt sonars){
@@ -259,8 +255,8 @@ public class CentralStation {
 	 */
 	public void done_mapping() {
 		robots[0].stop();
-		robots[0].set_behavior(behavior_patterns[2]);
 		robots[1].stop();
+		robots[0].set_behavior(behavior_patterns[2]);
 		robots[1].set_behavior(behavior_patterns[2]);
 		file_server.count();
 	}

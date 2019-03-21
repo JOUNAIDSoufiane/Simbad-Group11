@@ -67,14 +67,14 @@ public class Environment extends EnvironmentDescription {
         room2Wall2.rotate90(1);
         add(room2Wall2);
         
-//        Wall room2Wall3 = new Wall(new Vector3d(7.9, 0, -0.5), 1, 1, this);
-//        room2Wall3.setColor(new Color3f(Color.BLUE));
-//        add(room2Wall3);
-//        
-//        Wall room2Wall4 = new Wall(new Vector3d(12, 0, -0.5), 1, 1, this);
-//        room2Wall4.setColor(new Color3f(Color.BLUE));
-//        add(room2Wall4);
-//        
+        Wall room2Wall3 = new Wall(new Vector3d(7.9, 0, -0.5), 1, 1, this);
+        room2Wall3.setColor(new Color3f(Color.BLUE));
+        add(room2Wall3);
+        
+        Wall room2Wall4 = new Wall(new Vector3d(12, 0, -0.5), 1, 1, this);
+        room2Wall4.setColor(new Color3f(Color.BLUE));
+        add(room2Wall4);
+        
         Wall room3Wall1 = new Wall(new Vector3d(-8.5, 0, 4), 8, 1, this);
         room3Wall1.setColor(new Color3f(Color.BLUE));
         add(room3Wall1);
@@ -128,9 +128,9 @@ public class Environment extends EnvironmentDescription {
 //        box3.setColor(new Color3f(Color.ORANGE));
 //        add(box3);
 //        
-//        Box button = new Box(new Vector3d(-9, 0, -9), new Vector3f(3, 1, 3), this);
-//        button.setColor(new Color3f(Color.RED));
-//        add(button);
+        Box button = new Box(new Vector3d(-9, 0, -9), new Vector3f(3, 1, 3), this);
+        button.setColor(new Color3f(Color.RED));
+        add(button);
 //        
 //        Arch arch1 = new Arch(new Vector3d(-5, 0, 9), this);
 //        arch1.rotate90(1);

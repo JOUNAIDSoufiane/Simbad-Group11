@@ -21,11 +21,7 @@ public class FileServer {
 	/**
 	 * 
 	 */
-	public Coordinates[] blocked = new Coordinates[10000];
-	/**
-	 * 
-	 */
-	public Object[] objects = new Object[10000];
+	public Object[] objects = new Object[100];
 
 	/**
 	 * 
@@ -38,7 +34,7 @@ public class FileServer {
 	 * 
 	 * @param coordinates 
 	 */
-	public void update_blocked(Coordinates coordinates) {
+	public void update_objects(Coordinates coordinates) {
 		
 	}
 	
@@ -65,8 +61,8 @@ public class FileServer {
 	public void count() {
 		int visited_coords = 0, unvisited_coords = 0;
 		
-		for (Coordinates d : unvisited) {
-			if(d.x == 99)
+		for (Coordinates coordinates : unvisited) {
+			if(coordinates.x == 99)
 				visited_coords++;
 			else
 				unvisited_coords++;
