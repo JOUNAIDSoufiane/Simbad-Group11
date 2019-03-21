@@ -67,15 +67,14 @@ public class Environment extends EnvironmentDescription {
         room2Wall2.rotate90(1);
         add(room2Wall2);
         
-        //XXX WTF Adding any of these two causes the robot to crash into wall in different locations
-//        Wall room2Wall3 = new Wall(new Vector3d(8.35, 0, -0.5), 1, 1, this);
+//        Wall room2Wall3 = new Wall(new Vector3d(7.9, 0, -0.5), 1, 1, this);
 //        room2Wall3.setColor(new Color3f(Color.BLUE));
 //        add(room2Wall3);
-        
+//        
 //        Wall room2Wall4 = new Wall(new Vector3d(12, 0, -0.5), 1, 1, this);
 //        room2Wall4.setColor(new Color3f(Color.BLUE));
 //        add(room2Wall4);
-        
+//        
         Wall room3Wall1 = new Wall(new Vector3d(-8.5, 0, 4), 8, 1, this);
         room3Wall1.setColor(new Color3f(Color.BLUE));
         add(room3Wall1);

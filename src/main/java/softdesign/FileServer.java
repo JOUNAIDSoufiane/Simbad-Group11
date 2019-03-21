@@ -17,7 +17,7 @@ public class FileServer {
 	/**
 	 * 
 	 */
-	private Coordinates[] unvisited = new Coordinates[10201];
+	private Coordinates[] unvisited = new Coordinates[2601];
 	/**
 	 * 
 	 */
@@ -48,7 +48,7 @@ public class FileServer {
 	 */
 	public void remove_coordinates(Coordinates coordinates) {
 		//replace already visited coordinate in array with coordinate 99,99
-		int location = (int) (((25 + coordinates.x) / 0.5 * 101) + (25 + coordinates.y) / 0.5); 
+		int location = (int) (((12.5 + coordinates.x) / 0.5 * 51) + (12.5 + coordinates.y) / 0.5); 
 
 		unvisited[location].x = 99;
 		unvisited[location].y = 99;
@@ -59,7 +59,21 @@ public class FileServer {
 	 * @param coordinates
 	 */
 	public boolean visited(Coordinates coordinates) {
-		return unvisited[(int) (((25 + coordinates.x) / 0.5 * 101) + (25 + coordinates.y) / 0.5)].x == 99;
+		return unvisited[(int) (((12.5 + coordinates.x) / 0.5 * 51) + (12.5 + coordinates.y) / 0.5)].x == 99;
+	}
+	
+	public void count() {
+		int visited_coords = 0, unvisited_coords = 0;
+		
+		for (Coordinates d : unvisited) {
+			if(d.x == 99)
+				visited_coords++;
+			else
+				unvisited_coords++;
+		}
+		
+		System.out.println("Number of Visited Coordinates: " + visited_coords);
+		System.out.println("Number of Unvisited Coordinates: " + unvisited_coords);
 	}
 	
 	/**
@@ -70,15 +84,23 @@ public class FileServer {
 		
 		//initialize unvisited array with all possible coordinates
 		int count = 0;
-		double x = -25;
-		while (x <= 25) {
-			double y = -25;
-			while (y <= 25) {
+		double x = -12.5;
+		while (x <= 12.5) {
+			double y = -12.5;
+			while (y <= 12.5) {
 				unvisited[count] = new Coordinates(x,y);
 				y += 0.5;
 				count++;
 			}
 			x += 0.5;
+		}
+		
+		//removing coordinates for outer walls from unvisited array
+		for(double i = -12.5; i <= 12.5; i+=0.5) {
+			remove_coordinates(new Coordinates(12.5, i));
+			remove_coordinates(new Coordinates(-12.5, i));
+			remove_coordinates(new Coordinates(i, 12.5));
+			remove_coordinates(new Coordinates(i, -12.5));
 		}
 	}
 };

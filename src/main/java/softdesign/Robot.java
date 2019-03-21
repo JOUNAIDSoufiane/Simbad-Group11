@@ -109,6 +109,13 @@ public class Robot extends Agent
 				turn_left();
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
+			
+			//remove wall coordinates on left from unvisited array
+			if((coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y)) {
+				central_station.remove_left_coords(coordinates, prev_coordinates);
+			}
+			
+			//Check if robot has reached any robot's starting position
 			starting_coordinates = central_station.get_starting_positions();
 			for (int i = 0; i < starting_coordinates.length; i++) {
 				if(coordinates.x == starting_coordinates[i].x && coordinates.y == starting_coordinates[i].y && this.getOdometer() > 1) {
@@ -133,7 +140,7 @@ public class Robot extends Agent
 	 */  
     public void turn_left(){ 
 		this.setTranslationalVelocity(0);
-		this.rotateY(1.5707963268); // 90 degrees
+		this.rotateY(90 * Math.PI / 180); // 90 degrees
 			
     }
     /**
@@ -141,7 +148,7 @@ public class Robot extends Agent
 	 */  
     public void turn_right(){
 		this.setTranslationalVelocity(0);
-		this.rotateY(4.7123889804); // 270 degrees
+		this.rotateY(270 * Math.PI / 180); // 270 degrees
 		
     }
     /**
@@ -149,7 +156,7 @@ public class Robot extends Agent
 	 */     
     public void turn_around(){ 
 		this.setTranslationalVelocity(0);
-		this.rotateY(3.1415926536); // 180 degrees
+		this.rotateY(Math.PI); // 180 degrees
     }
     
     public void stop(){
@@ -161,7 +168,7 @@ public class Robot extends Agent
     
 	public void performBehavior() {
 		
-		if(behavior_pattern != "stop") {
+		if(behavior_pattern != "stop" && behavior_pattern != "finished") {
 			//Robot starts moving straight
 			move();
 			
@@ -183,7 +190,7 @@ public class Robot extends Agent
     public boolean foundCube()
     {
 		camera.copyVisionImage(camera_image);
-		return central_station.found_object(new Coordinates(position.x,position.y),camera_image);
+		return central_station.found_object(new Coordinates(position.x,position.z),camera_image);
     }
     
 	public String get_behavior() {

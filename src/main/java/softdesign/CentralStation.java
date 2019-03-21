@@ -5,6 +5,7 @@
 package main.java.softdesign;
 
 import java.awt.image.BufferedImage;
+
 import javax.vecmath.Vector3d;
 
 import simbad.sim.RangeSensorBelt;
@@ -81,7 +82,7 @@ public class CentralStation {
 	public Coordinates[] get_starting_positions() {
 		return starting_positions;
 	}
-	//FIXME implement everything visited what to do
+	
 	public void spiral(Robot robot, Coordinates coordinates, Coordinates prev) {
 		Coordinates next_coordinates, xplus, xminus, yplus, yminus, left;
 
@@ -89,8 +90,12 @@ public class CentralStation {
 		xminus = new Coordinates(coordinates.x - 0.5, coordinates.y);
 		yplus = new Coordinates(coordinates.x, coordinates.y + 0.5);
 		yminus = new Coordinates(coordinates.x, coordinates.y - 0.5);
-		
-
+		if(file_server.visited(xplus) && file_server.visited(xminus) && file_server.visited(yplus) && file_server.visited(yminus)) {
+			robot.stop();
+			robot.set_behavior(behavior_patterns[3]);
+			if(robots[0].get_behavior() == behavior_patterns[3] && robots[1].get_behavior() == behavior_patterns[3])
+				done_mapping();
+		} else {
 			if(coordinates.x - prev.x > 0) {
 				next_coordinates = xplus;
 				left = yminus;
@@ -108,13 +113,12 @@ public class CentralStation {
 				left = xminus;
 			}
 			
-			if (!file_server.visited(left)) {
-				System.out.println(!file_server.visited(left) + "  " + left.x + ", " + left.y);
+			if (!file_server.visited(left))
 				robot.turn_left();
-			}
 			else if (file_server.visited(next_coordinates))
-					robot.turn_right();
+				robot.turn_right();
 		}
+	}
 	
 	/**
 	 * 
@@ -125,9 +129,30 @@ public class CentralStation {
 		
 		if (!file_server.visited(coordinates)) {
 			file_server.remove_coordinates(coordinates);
-			System.out.println("I am " + robot.get_name() + " and I am at coordinate " + coordinates.x + "," + coordinates.y);
+			//System.out.println("I am " + robot.get_name() + " and I am at coordinate " + coordinates.x + "," + coordinates.y);
 		} 
 				
+	}
+	
+	//removes coordinates to left of robot from unvisited array
+	public void remove_left_coords(Coordinates coordinates, Coordinates prev) {
+		Coordinates xplus, xminus, yplus, yminus, left;
+
+		xplus = new Coordinates(coordinates.x + 0.5, coordinates.y);
+		xminus = new Coordinates(coordinates.x - 0.5, coordinates.y);
+		yplus = new Coordinates(coordinates.x, coordinates.y + 0.5);
+		yminus = new Coordinates(coordinates.x, coordinates.y - 0.5);
+		
+		if(coordinates.x - prev.x > 0) 
+			left = yminus;
+		else if(coordinates.x - prev.x < 0)
+			left = yplus;
+		else if(coordinates.y - prev.y > 0)
+			left = xplus;
+		else
+			left = xminus;
+		if (!file_server.visited(left))
+			file_server.remove_coordinates(left);
 	}
 	/**
 	 * 
@@ -145,6 +170,7 @@ public class CentralStation {
 	 	if(red > 250 && green < 50 && blue < 50) //these values are used to truly find red and not black
 		{
 			System.out.println("Picture taken " + red);
+			done_mapping();
 			return true;
 		}
 		
@@ -221,7 +247,7 @@ public class CentralStation {
 		behavior_patterns[0] = "follow_wall";
 		behavior_patterns[1] = "spiral";
 		behavior_patterns[2] = "stop";
-		behavior_patterns[3] = "found";
+		behavior_patterns[3] = "finished";
 		
 		//getting instance of File Server
 		file_server = FileServer.getinstance();
@@ -232,13 +258,18 @@ public class CentralStation {
 	 * 
 	 */
 	public void done_mapping() {
+		robots[0].stop();
+		robots[0].set_behavior(behavior_patterns[2]);
+		robots[1].stop();
+		robots[1].set_behavior(behavior_patterns[2]);
+		file_server.count();
 	}
 	
 	public void stop_mission() {
 		robots[0].stop();
 		robots[1].stop();
-		robots[0].set_behavior(behavior_patterns[3]);
-		robots[1].set_behavior(behavior_patterns[3]);
+		robots[0].set_behavior(behavior_patterns[2]);
+		robots[1].set_behavior(behavior_patterns[2]);
 		System.out.println("Mission Stopped.");
 	}
 };
