@@ -6,16 +6,12 @@ import simbad.sim.*;
 
 import javax.vecmath.Vector3d;
 
-/**
-  Derivate your own code from this example.
- */
-
 
 public class Main {
 
     public static void main(String[] args) {
         // request antialising so that diagonal lines are not "stairy"
-    	
+    		
         System.setProperty("j3d.implicitAntialiasing", "true");
         
         // creation of the environment containing all obstacles and robots
