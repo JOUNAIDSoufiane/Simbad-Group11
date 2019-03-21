@@ -36,7 +36,13 @@ public class Robot extends Agent
 	/**
 				 * 
 				 */
+				private int left_counter = 0;
+				/**
+				 * 
+				 */
 				private BufferedImage camera_image;
+				
+				private Coordinates[] temp_memory = new Coordinates[4];
 
 	/**
 				 * 
@@ -145,16 +151,23 @@ public class Robot extends Agent
 			//TODO Return to spiral behavior when next coord in front is free
 			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3))
 				turn_left();
-			else if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(2) && !sonars.hasHit(4))
+			else if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(2) && !sonars.hasHit(4)){
 				turn_left();
+				left_counter++;
+				this.getCoords(position);
+				Coordinates coordinates = new Coordinates(position.x, position.z);
+				temp_memory[left_counter-1] = coordinates;
+				if (left_counter == 4){
+					central_station.map_object(temp_memory);
+					// TODO : NEED to revert the behavior pattern to spiral in a logical way
+					left_counter = 0;
+					behavior_pattern = "spiral";
+				}
+			}
+				
 			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) {
 				foundCube();
 				turn_right();
-			}
-			this.getCoords(position);
-			Coordinates coordinates = new Coordinates(position.x, position.z);
-			if((coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y)) {
-				central_station.map_object(coordinates, prev_coordinates);
 			}
 			
 		}

@@ -35,7 +35,9 @@ public class CentralStation {
 	 * 
 	 */
 	private Coordinates[] starting_positions;
-
+	/**
+	 * 
+	 */
 	/**
 	 * 
 	 */
@@ -143,13 +145,61 @@ public class CentralStation {
 		if (!file_server.visited(left))
 			file_server.remove_coordinates(left);
 	}
-	
-	public void map_object(Coordinates coordinates, Coordinates prev) {
-		Coordinates  left = get_left_coordinates(coordinates, prev);
-		
-		
+
+	public void map_object(Coordinates[] coordinates) {
 		//TODO map out box, calculate all coordinates it's on, remove those from unvisited
-		System.out.println(left.x + ", " + left.y);
+		
+		double width = 0;
+		double length = 0;
+		double xstart = 0;
+		double ystart = 0;
+		int directionx = 0,directiony = 0; // 1 for ascending and -1 f0r descending
+		
+		if (coordinates[0].x == coordinates[1].x){
+			length = Math.abs(coordinates[0].y - coordinates[1].y);
+			xstart = coordinates[0].x;
+			if (coordinates[0].y > coordinates[1].y)  //  if the order is descending 
+				directiony = 1;
+			else
+				directiony = -1; 
+		}
+		else if (coordinates[1].x == coordinates[2].x){
+			length = Math.abs(coordinates[1].y - coordinates[2].y);
+			xstart = coordinates[1].x;
+			if (coordinates[0].y > coordinates[1].y)  //  if the order is descending 
+				directiony = 1;
+			else
+				directiony = -1; 
+		}	
+		if (coordinates[0].y == coordinates[1].y){
+			width = Math.abs(coordinates[0].x - coordinates[1].x);
+			ystart = coordinates[0].y;
+			if (coordinates[0].x > coordinates[1].x)  //  if the order is descending 
+				directionx = 1;
+			else
+				directionx = -1; 	
+		}
+		else if (coordinates[1].y == coordinates[2].y){
+			width = Math.abs(coordinates[1].x - coordinates[2].x);
+			ystart = coordinates[1].y;
+			
+			if (coordinates[0].x > coordinates[1].x)  //  if the order is descending 
+				directionx = 1;
+			else
+				directionx = -1; 
+		}	
+		
+		System.out.println("Object fully mapped, wdith = " + width + " length = " + length);
+			
+		for (double x = 0; x <= width; x+= 0.5){
+			for (double y = 0; y <= length; y+=0.5){
+				System.out.println("Visited : x = " + (xstart+x * directionx)  + " y = " + (ystart + y * directiony));
+				file_server.remove_coordinates(new Coordinates(xstart+x * directionx,ystart + y * directiony));
+
+			}
+		}
+			
+		
 		
 	}
 	/**
