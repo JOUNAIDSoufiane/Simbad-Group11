@@ -142,7 +142,7 @@ public class Robot extends Agent
 			
 			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) {
 				if (left_counter == 0)
-					take_picture();
+					camera.copyVisionImage(camera_image);
 				turn_right();
 				behavior_pattern = "around_obstacle";
 			}
@@ -164,6 +164,7 @@ public class Robot extends Agent
 				Coordinates coordinates = new Coordinates(position.x, position.z);
 				temp_memory[left_counter-1] = coordinates;
 				if (left_counter == 4){
+					central_station.found_object(new Coordinates(position.x,position.z),camera_image);
 					central_station.map_object(temp_memory);
 					// TODO : NEED to revert the behavior pattern to spiral in a logical way
 					left_counter = 0;
@@ -225,17 +226,6 @@ public class Robot extends Agent
 		}
 		
 }
-	
-	/**
-	 * 
-	 * @return 
-	 * @throws IOException 
-	 */
-    public void take_picture()
-    {
-		camera.copyVisionImage(camera_image);
-		central_station.found_object(new Coordinates(position.x,position.z),camera_image);
-    }
     
 	public String get_behavior() {
 		return behavior_pattern;
