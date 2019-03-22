@@ -5,11 +5,13 @@
     <packagedElement xmi:type="uml:UseCase" xmi:id="_Km22ADOJEem-24BjLweG-w" name="Explore Environment">
       <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_RQ1asDOJEem-24BjLweG-w" name="ExtensionPoint1"/>
       <include xmi:type="uml:Include" xmi:id="_AGtdYD-EEemSGundwHL_rg" addition="_CrL_8DOJEem-24BjLweG-w"/>
-      <include xmi:type="uml:Include" xmi:id="_AyuO0D-EEemSGundwHL_rg" addition="_SIs20DOJEem-24BjLweG-w"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:UseCase" xmi:id="_SIs20DOJEem-24BjLweG-w" name="Information Storing"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_SIs20DOJEem-24BjLweG-w" name="Information Storing">
+      <include xmi:type="uml:Include" xmi:id="_sS9x8Ey8EemLZfiZNeG4Sw" addition="_Km22ADOJEem-24BjLweG-w"/>
+    </packagedElement>
     <packagedElement xmi:type="uml:UseCase" xmi:id="__NR5MDOJEem-24BjLweG-w" name="Information Sharing"/>
     <packagedElement xmi:type="uml:UseCase" xmi:id="_ytjaYDOPEem-24BjLweG-w" name="   Information Retrieval   "/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_yJHF8Ey8EemLZfiZNeG4Sw" name="Stop Mission"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Actor" xmi:id="_hYpUIDN7Eem-24BjLweG-w" name="   Operator   "/>
   <packagedElement xmi:type="uml:Actor" xmi:id="_i9M3IDN7Eem-24BjLweG-w" name="   Central Station   "/>
@@ -62,5 +64,19 @@
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_7tV_4jOPEem-24BjLweG-w" name="file system" type="_-6O20DOIEem-24BjLweG-w" association="_7tVY0DOPEem-24BjLweG-w"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_7tWm8DOPEem-24BjLweG-w" name="information retrieval" type="_ytjaYDOPEem-24BjLweG-w" association="_7tVY0DOPEem-24BjLweG-w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_2rXJIEy8EemLZfiZNeG4Sw" memberEnd="_2rXwMky8EemLZfiZNeG4Sw _2rYXQEy8EemLZfiZNeG4Sw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2rXwMEy8EemLZfiZNeG4Sw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2rXwMUy8EemLZfiZNeG4Sw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_2rXwMky8EemLZfiZNeG4Sw" name="   operator   " type="_hYpUIDN7Eem-24BjLweG-w" association="_2rXJIEy8EemLZfiZNeG4Sw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_2rYXQEy8EemLZfiZNeG4Sw" name="stop mission" type="_yJHF8Ey8EemLZfiZNeG4Sw" association="_2rXJIEy8EemLZfiZNeG4Sw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_3LLRoEy8EemLZfiZNeG4Sw" memberEnd="_3LL4sky8EemLZfiZNeG4Sw _3LL4s0y8EemLZfiZNeG4Sw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3LL4sEy8EemLZfiZNeG4Sw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3LL4sUy8EemLZfiZNeG4Sw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3LL4sky8EemLZfiZNeG4Sw" name="   central station   " type="_i9M3IDN7Eem-24BjLweG-w" association="_3LLRoEy8EemLZfiZNeG4Sw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3LL4s0y8EemLZfiZNeG4Sw" name="stop mission" type="_yJHF8Ey8EemLZfiZNeG4Sw" association="_3LLRoEy8EemLZfiZNeG4Sw"/>
   </packagedElement>
 </uml:Model>
