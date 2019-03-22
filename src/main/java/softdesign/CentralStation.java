@@ -92,7 +92,8 @@ public class CentralStation {
 
 		if(file_server.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && file_server.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
 				&& file_server.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && file_server.visited(new Coordinates(coordinates.x, coordinates.y - 0.5))) {
-			robot.set_behavior(behavior_patterns[4]);
+			robot.stop();
+			robot.set_behavior(behavior_patterns[3]);
 			if(robots[0].get_behavior() == behavior_patterns[3] && robots[1].get_behavior() == behavior_patterns[3])
 				done_mapping();
 		} else {
@@ -143,9 +144,28 @@ public class CentralStation {
 	
 	//removes coordinates to left of robot from unvisited array
 	public void remove_left_coords(Coordinates coordinates, Coordinates prev) {
-		Coordinates left = get_left_coordinates(coordinates, prev);
-		if (!file_server.visited(left))
-			file_server.remove_coordinates(left);
+		Coordinates left, left_left;
+		if(coordinates.x - prev.x > 0) {
+			left = new Coordinates(coordinates.x, coordinates.y - 0.5);
+			left_left = new Coordinates(coordinates.x, coordinates.y - 1.0);
+		}
+		else if(coordinates.x - prev.x < 0) {
+			left = new Coordinates(coordinates.x, coordinates.y + 0.5);
+			left_left = new Coordinates(coordinates.x, coordinates.y + 1.0);
+		}
+		else if(coordinates.y - prev.y > 0) {
+			left = new Coordinates(coordinates.x + 0.5, coordinates.y);
+			left_left = new Coordinates(coordinates.x + 1.0, coordinates.y);
+		}
+		else {
+			left = new Coordinates(coordinates.x - 0.5, coordinates.y);
+			left_left = new Coordinates(coordinates.x - 1.0, coordinates.y);
+		}
+			
+		file_server.remove_coordinates(left);
+		
+		if(left_left.x >= -12.5 && left_left.x <= 12.5 && left_left.y >= -12.5 && left_left.y <= 12.5 )
+			file_server.remove_coordinates(left_left);
 	}
 
 	public void map_object(Coordinates[] coordinates) {
