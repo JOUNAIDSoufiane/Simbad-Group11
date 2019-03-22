@@ -377,6 +377,36 @@
       <value xmi:type="uml:InstanceValue" xmi:id="_hXbAEkD4EemEmtFEDh8rlQ" name="InstanceValue1" type="_J7oS8Dw1EemgBaKBb33t8g" instance="_wrx60EAPEemEmtFEDh8rlQ"/>
     </slot>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_D3ZsoEy9EemLZfiZNeG4Sw" name="ActionListener (Template)">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_g9XWMEy9EemLZfiZNeG4Sw" name="actionPerformed">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_k6J74Ey9EemLZfiZNeG4Sw" name="e" type="_FnXOYEy9EemLZfiZNeG4Sw"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_FnXOYEy9EemLZfiZNeG4Sw" name="ActionEvent (Template)"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_S5tOMEy9EemLZfiZNeG4Sw" name="StopButton">
+    <generalization xmi:type="uml:Generalization" xmi:id="_Un4KwEy-EemLZfiZNeG4Sw" general="_D3ZsoEy9EemLZfiZNeG4Sw"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_pkRhoEy9EemLZfiZNeG4Sw" name="window" type="_VpIo4Ey9EemLZfiZNeG4Sw"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_vnNUcEy9EemLZfiZNeG4Sw" name="button" type="_XsMFwEy9EemLZfiZNeG4Sw"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_1MBA0Ey9EemLZfiZNeG4Sw" name="StopButton"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_2v5OYEy9EemLZfiZNeG4Sw" name="initialize_window" visibility="private"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_5VnTcEy9EemLZfiZNeG4Sw" name="initialize_button" visibility="private"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_8H84MEy9EemLZfiZNeG4Sw" name="actionPerformed">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="__CD44Ey9EemLZfiZNeG4Sw" name="e" type="_FnXOYEy9EemLZfiZNeG4Sw"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_VpIo4Ey9EemLZfiZNeG4Sw" name="JFrame (Template)">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_dWQsoEy9EemLZfiZNeG4Sw" name="JFrame"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_XsMFwEy9EemLZfiZNeG4Sw" name="JButton (Template)">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_ebczEEy9EemLZfiZNeG4Sw" name="JButton"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_NPAfwEy-EemLZfiZNeG4Sw" name="commands to stop" memberEnd="_NPBG0ky-EemLZfiZNeG4Sw _NPBt4Ey-EemLZfiZNeG4Sw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_NPBG0Ey-EemLZfiZNeG4Sw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_NPBG0Uy-EemLZfiZNeG4Sw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_NPBt4Ey-EemLZfiZNeG4Sw" name="stopbutton" type="_S5tOMEy9EemLZfiZNeG4Sw" association="_NPAfwEy-EemLZfiZNeG4Sw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_NPBG0ky-EemLZfiZNeG4Sw" name="centralstation" type="_J7oS8Dw1EemgBaKBb33t8g" association="_NPAfwEy-EemLZfiZNeG4Sw"/>
+  </packagedElement>
   <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_Qy8lgDw0EemgBaKBb33t8g">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Qy9MkDw0EemgBaKBb33t8g" source="http://www.eclipse.org/uml2/2.0.0/UML">
       <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
