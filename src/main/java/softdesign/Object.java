@@ -20,7 +20,7 @@ public class Object {
 	 * @param obstacle_coords 
 	 * @param color 
 	 */
-	public Object(Coordinates obstacle_coords, Color color) {
-		coordinates_array = new Coordinates[2601];
+	public Object(int size) {
+		coordinates_array = new Coordinates[size];
 	}
 };

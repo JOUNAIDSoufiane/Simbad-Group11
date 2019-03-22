@@ -27,6 +27,8 @@ public class CentralStation {
 	 * 
 	 */
 	private static String[] behavior_patterns;
+	
+	private int object_counter = 0;
 	/**
 	 * 
 	 */
@@ -183,11 +185,20 @@ public class CentralStation {
 		else 
 			directionx = 1;
 		
+		int array_size = (int)((width+0.5)/0.5) *(int)((length+0.5)/0.5);
+		file_server.objects[object_counter] = new Object(array_size);
+		
+		int counter = 0;
+		
 		for (double i = 0; i <= width; i+= 0.5){ // removing the coordinates occupied by the object from the unvisited array
 			for (double j = 0; j <= length; j+=0.5){
-				file_server.remove_coordinates(new Coordinates(origin.x +i * directionx,origin.y + j * directiony));
+				Coordinates new_coordinates = new Coordinates(origin.x +i * directionx, origin.y + j * directiony);
+				file_server.remove_coordinates(new_coordinates);
+				file_server.objects[object_counter].coordinates_array[counter] = new_coordinates;
+				counter++;
 			}
 		}
+		object_counter++;
 
 	}
 	/**
