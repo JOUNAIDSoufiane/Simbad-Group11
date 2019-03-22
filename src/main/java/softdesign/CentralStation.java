@@ -92,8 +92,7 @@ public class CentralStation {
 
 		if(file_server.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && file_server.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
 				&& file_server.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && file_server.visited(new Coordinates(coordinates.x, coordinates.y - 0.5))) {
-			robot.stop();
-			robot.set_behavior(behavior_patterns[3]);
+			robot.set_behavior(behavior_patterns[4]);
 			if(robots[0].get_behavior() == behavior_patterns[3] && robots[1].get_behavior() == behavior_patterns[3])
 				done_mapping();
 		} else {
@@ -287,11 +286,12 @@ public class CentralStation {
 		starting_positions = new Coordinates[2];
 		
 		//Instantiating array with all possible behavior patterns
-		behavior_patterns = new String[4];
+		behavior_patterns = new String[5];
 		behavior_patterns[0] = "follow_wall";
 		behavior_patterns[1] = "spiral";
 		behavior_patterns[2] = "stop";
 		behavior_patterns[3] = "finished";
+		behavior_patterns[4] = "clean_up";
 		
 		//getting instance of File Server
 		file_server = FileServer.getinstance();
