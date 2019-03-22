@@ -14,6 +14,9 @@ public class Object {
 	 * 
 	 */
 	public Coordinates[] coordinates_array;
+	
+	
+	public Color color;
 
 	/**
 	 * 
