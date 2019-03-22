@@ -120,14 +120,14 @@ public class Environment extends EnvironmentDescription {
         box1.setColor(new Color3f(Color.GREEN));
         add(box1);
         
-//        Box box2 = new Box(new Vector3d(-10, 0, 1), new Vector3f(1, 1, 1), this);
-//        box2.setColor(new Color3f(Color.BLACK));
-//        add(box2);
-//        
+        Box box2 = new Box(new Vector3d(-10, 0, 1), new Vector3f(1, 1, 1), this);
+        box2.setColor(new Color3f(Color.BLACK));
+        add(box2);
+        
         Box box3 = new Box(new Vector3d(6, 0, 5), new Vector3f(2, 1, 2), this);
         box3.setColor(new Color3f(Color.ORANGE));
         add(box3);
-//        
+       
         Box button = new Box(new Vector3d(-9, 0, -9), new Vector3f(3, 1, 3), this);
         button.setColor(new Color3f(Color.RED));
         add(button);

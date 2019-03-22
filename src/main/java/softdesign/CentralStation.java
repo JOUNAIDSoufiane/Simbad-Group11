@@ -149,58 +149,45 @@ public class CentralStation {
 	public void map_object(Coordinates[] coordinates) {
 		//TODO map out box, calculate all coordinates it's on, remove those from unvisited
 		
-		double width = 0;
-		double length = 0;
-		double xstart = 0;
-		double ystart = 0;
-		int directionx = 0,directiony = 0; // 1 for ascending and -1 f0r descending
 		
-		if (coordinates[0].x == coordinates[1].x){
-			length = Math.abs(coordinates[0].y - coordinates[1].y);
-			xstart = coordinates[0].x;
-			if (coordinates[0].y > coordinates[1].y)  //  if the order is descending 
-				directiony = 1;
-			else
-				directiony = -1; 
-		}
-		else if (coordinates[1].x == coordinates[2].x){
-			length = Math.abs(coordinates[1].y - coordinates[2].y);
-			xstart = coordinates[1].x;
-			if (coordinates[0].y > coordinates[1].y)  //  if the order is descending 
-				directiony = 1;
-			else
-				directiony = -1; 
-		}	
-		if (coordinates[0].y == coordinates[1].y){
-			width = Math.abs(coordinates[0].x - coordinates[1].x);
-			ystart = coordinates[0].y;
-			if (coordinates[0].x > coordinates[1].x)  //  if the order is descending 
-				directionx = 1;
-			else
-				directionx = -1; 	
-		}
-		else if (coordinates[1].y == coordinates[2].y){
-			width = Math.abs(coordinates[1].x - coordinates[2].x);
-			ystart = coordinates[1].y;
-			
-			if (coordinates[0].x > coordinates[1].x)  //  if the order is descending 
-				directionx = 1;
-			else
-				directionx = -1; 
-		}	
+		//TODO fix variable names but x and x2 are two coordinates with same x value and y and y2 have same y value
+		Coordinates x = coordinates[0], x2 = new Coordinates(0,0), y = coordinates[0], y2= new Coordinates(0,0);
+		double length = 0, width = 0;
+		int directionx, directiony;
 		
-		System.out.println("Object fully mapped, wdith = " + width + " length = " + length);
-			
-		for (double x = 0; x <= width; x+= 0.5){
-			for (double y = 0; y <= length; y+=0.5){
-				System.out.println("Visited : x = " + (xstart+x * directionx)  + " y = " + (ystart + y * directiony));
-				file_server.remove_coordinates(new Coordinates(xstart+x * directionx,ystart + y * directiony));
+		for (int i = 1; i < 4; i++) {
+			if(x.x == coordinates[i].x) {
+				x2 = coordinates[i];
+				length = Math.abs(Math.abs(x.y) - Math.abs(x2.y));  //length in number of coordinates
+				break;
+			}
+		}
+		
+		for (int i = 1; i < 4; i++) {
+			if(y.y == coordinates[i].y) {
+				y2 = coordinates[i];
+				width = Math.abs(Math.abs(y.x) - Math.abs(y2.x));   //width in number of coordinates
+				break;
+			}
+		}
+		
+		if(x.y > x2.y)
+			directiony = -1;
+		else
+			directiony = 1;
+		
+		if(y.x > y2.x)
+			directionx = -1;
+		else 
+			directionx = 1;
+		
+		for (double i = 0; i <= width; i+= 0.5){
+			for (double j = 0; j <= length; j+=0.5){
+				file_server.remove_coordinates(new Coordinates(x.x +i * directionx,x.y + j * directiony));
 
 			}
 		}
-			
-		
-		
+
 	}
 	/**
 	 * 

@@ -36,7 +36,7 @@ public class Robot extends Agent
 	/**
 				 * 
 				 */
-				private int left_counter = 0;
+				private int left_counter;
 				/**
 				 * 
 				 */
@@ -62,6 +62,7 @@ public class Robot extends Agent
 		
 		super(position,name);
 		this.name = name;
+		this.left_counter = 0;
 		this.central_station = CentralStation.getinstance();
 		prev_coordinates = new Coordinates(position.x, position.z);
 		
@@ -160,7 +161,7 @@ public class Robot extends Agent
 				if (left_counter == 4){
 					central_station.map_object(temp_memory);
 					// TODO : NEED to revert the behavior pattern to spiral in a logical way
-					left_counter = 0;
+					this.left_counter = 0;
 					behavior_pattern = "spiral";
 				}
 			}
