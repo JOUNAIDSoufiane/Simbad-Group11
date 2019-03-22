@@ -147,8 +147,6 @@ public class CentralStation {
 	}
 
 	public void map_object(Coordinates[] coordinates) {
-		//TODO map out box, calculate all coordinates it's on, remove those from unvisited
-		
 		
 		//TODO fix variable names but x and x2 are two coordinates with same x value and y and y2 have same y value
 		Coordinates x = coordinates[0], x2 = new Coordinates(0,0), y = coordinates[0], y2= new Coordinates(0,0);
@@ -158,7 +156,7 @@ public class CentralStation {
 		for (int i = 1; i < 4; i++) {
 			if(x.x == coordinates[i].x) {
 				x2 = coordinates[i];
-				length = Math.abs(Math.abs(x.y) - Math.abs(x2.y));  //length in number of coordinates
+				length = Math.abs(Math.abs(x.y) - Math.abs(x2.y));
 				break;
 			}
 		}
@@ -166,7 +164,7 @@ public class CentralStation {
 		for (int i = 1; i < 4; i++) {
 			if(y.y == coordinates[i].y) {
 				y2 = coordinates[i];
-				width = Math.abs(Math.abs(y.x) - Math.abs(y2.x));   //width in number of coordinates
+				width = Math.abs(Math.abs(y.x) - Math.abs(y2.x));
 				break;
 			}
 		}
@@ -184,7 +182,6 @@ public class CentralStation {
 		for (double i = 0; i <= width; i+= 0.5){
 			for (double j = 0; j <= length; j+=0.5){
 				file_server.remove_coordinates(new Coordinates(x.x +i * directionx,x.y + j * directiony));
-
 			}
 		}
 
