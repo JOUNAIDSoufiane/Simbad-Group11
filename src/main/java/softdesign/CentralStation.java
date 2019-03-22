@@ -245,8 +245,55 @@ public class CentralStation {
 	}
 	
 	public Coordinates get_unvisited(Coordinates robot_position){
-		return file_server.get_coordinates(robot_position);
+	 // gets the remaining  unvisited coordinates
+		
+		// IDEAS : TWO METHODS, return coordinates in the same quadrant or return next unvisited coordinate starting from the robot_position 
+		
+		double start_loop1, end_loop1, start_loop2, end_loop2;
+		
+		if (robot_position.x >= 0){
+			if (robot_position.y >= 0){
+				// quadrant I + + start at 0 and ends at 12.5 for both loops
+				start_loop1 = 0;
+				end_loop1 = 12.5;
+				start_loop2 = 0;
+				end_loop2 = 12.5;
+			}
+			else{
+				// quadrant II + - starts at 0 and ends at 12.5 for first loop and starts at -12.5 and ends at -0.5 for second loop
+				start_loop1 = 0;
+				end_loop1 = 12.5;
+				start_loop2 = -12.5;
+				end_loop2 = -0.5;
+			}
+
+		}
+		else
+			if (robot_position.y >= 0){
+				// quadrant IV - + starts at -12.5 and ends at -0.5 for first loop and starts at 0 and ends at 12.5 for second loop
+				start_loop1 = -12.5;
+				end_loop1 = -0.5;
+				start_loop2 = 0;
+				end_loop2 = 12.5;
+			}
+			else{
+				// quadrant III - - starts at -12.5 and ends at -0.5 for both loops
+				start_loop1 = -12.5;
+				end_loop1 = -0.5;
+				start_loop2 = -12.5;
+				end_loop2 = -0.5;
+			}
+				
+		for(double i = start_loop1; i <= end_loop1; i=+0.5) {  
+			for(double j = start_loop2; j <= end_loop2; j+=0.5) {
+				Coordinates coordinates = new Coordinates(i,j);
+				if(!file_server.visited(coordinates))
+					return coordinates;
+			}
+		}				
+		return null; // in case all coordinates are visited 
 	}
+	
 	
 	
 	public void found_obstacle(Robot robot, RangeSensorBelt sonars){
