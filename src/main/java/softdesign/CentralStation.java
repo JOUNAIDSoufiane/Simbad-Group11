@@ -38,6 +38,7 @@ public class CentralStation {
 	/**
 	 * 
 	 */
+	private Color goal_color;
 	/**
 	 * 
 	 */
@@ -73,11 +74,10 @@ public class CentralStation {
 	 * @param position_color_found 
 	 */
 	public void start_mission(Color color) {
-		
 		//Set each robot's behavior pattern
 		robots[0].set_behavior(behavior_patterns[0]);
 		robots[1].set_behavior(behavior_patterns[0]);
-		
+		goal_color = color; 
 	}
 	
 	public Coordinates[] get_starting_positions() {
@@ -196,24 +196,24 @@ public class CentralStation {
 	 * @param color 
 	 * @return 
 	 */
-	public boolean found_object(Coordinates coordinates, BufferedImage cameraImage) {
+	public void found_object(Coordinates coordinates, BufferedImage cameraImage) {
 		
-		int color = cameraImage.getRGB(cameraImage.getHeight()/2, cameraImage.getWidth()/2);
-		int blue = color & 0xff;
-		int green = (color & 0xff00) >> 8;
-		int red = (color & 0xff0000) >> 16;
+		int rgb_value = cameraImage.getRGB(cameraImage.getHeight()/2, cameraImage.getWidth()/2);
 		
-	 	if(red > 250 && green < 50 && blue < 50) //these values are used to truly find red and not black
-		{
-			System.out.println("Picture taken " + red);
-			return true;
-		}
+		System.out.println("RGB value :" + rgb_value);
 		
-		else
-		{
-			return false;
-		}
-	
+		int red = (rgb_value >> 16) & 0xff; 
+		int green = (rgb_value >> 8 ) & 0xff;
+		int blue = (rgb_value ) & 0xff;
+		
+		System.out.println("picture taken, RGB values :" + red + " , "+ green +  " , " + blue);
+		
+		Color color = new Color(red,green,blue);
+		
+		if (goal_color.detect_color() == color.detect_color())
+			System.out.println("Found an object of the right color: " + color.detect_color());
+		else 
+			System.out.println("Found an object of color: " + color.detect_color());
 	}
 	
 	public void found_obstacle(Robot robot, RangeSensorBelt sonars){

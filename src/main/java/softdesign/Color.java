@@ -12,15 +12,34 @@ public class Color {
 	/**
 	 * 
 	 */
-	public static int red;
+	public int red;
 	/**
 	 * 
 	 */
-	public static int green;
+	public int green;
 	/**
 	 * 
 	 */
-	public static int blue;
+	public int blue;
+	
+	public String detect_color(){
+		if (red > 250 && green < 50 && blue < 50)
+			return "red";
+		else if (red < 50 && green > 250 && blue < 50)
+			return "green";
+		else if (red < 50 && green < 50 && blue > 250)
+			return "blue";
+		else if (red > 200 && green > 200 && blue < 50)
+			return "yellow";
+		else if (red < 50 && green > 200 && blue > 200)
+			return "cyan";
+		else if (red > 200 && green < 50 && blue > 200)
+			return "magenta";
+		else if (red < 50 && green < 50 && blue < 50)
+			return "black";
+		else
+			return "fail";
+	}
 
 	/**
 	 * 
@@ -29,5 +48,8 @@ public class Color {
 	 * @param blue 
 	 */
 	public Color(int red, int green, int blue) {
+		this.red = red;
+		this.green = green;
+		this.blue = blue;
 	}
 };

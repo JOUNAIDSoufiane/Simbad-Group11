@@ -149,9 +149,13 @@ public class Robot extends Agent
 		}
 		
 		else if(behavior_pattern == "around_obstacle") {
-			//TODO Return to spiral behavior when next coord in front is free
-			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3))
+			//TODO Return to spiral behavior when next coords in front is free
+			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3)){
 				turn_left();
+				if (left_counter == 0)
+					take_picture();
+			}
+				
 			else if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(2) && !sonars.hasHit(4)){
 				turn_left();
 				left_counter++;
@@ -161,7 +165,7 @@ public class Robot extends Agent
 				if (left_counter == 4){
 					central_station.map_object(temp_memory);
 					// TODO : NEED to revert the behavior pattern to spiral in a logical way
-					this.left_counter = 0;
+					left_counter = 0;
 					behavior_pattern = "spiral";
 				}
 			}
@@ -225,10 +229,10 @@ public class Robot extends Agent
 	 * 
 	 * @return 
 	 */
-    public boolean foundCube()
+    public void take_picture()
     {
 		camera.copyVisionImage(camera_image);
-		return central_station.found_object(new Coordinates(position.x,position.z),camera_image);
+		central_station.found_object(new Coordinates(position.x,position.z),camera_image);
     }
     
 	public String get_behavior() {
