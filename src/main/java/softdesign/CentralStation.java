@@ -148,40 +148,44 @@ public class CentralStation {
 
 	public void map_object(Coordinates[] coordinates) {
 		
-		//TODO fix variable names but x and x2 are two coordinates with same x value and y and y2 have same y value
-		Coordinates x = coordinates[0], x2 = new Coordinates(0,0), y = coordinates[0], y2= new Coordinates(0,0);
+		//   OBJECT IN INVERTED SIMBAD AXIS (Origin,(vector) y, (vector) x)
+		//
+		//      x  _______
+		//        |       | 
+		//        | Object| length  
+		//        |       |
+		// origin |_______| y 
+		//          width
+		//
+		Coordinates origin = coordinates[0], x = new Coordinates(0,0), y = new Coordinates(0,0);
 		double length = 0, width = 0;
 		int directionx, directiony;
 		
-		for (int i = 1; i < 4; i++) {
-			if(x.x == coordinates[i].x) {
-				x2 = coordinates[i];
-				length = Math.abs(Math.abs(x.y) - Math.abs(x2.y));
-				break;
+		for (int i = 1; i < 4; i++) { // getting the values of x and y
+			if(origin.x == coordinates[i].x) {
+				x = coordinates[i];
+				length = Math.abs(Math.abs(origin.y) - Math.abs(x.y));
+			}
+			if(origin.y == coordinates[i].y) {
+				y = coordinates[i];
+				width = Math.abs(Math.abs(origin.x) - Math.abs(y.x));
 			}
 		}
 		
-		for (int i = 1; i < 4; i++) {
-			if(y.y == coordinates[i].y) {
-				y2 = coordinates[i];
-				width = Math.abs(Math.abs(y.x) - Math.abs(y2.x));
-				break;
-			}
-		}
 		
-		if(x.y > x2.y)
+		if(origin.y > x.y) // TODO : Meaningful comments 
 			directiony = -1;
 		else
 			directiony = 1;
 		
-		if(y.x > y2.x)
+		if(origin.x > y.x)
 			directionx = -1;
 		else 
 			directionx = 1;
 		
-		for (double i = 0; i <= width; i+= 0.5){
+		for (double i = 0; i <= width; i+= 0.5){ // removing the coordinates occupied by the object from the unvisited array
 			for (double j = 0; j <= length; j+=0.5){
-				file_server.remove_coordinates(new Coordinates(x.x +i * directionx,x.y + j * directiony));
+				file_server.remove_coordinates(new Coordinates(origin.x +i * directionx,origin.y + j * directiony));
 			}
 		}
 
