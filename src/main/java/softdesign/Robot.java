@@ -1,6 +1,7 @@
 package main.java.softdesign;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -96,8 +97,9 @@ public class Robot extends Agent
     }
     /**
 	 * sets a positive translational velocity 
+     * @throws IOException 
 	 */  
-    public void move(){
+    public void move() {
 		this.setRotationalVelocity(0);
 		this.setTranslationalVelocity(0.5);
 		
@@ -139,6 +141,8 @@ public class Robot extends Agent
 			Coordinates coordinates = new Coordinates(position.x, position.z);
 			
 			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) {
+				if (left_counter == 0)
+					take_picture();
 				turn_right();
 				behavior_pattern = "around_obstacle";
 			}
@@ -150,12 +154,9 @@ public class Robot extends Agent
 		
 		else if(behavior_pattern == "around_obstacle") {
 			//TODO Return to spiral behavior when next coords in front is free
-			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3)){
+			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3))
 				turn_left();
-				if (left_counter == 0)
-					take_picture();
-			}
-				
+			
 			else if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(2) && !sonars.hasHit(4)){
 				turn_left();
 				left_counter++;
@@ -171,8 +172,6 @@ public class Robot extends Agent
 			}
 				
 			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) {
-				if(left_counter == 0)
-					foundCube();
 				turn_right();
 			}
 			
@@ -230,6 +229,7 @@ public class Robot extends Agent
 	/**
 	 * 
 	 * @return 
+	 * @throws IOException 
 	 */
     public void take_picture()
     {

@@ -27,6 +27,7 @@ public class CentralStation {
 	 * 
 	 */
 	private static String[] behavior_patterns;
+	private Color object_color;
 	
 	private int object_counter = 0;
 	/**
@@ -187,7 +188,7 @@ public class CentralStation {
 		
 		int array_size = (int)((width+0.5)/0.5) *(int)((length+0.5)/0.5);
 		file_server.objects[object_counter] = new Object(array_size);
-		
+		file_server.objects[object_counter].color = object_color;
 		int counter = 0;
 		
 		for (double i = 0; i <= width; i+= 0.5){ // removing the coordinates occupied by the object from the unvisited array
@@ -209,22 +210,19 @@ public class CentralStation {
 	 */
 	public void found_object(Coordinates coordinates, BufferedImage cameraImage) {
 		
-		int rgb_value = cameraImage.getRGB(cameraImage.getHeight()/2, cameraImage.getWidth()/2);
+		int rgb_value = cameraImage.getRGB(cameraImage.getHeight() - 1, cameraImage.getWidth()/2);
 		
-		System.out.println("RGB value :" + rgb_value);
-		
-		int red = (rgb_value >> 16) & 0xff; 
-		int green = (rgb_value >> 8 ) & 0xff;
-		int blue = (rgb_value ) & 0xff;
-		
-		System.out.println("picture taken, RGB values :" + red + " , "+ green +  " , " + blue);
+		int blue = rgb_value & 0xff;
+		int green = (rgb_value & 0xff00) >> 8;
+		int red = (rgb_value & 0xff0000) >> 16;
 		
 		Color color = new Color(red,green,blue);
 		
+		object_color = color;
+		
 		if (goal_color.detect_color() == color.detect_color())
 			System.out.println("Found an object of the right color: " + color.detect_color());
-		else 
-			System.out.println("Found an object of color: " + color.detect_color());
+		
 	}
 	
 	public void found_obstacle(Robot robot, RangeSensorBelt sonars){

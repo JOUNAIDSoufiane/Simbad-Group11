@@ -119,7 +119,7 @@ public class Environment extends EnvironmentDescription {
         box1.setColor(new Color3f(Color.GREEN));
         add(box1);
         
-        Box box2 = new Box(new Vector3d(-10, 0, 1), new Vector3f(1, 1, 1), this);
+        Box box2 = new Box(new Vector3d(10, 0, 5), new Vector3f(1, 1, 1), this);
         box2.setColor(new Color3f(Color.BLACK));
         add(box2);
         
