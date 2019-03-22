@@ -225,6 +225,7 @@ public class CentralStation {
 		
 	}
 	
+	
 	public void found_obstacle(Robot robot, RangeSensorBelt sonars){
 		
 		//Hitting dead end 
