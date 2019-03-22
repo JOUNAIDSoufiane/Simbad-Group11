@@ -93,7 +93,7 @@ public class CentralStation {
 		if(file_server.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && file_server.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
 				&& file_server.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && file_server.visited(new Coordinates(coordinates.x, coordinates.y - 0.5))) {
 			robot.stop();
-			robot.set_behavior(behavior_patterns[3]);
+			robot.set_behavior(behavior_patterns[4]);
 			if(robots[0].get_behavior() == behavior_patterns[3] && robots[1].get_behavior() == behavior_patterns[3])
 				done_mapping();
 		} else {
@@ -242,6 +242,10 @@ public class CentralStation {
 		if (goal_color.detect_color() == color.detect_color())
 			System.out.println("Found an object of the right color: " + color.detect_color());
 		
+	}
+	
+	public Coordinates get_unvisited(Coordinates robot_position){
+		return file_server.get_coordinates(robot_position);
 	}
 	
 	

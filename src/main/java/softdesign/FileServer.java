@@ -49,7 +49,6 @@ public class FileServer {
 		unvisited[location].x = 99;
 		unvisited[location].y = 99;
 	}
-	
 	/**
 	 * 
 	 * @param coordinates
@@ -57,6 +56,61 @@ public class FileServer {
 	public boolean visited(Coordinates coordinates) {
 		return unvisited[(int) (((12.5 + coordinates.x) / 0.5 * 51) + (12.5 + coordinates.y) / 0.5)].x == 99;
 	}
+	
+	
+	
+	
+	public Coordinates get_coordinates(Coordinates robot_position){ // gets the remaining  unvisited coordinates
+		
+		// IDEAS : TWO METHODS, return coordinates in the same quadrant or return next unvisited coordinate starting from the robot_position 
+		
+		int start_loop1, end_loop1, start_loop2, end_loop2;
+		
+		if (robot_position.x >= 0){
+			if (robot_position.y >= 0){
+				// quadrant I + + start at 25 and ends at 50 for both loops
+				start_loop1 = 25;
+				end_loop1 = 50;
+				start_loop2 = 25;
+				end_loop2 = 50;
+			}
+			else{
+				// quadrant II + - starts at 25 and ends at 50 for first loop and starts at 0 and ends at 25 for second loop
+				start_loop1 = 25;
+				end_loop1 = 50;
+				start_loop2 = 0;
+				end_loop2 = 25;
+			}
+
+		}
+		else
+			if (robot_position.y >= 0){
+				// quadrant IV - + starts at 0 and ends at 25 for first loop and starts at 25 and ends at 50 for second loop
+				start_loop1 = 0;
+				end_loop1 = 25;
+				start_loop2 = 25;
+				end_loop2 = 50;
+			}
+			else{
+				// quadrant III - - starts at 0 and ends at 25 for both loops (excluding 25)
+				start_loop1 = 0;
+				end_loop1 = 25;
+				start_loop2 = 0;
+				end_loop2 = 25;
+			}
+				
+		for(int i = start_loop1; i < end_loop1; i++) {  
+			for (int j = start_loop2; j < end_loop2; j++) {
+				if (unvisited[i*51+j].x != 99)
+					return unvisited[i*51+j];    // make this even smarter 
+			}
+		}
+				
+		return null; // in case all coordinates are visited 
+	}
+	
+	
+	
 	
 	public void count() {
 		int visited_coords = 0, unvisited_coords = 0;

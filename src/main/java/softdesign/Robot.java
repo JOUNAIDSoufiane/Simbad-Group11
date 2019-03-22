@@ -171,11 +171,22 @@ public class Robot extends Agent
 					behavior_pattern = "spiral";
 				}
 			}
-				
 			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) {
 				turn_right();
 			}
+
+		}
+		else if (behavior_pattern == "clean_up"){
+			this.getCoords(position);
+			Coordinates current_position = new Coordinates(position.x, position.z);
 			
+			Coordinates goal = central_station.get_unvisited(current_position); // returns a closeby unvisited coordinate.
+			
+			System.out.println("unvisited : " + goal.x + " , " + goal.y); 
+			
+			// TODO : implement a goto method to visit the returned coordinate
+			
+			System.exit(0);
 			
 		}
     }
