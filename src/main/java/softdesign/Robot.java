@@ -171,6 +171,8 @@ public class Robot extends Agent
 			}
 				
 			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) {
+				if(left_counter == 0)
+					foundCube();
 				turn_right();
 			}
 			

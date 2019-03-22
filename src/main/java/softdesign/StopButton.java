@@ -16,7 +16,7 @@ class StopButton implements ActionListener {
 		initialize_button();
 	}
 	
-	public void initialize_window() {
+	private void initialize_window() {
 		 window.setTitle("Mission Control");
 	     window.getContentPane().setLayout(null);
 	     window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -24,7 +24,7 @@ class StopButton implements ActionListener {
 	     window.setBounds(200,200,200,200);
 	}
 	
-	public void initialize_button(){
+	private void initialize_button(){
         button.setBounds(25,50,150,40);
         button.setBackground(java.awt.Color.RED);
         window.add(button);
