@@ -22,6 +22,9 @@ public class FileServer {
 	 * 
 	 */
 	public Object[] objects = new Object[100];
+	
+	private Coordinates[] blocked = new Coordinates[2601];
+	private int blocked_index = 0;
 
 	/**
 	 * 
@@ -30,7 +33,19 @@ public class FileServer {
 	public static FileServer getinstance() {
 		return file_server;
 	}
-
+	
+	public void update_blocked(Coordinates coordinates) {
+		blocked[blocked_index] = new Coordinates(coordinates.x, coordinates.y);
+		blocked_index++;
+	}
+	
+	public boolean isblocked(Coordinates coordinates) {
+		for(int i = 0; i < blocked_index; i++) {
+			if(blocked[i].x == coordinates.x && blocked[i].y == coordinates.y)
+				return true;
+		}
+		return false;
+	}
 	/**
 	 * 
 	 * @param coordinates

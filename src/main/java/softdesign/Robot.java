@@ -23,7 +23,7 @@ public class Robot extends Agent
 				private Point3d position = new Point3d();
 				private Coordinates prev_coordinates;
 				private Coordinates[] starting_coordinates;
-				private Coordinates goal = new Coordinates(99,99);
+				public Coordinates goal;
 
 	/**
 				 * 
@@ -124,6 +124,7 @@ public class Robot extends Agent
 			//remove wall coordinates on left from unvisited array
 			if((coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y)) {
 				central_station.remove_left_coords(coordinates, prev_coordinates);
+				central_station.update_blocked(coordinates, prev_coordinates);
 			}
 			
 			//Check if robot has reached any robot's starting position
@@ -175,35 +176,28 @@ public class Robot extends Agent
 			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) {
 				turn_right();
 			}
-
 		}
-		else if (behavior_pattern == "clean_up"){   		//XXX Follows wall until it's reached x coordinate of goal then turns toward goal
-			this.getCoords(position);
-			Coordinates current_position = new Coordinates(position.x, position.z);
-			
-			if(goal.x == 99) {
-				goal = central_station.get_unvisited(current_position); // returns a closeby unvisited coordinate.
-				System.out.println("Goal: " + goal.x + " " + goal.y);
-			}
-			
-			if(goal.x == 98)
-				central_station.done_mapping();
-			
-			if(current_position.x == goal.x && current_position.y == goal.y) {
-				System.out.println("Reached goal");
-				goal.x = 99;
-				goal.y = 99;
-				behavior_pattern = "spiral";
-			}
-			// TODO : implement a goto method to visit the returned coordinate
-			
-			if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4) && goal.x != current_position.x)
-				turn_left();
-			else if(goal.x == current_position.x && sonars.hasHit(2)) {
+		else if(behavior_pattern == "move_to")
+			move_to();
+    }
+    
+    public void move_to() {
+    	if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
+			turn_left();
+    	this.getCoords(position);
+		Coordinates coordinates = new Coordinates(position.x, position.z);
+		central_station.update_coordinates(this, coordinates);
+		if(coordinates.x == goal.x && coordinates.y == goal.y) {
+			central_station.update_coordinates(this, coordinates);
+			System.out.println("Reached Goal. Now Spiraling");
+			behavior_pattern = "spiral";
+		}
+		else if((coordinates.x != prev_coordinates.x)) {
+			if(coordinates.x == goal.x && central_station.nothing_between(coordinates, goal)) {
 				turn_right();
 			}
-			
 		}
+		
     }
     /**
 	 * turns 90 degrees left  
