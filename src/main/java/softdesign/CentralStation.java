@@ -92,10 +92,12 @@ public class CentralStation {
 
 		if(file_server.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && file_server.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
 				&& file_server.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && file_server.visited(new Coordinates(coordinates.x, coordinates.y - 0.5))) {
-			robot.stop();
-			robot.set_behavior(behavior_patterns[4]);
-			if(robots[0].get_behavior() == behavior_patterns[3] && robots[1].get_behavior() == behavior_patterns[3])
-				done_mapping();
+				robot.set_behavior(behavior_patterns[4]);
+				
+				//XXX ONLY CAUSE ROVERS CRASH IF BOTH CLEAN UP
+				robots[1].stop();
+				robots[1].set_behavior(behavior_patterns[3]);
+				robots[1].moveToPosition(-11, 11);
 		} else {
 			if (!file_server.visited(left))
 				robot.turn_left();
@@ -266,7 +268,6 @@ public class CentralStation {
 				start_loop2 = -12.5;
 				end_loop2 = -0.5;
 			}
-
 		}
 		else
 			if (robot_position.y >= 0){
@@ -287,11 +288,23 @@ public class CentralStation {
 		for(double i = start_loop1; i <= end_loop1; i=+0.5) {  
 			for(double j = start_loop2; j <= end_loop2; j+=0.5) {
 				Coordinates coordinates = new Coordinates(i,j);
-				if(!file_server.visited(coordinates))
+				if(!file_server.visited(coordinates)) {
 					return coordinates;
+				}
 			}
-		}				
-		return null; // in case all coordinates are visited 
+		}
+		
+		//If no coordinates in quadrant look in whole array
+		for(double i = -12.5; i <= 12.5; i=+0.5) {  
+			for(double j = -12.5; j <= 12.5; j+=0.5) {
+				Coordinates coordinates = new Coordinates(i,j);
+				if(!file_server.visited(coordinates)) {
+					return coordinates;
+				}
+			}
+		}
+		
+		return new Coordinates(98,98); // in case all coordinates are visited 
 	}
 	
 	

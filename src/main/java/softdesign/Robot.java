@@ -23,6 +23,7 @@ public class Robot extends Agent
 				private Point3d position = new Point3d();
 				private Coordinates prev_coordinates;
 				private Coordinates[] starting_coordinates;
+				private Coordinates goal = new Coordinates(99,99);
 
 	/**
 				 * 
@@ -176,17 +177,31 @@ public class Robot extends Agent
 			}
 
 		}
-		else if (behavior_pattern == "clean_up"){
+		else if (behavior_pattern == "clean_up"){   		//XXX Follows wall until it's reached x coordinate of goal then turns toward goal
 			this.getCoords(position);
 			Coordinates current_position = new Coordinates(position.x, position.z);
 			
-			Coordinates goal = central_station.get_unvisited(current_position); // returns a closeby unvisited coordinate.
+			if(goal.x == 99) {
+				goal = central_station.get_unvisited(current_position); // returns a closeby unvisited coordinate.
+				System.out.println("Goal: " + goal.x + " " + goal.y);
+			}
 			
-			System.out.println("unvisited : " + goal.x + " , " + goal.y); 
+			if(goal.x == 98)
+				central_station.done_mapping();
 			
+			if(current_position.x == goal.x && current_position.y == goal.y) {
+				System.out.println("Reached goal");
+				goal.x = 99;
+				goal.y = 99;
+				behavior_pattern = "spiral";
+			}
 			// TODO : implement a goto method to visit the returned coordinate
 			
-			System.exit(0);
+			if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4) && goal.x != current_position.x)
+				turn_left();
+			else if(goal.x == current_position.x && sonars.hasHit(2)) {
+				turn_right();
+			}
 			
 		}
     }
