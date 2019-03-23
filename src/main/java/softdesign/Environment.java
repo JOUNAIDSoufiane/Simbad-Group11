@@ -58,9 +58,9 @@ public class Environment extends EnvironmentDescription {
         room1Wall3.setColor(new Color3f(Color.BLUE));
         add(room1Wall3);
         
-        Wall room1wall4 = new Wall(new Vector3d(0.4, 0, -7.5), 1, 1, this);
-        room1wall4.setColor(new Color3f(Color.BLUE));
-        add(room1wall4);
+//        Wall room1wall4 = new Wall(new Vector3d(0.4, 0, -7.5), 1, 1, this);
+//        room1wall4.setColor(new Color3f(Color.BLUE));
+//        add(room1wall4);
 
         Wall room2Wall2 = new Wall(new Vector3d(7.5, 0, -4), 7, 1, this);
         room2Wall2.setColor(new Color3f(Color.BLUE));

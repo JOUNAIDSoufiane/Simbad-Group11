@@ -182,10 +182,11 @@ public class Robot extends Agent
     }
     
     public void move_to() {
-    	if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
-			turn_left();
     	this.getCoords(position);
 		Coordinates coordinates = new Coordinates(position.x, position.z);
+		
+    	if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
+			turn_left();
 		central_station.update_coordinates(this, coordinates);
 		if(coordinates.x == goal.x && coordinates.y == goal.y) {
 			central_station.update_coordinates(this, coordinates);

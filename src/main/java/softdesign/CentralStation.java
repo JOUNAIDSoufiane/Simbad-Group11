@@ -95,7 +95,7 @@ public class CentralStation {
 				robot.stop();
 				robot.set_behavior(behavior_patterns[2]);
 				if(robots[0].get_behavior() == behavior_patterns[2] && robots[1].get_behavior() == behavior_patterns[2]) {
-					clean_up();
+					clean_up(coordinates, prev);
 				}
 		} else {
 			if (!file_server.visited(left))
@@ -110,7 +110,7 @@ public class CentralStation {
 	}
 	
 	//Give coordinate to move to for next spiral
-	public void clean_up() {
+	public void clean_up(Coordinates robot_position, Coordinates prev) {
 		System.out.println("Now Cleaning");
 		
 		//remove all unvisited coordinates that don't have any adjacent unvisited coordinates, since boxes need to occupy at least 2 adjacent coordinates
@@ -126,23 +126,94 @@ public class CentralStation {
 			}
 		}
 		
-		outerloop:
-		for(double x = -12; x <= 12; x+=0.5) {  
-			for(double y = -12; y <= 12; y+=0.5) {
-				Coordinates coordinates = new Coordinates(x,y);
+		double start_loop1, end_loop1, start_loop2, end_loop2;
+		
+		if (robot_position.x >= 0){
+			if (robot_position.y >= 0){
+				// quadrant I + + start at 0 and ends at 12.5 for both loops
+				start_loop1 = 0;
+				end_loop1 = 12.5;
+				start_loop2 = 0;
+				end_loop2 = 12.5;
+			}
+			else{
+				// quadrant II + - starts at 0 and ends at 12.5 for first loop and starts at -12.5 and ends at -0.5 for second loop
+				start_loop1 = 0;
+				end_loop1 = 12.5;
+				start_loop2 = -12.5;
+				end_loop2 = -0.5;
+			}
+
+		}
+		else
+			if (robot_position.y >= 0){
+				// quadrant IV - + starts at -12.5 and ends at -0.5 for first loop and starts at 0 and ends at 12.5 for second loop
+				start_loop1 = -12.5;
+				end_loop1 = -0.5;
+				start_loop2 = 0;
+				end_loop2 = 12.5;
+			}
+			else{
+				// quadrant III - - starts at -12.5 and ends at -0.5 for both loops
+				start_loop1 = -12.5;
+				end_loop1 = -0.5;
+				start_loop2 = -12.5;
+				end_loop2 = -0.5;
+			}
+				
+		for(double i = start_loop1; i <= end_loop1; i+=0.5) {  
+			for(double j = start_loop2; j <= end_loop2; j+=0.5) {
+				Coordinates coordinates = new Coordinates(i,j);
 				if(!file_server.visited(coordinates)) {
 					robots[1].goal = coordinates;							//XXX Where to move to
 					robots[1].set_behavior(behavior_patterns[4]);
-					System.out.println("Coordinate: " + x + " " + y);
-					break outerloop;
+					System.out.println("Coordinate: " + i + " " + j);
+					return;
 				}
 			}
-			if(x == 12) {
+		}
+		for(double i = -12.5; i <= 12.5; i+=0.5) {  
+			for(double j = -12.5; j <= 12.5; j+=0.5) {
+				Coordinates coordinates = new Coordinates(i,j);
+				if(!file_server.visited(coordinates)) {
+					robots[1].goal = coordinates;							//XXX Where to move to
+					robots[1].set_behavior(behavior_patterns[4]);
+					System.out.println("Coordinate: " + i + " " + j);
+					return;
+				}
+			}
+			if(i == 12) {
 				done_mapping();
 			}
 		}
+//		outerloop:
+//		for(double x = -12; x <= 12; x+=0.5) {  
+//			for(double y = -12; y <= 12; y+=0.5) {
+//				Coordinates coordinates = new Coordinates(x,y);
+//				if(!file_server.visited(coordinates)) {
+//					robots[1].goal = coordinates;							//XXX Where to move to
+//					robots[1].set_behavior(behavior_patterns[4]);
+//					System.out.println("Coordinate: " + x + " " + y);
+//					break outerloop;
+//				}
+//			}
+//			if(x == 12) {
+//				done_mapping();
+//			}
+//		}
 	}
 	
+	
+	//FIXME For clean_up to check if coordinate is object's coordinate Somehow implement that lol 
+	public boolean isobject(Coordinates coordinates) {
+		for(int i = 0; i < object_counter; i++) {
+			for(int j = 0; j < file_server.objects[i].coordinates_array.length; j++) {
+				if(coordinates.x == file_server.objects[i].coordinates_array[j].x && coordinates.y == file_server.objects[i].coordinates_array[j].y)
+					return true;
+			}
+		}
+		return false;
+	}
 	//Checks if there is a blocked coordinate between robot and goal coordinate on x axis
 	public boolean nothing_between(Coordinates coordinates, Coordinates goal) {
 		if(coordinates.y < goal.y) {
