@@ -115,7 +115,7 @@ public class Environment extends EnvironmentDescription {
         Wall1.rotate90(1);
         add(Wall1);
         
-        Box box1 = new Box(new Vector3d(-5, 0, 10), new Vector3f(1, 1, 1), this);
+        Box box1 = new Box(new Vector3d(-8, 0, 10), new Vector3f(1, 1, 1), this);
         box1.setColor(new Color3f(Color.GREEN));
         add(box1);
         

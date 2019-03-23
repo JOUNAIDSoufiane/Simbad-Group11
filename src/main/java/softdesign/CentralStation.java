@@ -62,7 +62,7 @@ public class CentralStation {
 		//instantiate new robot and add it to the robots array
 		robots[robots_number - 1] = new Robot(position, name);
 		robots[robots_number - 1].initBehavior();
-		
+
 		//store robot's position
 		starting_positions[robots_number - 1] = new Coordinates(position.x, position.z);
 		
@@ -92,18 +92,72 @@ public class CentralStation {
 
 		if(file_server.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && file_server.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
 				&& file_server.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && file_server.visited(new Coordinates(coordinates.x, coordinates.y - 0.5))) {
-				robot.set_behavior(behavior_patterns[4]);
-				
-				//XXX ONLY CAUSE ROVERS CRASH IF BOTH CLEAN UP
-				robots[1].stop();
-				robots[1].set_behavior(behavior_patterns[3]);
-				robots[1].moveToPosition(-11, 11);
+				robot.stop();
+				robot.set_behavior(behavior_patterns[2]);
+				if(robots[0].get_behavior() == behavior_patterns[2] && robots[1].get_behavior() == behavior_patterns[2]) {
+					clean_up();
+				}
 		} else {
 			if (!file_server.visited(left))
 				robot.turn_left();
 			else if (file_server.visited(next_coordinates))
 				robot.turn_right();
 		}
+	}
+	
+	public void update_blocked(Coordinates coordinates, Coordinates prev) {
+		file_server.update_blocked(get_left_coordinates(coordinates, prev));
+	}
+	
+	//Give coordinate to move to for next spiral
+	public void clean_up() {
+		System.out.println("Now Cleaning");
+		
+		//remove all unvisited coordinates that don't have any adjacent unvisited coordinates, since boxes need to occupy at least 2 adjacent coordinates
+		for(double i = -12; i <= 12; i+=0.5) {
+			for(double j = -12; j <= 12; j+=0.5) {
+				Coordinates coordinates = new Coordinates(i,j);
+				if(!file_server.visited(coordinates)) {
+					if(file_server.visited(new Coordinates(i + 0.5, j)) && file_server.visited(new Coordinates(i - 0.5, j)))
+						file_server.remove_coordinates(coordinates);
+					else if(file_server.visited(new Coordinates(i, j + 0.5)) && file_server.visited(new Coordinates(i, j - 0.5)))
+						file_server.remove_coordinates(coordinates);
+				}
+			}
+		}
+		
+		outerloop:
+		for(double x = -12; x <= 12; x+=0.5) {  
+			for(double y = -12; y <= 12; y+=0.5) {
+				Coordinates coordinates = new Coordinates(x,y);
+				if(!file_server.visited(coordinates)) {
+					robots[1].goal = coordinates;							//XXX Where to move to
+					robots[1].set_behavior(behavior_patterns[4]);
+					System.out.println("Coordinate: " + x + " " + y);
+					break outerloop;
+				}
+			}
+			if(x == 12) {
+				done_mapping();
+			}
+		}
+	}
+	
+	//Checks if there is a blocked coordinate between robot and goal coordinate on x axis
+	public boolean nothing_between(Coordinates coordinates, Coordinates goal) {
+		if(coordinates.y < goal.y) {
+			for(double i = coordinates.y + 0.5; i < goal.y; i+=0.5) {
+				if(file_server.isblocked(new Coordinates(coordinates.x, i)))
+					return false;
+			}
+		} else if(coordinates.y > goal.y) {
+			for(double i = coordinates.y - 0.5; i > goal.y; i-=0.5) {
+				if(file_server.isblocked(new Coordinates(coordinates.x, i)))
+					return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -216,6 +270,7 @@ public class CentralStation {
 			for (double j = 0; j <= length; j+=0.5){
 				Coordinates new_coordinates = new Coordinates(origin.x +i * directionx, origin.y + j * directiony);
 				file_server.remove_coordinates(new_coordinates);
+				file_server.update_blocked(new_coordinates);
 				file_server.objects[object_counter].coordinates_array[counter] = new_coordinates;
 				counter++;
 			}
@@ -245,68 +300,6 @@ public class CentralStation {
 			System.out.println("Found an object of the right color: " + color.detect_color());
 		
 	}
-	
-	public Coordinates get_unvisited(Coordinates robot_position){
-	 // gets the remaining  unvisited coordinates
-		
-		// IDEAS : TWO METHODS, return coordinates in the same quadrant or return next unvisited coordinate starting from the robot_position 
-		
-		double start_loop1, end_loop1, start_loop2, end_loop2;
-		
-		if (robot_position.x >= 0){
-			if (robot_position.y >= 0){
-				// quadrant I + + start at 0 and ends at 12.5 for both loops
-				start_loop1 = 0;
-				end_loop1 = 12.5;
-				start_loop2 = 0;
-				end_loop2 = 12.5;
-			}
-			else{
-				// quadrant II + - starts at 0 and ends at 12.5 for first loop and starts at -12.5 and ends at -0.5 for second loop
-				start_loop1 = 0;
-				end_loop1 = 12.5;
-				start_loop2 = -12.5;
-				end_loop2 = -0.5;
-			}
-		}
-		else
-			if (robot_position.y >= 0){
-				// quadrant IV - + starts at -12.5 and ends at -0.5 for first loop and starts at 0 and ends at 12.5 for second loop
-				start_loop1 = -12.5;
-				end_loop1 = -0.5;
-				start_loop2 = 0;
-				end_loop2 = 12.5;
-			}
-			else{
-				// quadrant III - - starts at -12.5 and ends at -0.5 for both loops
-				start_loop1 = -12.5;
-				end_loop1 = -0.5;
-				start_loop2 = -12.5;
-				end_loop2 = -0.5;
-			}
-				
-		for(double i = start_loop1; i <= end_loop1; i=+0.5) {  
-			for(double j = start_loop2; j <= end_loop2; j+=0.5) {
-				Coordinates coordinates = new Coordinates(i,j);
-				if(!file_server.visited(coordinates)) {
-					return coordinates;
-				}
-			}
-		}
-		
-		//If no coordinates in quadrant look in whole array
-		for(double i = -12.5; i <= 12.5; i=+0.5) {  
-			for(double j = -12.5; j <= 12.5; j+=0.5) {
-				Coordinates coordinates = new Coordinates(i,j);
-				if(!file_server.visited(coordinates)) {
-					return coordinates;
-				}
-			}
-		}
-		
-		return new Coordinates(98,98); // in case all coordinates are visited 
-	}
-	
 	
 	
 	public void found_obstacle(Robot robot, RangeSensorBelt sonars){
@@ -375,7 +368,7 @@ public class CentralStation {
 		behavior_patterns[1] = "spiral";
 		behavior_patterns[2] = "stop";
 		behavior_patterns[3] = "finished";
-		behavior_patterns[4] = "clean_up";
+		behavior_patterns[4] = "move_to";
 		
 		//getting instance of File Server
 		file_server = FileServer.getinstance();
