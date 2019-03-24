@@ -371,7 +371,25 @@ public class CentralStation {
 		
 	}
 	
-	
+    public void isfree(Robot robot, Coordinates coordinates, Coordinates prev) {
+    	Coordinates left = get_left_coordinates(coordinates, prev);
+    	Coordinates right;
+    	
+    	if(coordinates.x - prev.x > 0) 
+			right = new Coordinates(coordinates.x, coordinates.y + 0.5);
+		else if(coordinates.x - prev.x < 0)
+			right = new Coordinates(coordinates.x, coordinates.y - 0.5);
+		else if(coordinates.y - prev.y > 0)
+			right = new Coordinates(coordinates.x - 0.5, coordinates.y);
+		else
+			right = new Coordinates(coordinates.x + 0.5, coordinates.y);
+    	
+    	if(!file_server.visited(left))
+    		robot.turn_left();
+    	else if(!file_server.visited(right))
+    		robot.turn_right();
+    }
+    
 	public void found_obstacle(Robot robot, RangeSensorBelt sonars){
 		
 		//Hitting dead end 

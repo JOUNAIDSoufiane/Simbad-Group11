@@ -193,6 +193,8 @@ public class Robot extends Agent
 		
 		if(coordinates.x == goal.x && coordinates.y == goal.y) {
 			central_station.update_coordinates(this, coordinates);
+			//TODO implement to turn towards free coordinates to start spiraling so that it doesn't drive around one time before going to next coordinates
+			central_station.isfree(this, coordinates, prev_coordinates);
 			System.out.println("Reached Goal. Now Spiraling");
 			behavior_pattern = "spiral";
 		}
