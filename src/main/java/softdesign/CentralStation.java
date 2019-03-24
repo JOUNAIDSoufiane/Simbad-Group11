@@ -92,12 +92,9 @@ public class CentralStation {
 
 		if(file_server.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && file_server.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
 				&& file_server.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && file_server.visited(new Coordinates(coordinates.x, coordinates.y - 0.5))) {
-				robot.stop();
-				robot.set_behavior(behavior_patterns[2]);
-				if(robots[0].get_behavior() == behavior_patterns[2] && robots[1].get_behavior() == behavior_patterns[2]) {
-					clean_up(coordinates, prev);
-				}
-		} else {
+			clean_up(coordinates, prev);       // NO CONGESTING, LET THEM BRAWL EACH OTHER AND MAY THE WINNER TAKE IT ALL
+		} 
+		else {
 			if (!file_server.visited(left))
 				robot.turn_left();
 			else if (file_server.visited(next_coordinates))
@@ -160,24 +157,26 @@ public class CentralStation {
 				start_loop2 = -12.5;
 				end_loop2 = -0.5;
 			}
-				
-		for(double i = start_loop1; i <= end_loop1; i+=0.5) {  
-			for(double j = start_loop2; j <= end_loop2; j+=0.5) {
-				Coordinates coordinates = new Coordinates(i,j);
-				if(!file_server.visited(coordinates)) {
-					robots[1].goal = coordinates;							//XXX Where to move to
-					robots[1].set_behavior(behavior_patterns[4]);
-					System.out.println("Coordinate: " + i + " " + j);
-					return;
-				}
-			}
-		}
+				 
+//		for(double i = start_loop1; i <= end_loop1; i+=0.5) {               // XXX USING THE QUADRANT LOOP MAKES IT TURN AROUND INFINETLY, LOGICAL HUH
+//			for(double j = start_loop2; j <= end_loop2; j+=0.5) {
+//				Coordinates coordinates = new Coordinates(i,j);
+//				if(!file_server.visited(coordinates)) {
+//					robots[1].goal = coordinates;							//XXX Where to move to
+//					robots[1].set_behavior(behavior_patterns[4]);
+//					System.out.println("Coordinate: " + i + " " + j);
+//					return;
+//				}
+//			}
+//		}
 		for(double i = -12.5; i <= 12.5; i+=0.5) {  
 			for(double j = -12.5; j <= 12.5; j+=0.5) {
 				Coordinates coordinates = new Coordinates(i,j);
 				if(!file_server.visited(coordinates)) {
 					robots[1].goal = coordinates;							//XXX Where to move to
 					robots[1].set_behavior(behavior_patterns[4]);
+					robots[0].goal = coordinates;							//XXX Where to move to
+					robots[0].set_behavior(behavior_patterns[4]);
 					System.out.println("Coordinate: " + i + " " + j);
 					return;
 				}

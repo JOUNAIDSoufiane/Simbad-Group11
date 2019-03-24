@@ -45,10 +45,10 @@ public class Robot extends Agent
 				private BufferedImage camera_image;
 				
 				private Coordinates[] temp_memory = new Coordinates[4];
-
 	/**
 				 * 
 				 */
+				
 				private String behavior_pattern;
 				
 				private CentralStation central_station;
@@ -142,7 +142,7 @@ public class Robot extends Agent
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
 			
-			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) {
+			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) { // encounters obstacle
 				if (left_counter == 0)
 					camera.copyVisionImage(camera_image);
 				turn_right();
@@ -155,7 +155,7 @@ public class Robot extends Agent
 		}
 		
 		else if(behavior_pattern == "around_obstacle") {
-			//TODO Return to spiral behavior when next coords in front is free
+			
 			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3))
 				turn_left();
 			
@@ -168,7 +168,6 @@ public class Robot extends Agent
 				if (left_counter == 4){
 					central_station.found_object(new Coordinates(position.x,position.z),camera_image);
 					central_station.map_object(temp_memory);
-					// TODO : NEED to revert the behavior pattern to spiral in a logical way
 					left_counter = 0;
 					behavior_pattern = "spiral";
 				}
@@ -185,9 +184,13 @@ public class Robot extends Agent
     	this.getCoords(position);
 		Coordinates coordinates = new Coordinates(position.x, position.z);
 		
-    	if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
+    	if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4)){ // made is to it spirals on every turn
 			turn_left();
+			behavior_pattern = "spiral";
+    	}
+    	
 		central_station.update_coordinates(this, coordinates);
+		
 		if(coordinates.x == goal.x && coordinates.y == goal.y) {
 			central_station.update_coordinates(this, coordinates);
 			System.out.println("Reached Goal. Now Spiraling");
@@ -196,6 +199,7 @@ public class Robot extends Agent
 		else if((coordinates.x != prev_coordinates.x)) {
 			if(coordinates.x == goal.x && central_station.nothing_between(coordinates, goal)) {
 				turn_right();
+				behavior_pattern = "spiral";
 			}
 		}
 		
