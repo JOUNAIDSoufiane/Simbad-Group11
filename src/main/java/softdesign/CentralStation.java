@@ -161,30 +161,30 @@ public class CentralStation {
 				end_loop2 = -0.5;
 			}
 				
-		for(double i = start_loop1; i <= end_loop1; i+=0.5) {  
-			for(double j = start_loop2; j <= end_loop2; j+=0.5) {
-				Coordinates coordinates = new Coordinates(i,j);
-				if(!file_server.visited(coordinates)) {
-					robots[1].goal = coordinates;							//XXX Where to move to
-					robots[1].set_behavior(behavior_patterns[4]);
-					System.out.println("Coordinate: " + i + " " + j);
-					return;
-				}
-			}
-		}
+//		for(double i = start_loop1; i <= end_loop1; i+=0.5) {  
+//			for(double j = start_loop2; j <= end_loop2; j+=0.5) {
+//				Coordinates coordinates = new Coordinates(i,j);
+//				if(!file_server.visited(coordinates)) {
+//					robots[1].goal = coordinates;							//XXX Where to move to
+//					robots[1].set_behavior(behavior_patterns[4]);
+//					System.out.println("Coordinate: " + i + " " + j);
+//					return;
+//				}
+//			}
+//		}
 		for(double i = -12.5; i <= 12.5; i+=0.5) {  
 			for(double j = -12.5; j <= 12.5; j+=0.5) {
 				Coordinates coordinates = new Coordinates(i,j);
 				if(!file_server.visited(coordinates)) {
-					robots[1].goal = coordinates;							//XXX Where to move to
-					robots[1].set_behavior(behavior_patterns[4]);
+					robots[0].goal = coordinates;							//XXX Where to move to
+					robots[0].set_behavior(behavior_patterns[4]);
 					System.out.println("Coordinate: " + i + " " + j);
 					return;
 				}
 			}
-			if(i == 12) {
-				done_mapping();
-			}
+//			if(i == 12) {
+//				done_mapping();
+//			}
 		}
 //		outerloop:
 //		for(double x = -12; x <= 12; x+=0.5) {  
