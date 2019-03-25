@@ -123,52 +123,7 @@ public class CentralStation {
 			}
 		}
 		
-		double start_loop1, end_loop1, start_loop2, end_loop2;
-		
-		if (robot_position.x >= 0){
-			if (robot_position.y >= 0){
-				// quadrant I + + start at 0 and ends at 12.5 for both loops
-				start_loop1 = 0;
-				end_loop1 = 12.5;
-				start_loop2 = 0;
-				end_loop2 = 12.5;
-			}
-			else{
-				// quadrant II + - starts at 0 and ends at 12.5 for first loop and starts at -12.5 and ends at -0.5 for second loop
-				start_loop1 = 0;
-				end_loop1 = 12.5;
-				start_loop2 = -12.5;
-				end_loop2 = -0.5;
-			}
-
-		}
-		else
-			if (robot_position.y >= 0){
-				// quadrant IV - + starts at -12.5 and ends at -0.5 for first loop and starts at 0 and ends at 12.5 for second loop
-				start_loop1 = -12.5;
-				end_loop1 = -0.5;
-				start_loop2 = 0;
-				end_loop2 = 12.5;
-			}
-			else{
-				// quadrant III - - starts at -12.5 and ends at -0.5 for both loops
-				start_loop1 = -12.5;
-				end_loop1 = -0.5;
-				start_loop2 = -12.5;
-				end_loop2 = -0.5;
-			}
-				 
-//		for(double i = start_loop1; i <= end_loop1; i+=0.5) {               // XXX USING THE QUADRANT LOOP MAKES IT TURN AROUND INFINETLY, LOGICAL HUH
-//			for(double j = start_loop2; j <= end_loop2; j+=0.5) {
-//				Coordinates coordinates = new Coordinates(i,j);
-//				if(!file_server.visited(coordinates)) {
-//					robots[1].goal = coordinates;							//XXX Where to move to
-//					robots[1].set_behavior(behavior_patterns[4]);
-//					System.out.println("Coordinate: " + i + " " + j);
-//					return;
-//				}
-//			}
-//		}
+		outerloop:
 		for(double i = -12.5; i <= 12.5; i+=0.5) {  
 			for(double j = -12.5; j <= 12.5; j+=0.5) {
 				Coordinates coordinates = new Coordinates(i,j);
@@ -178,28 +133,13 @@ public class CentralStation {
 					robots[0].goal = coordinates;							//XXX Where to move to
 					robots[0].set_behavior(behavior_patterns[4]);
 					System.out.println("Coordinate: " + i + " " + j);
-					return;
+					break outerloop;
 				}
 			}
-//			if(i == 12) {
-//				done_mapping();
-//			}
+			if(i == 12) {
+				done_mapping();
+			}
 		}
-//		outerloop:
-//		for(double x = -12; x <= 12; x+=0.5) {  
-//			for(double y = -12; y <= 12; y+=0.5) {
-//				Coordinates coordinates = new Coordinates(x,y);
-//				if(!file_server.visited(coordinates)) {
-//					robots[1].goal = coordinates;							//XXX Where to move to
-//					robots[1].set_behavior(behavior_patterns[4]);
-//					System.out.println("Coordinate: " + x + " " + y);
-//					break outerloop;
-//				}
-//			}
-//			if(x == 12) {
-//				done_mapping();
-//			}
-//		}
 	}
 	
 	
@@ -336,6 +276,10 @@ public class CentralStation {
 		file_server.objects[object_counter].color = object_color;
 		int counter = 0;
 		
+		
+		if (goal_color.detect_color() == file_server.objects[object_counter].color.detect_color())
+			System.out.println("Found " + file_server.objects[object_counter].color.detect_color() + " Object");
+		
 		for (double i = 0; i <= width; i+= 0.5){ // removing the coordinates occupied by the object from the unvisited array
 			for (double j = 0; j <= length; j+=0.5){
 				Coordinates new_coordinates = new Coordinates(origin.x +i * directionx, origin.y + j * directiony);
@@ -365,10 +309,6 @@ public class CentralStation {
 		Color color = new Color(red,green,blue);
 		
 		object_color = color;
-		
-		if (goal_color.detect_color() == color.detect_color())
-			System.out.println("Found an object of the right color: " + color.detect_color());
-		
 	}
 	
     public void isfree(Robot robot, Coordinates coordinates, Coordinates prev) {
