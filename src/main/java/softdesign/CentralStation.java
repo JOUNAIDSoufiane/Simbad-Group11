@@ -181,9 +181,9 @@ public class CentralStation {
 					return;
 				}
 			}
-			if(i == 12) {
-				done_mapping();
-			}
+//			if(i == 12) {
+//				done_mapping();
+//			}
 		}
 //		outerloop:
 //		for(double x = -12; x <= 12; x+=0.5) {  

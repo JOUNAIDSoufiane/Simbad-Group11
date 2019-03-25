@@ -39,6 +39,8 @@ public class Robot extends Agent
 				 * 
 				 */
 				private int left_counter;
+				
+				private int crash_counter;
 				/**
 				 * 
 				 */
@@ -184,11 +186,27 @@ public class Robot extends Agent
     	this.getCoords(position);
 		Coordinates coordinates = new Coordinates(position.x, position.z);
 		
-    	if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4)){ // made is to it spirals on every turn
+		if (sonars.hasHit(0) && sonars.getMeasurement(0) < 0.1) // XXX CRASH FIX
 			turn_left();
-			behavior_pattern = "spiral";
-    	}
-    	
+		else if (sonars.hasHit(1) && sonars.getMeasurement(1) < 0.2) // XXX CRASH FIX
+			turn_right();
+		else if (sonars.hasHit(7) && sonars.getMeasurement(7) < 0.2) // XXX CRASH FIX
+			turn_left();
+		
+		
+
+		if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4)){ // XXX makes it turn infinitely over a stand alone polygon
+			if (crash_counter < 42){
+				turn_left();
+				crash_counter++;
+			}
+			else{
+				System.out.println("too many left turns");
+				turn_right();
+				crash_counter = 0;
+			}
+	    }
+	    	
 		central_station.update_coordinates(this, coordinates);
 		
 		if(coordinates.x == goal.x && coordinates.y == goal.y) {
@@ -196,12 +214,13 @@ public class Robot extends Agent
 			//TODO implement to turn towards free coordinates to start spiraling so that it doesn't drive around one time before going to next coordinates
 			central_station.isfree(this, coordinates, prev_coordinates);
 			System.out.println("Reached Goal. Now Spiraling");
+			crash_counter = 0;
 			behavior_pattern = "spiral";
 		}
 		else if((coordinates.x != prev_coordinates.x)) {
 			if(coordinates.x == goal.x && central_station.nothing_between(coordinates, goal)) {
 				turn_right();
-				behavior_pattern = "spiral";
+				crash_counter = 0;
 			}
 		}
 		
