@@ -102,6 +102,9 @@ public class Robot extends Agent
 		this.setRotationalVelocity(0);
 		this.setTranslationalVelocity(0.5);
 		
+		this.getCoords(position);
+		Coordinates coordinates = new Coordinates(position.x, position.z);
+		
 		if(behaviorPattern != "aroundObstacle") {
 			//Detecting object in front, front right while next to wall, front left while next to wall (make sure it can or can't go through the gap between wall and object)
 			if((sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) 
@@ -116,8 +119,6 @@ public class Robot extends Agent
 			//turn left when possible
 			if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
 				turnLeft();
-			this.getCoords(position);
-			Coordinates coordinates = new Coordinates(position.x, position.z);
 			
 			//remove wall coordinates on left from unvisited array
 			if((coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y)) {
@@ -134,9 +135,7 @@ public class Robot extends Agent
 		
 		
 		else if(behaviorPattern == "spiral") {
-			this.getCoords(position);
-			Coordinates coordinates = new Coordinates(position.x, position.z);
-			
+
 			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) { // encounters obstacle
 				if (leftCounter == 0)
 					camera.copyVisionImage(cameraImage);
@@ -156,8 +155,6 @@ public class Robot extends Agent
 			else if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(2) && !sonars.hasHit(4)){
 				turnLeft();
 				leftCounter++;
-				this.getCoords(position);
-				Coordinates coordinates = new Coordinates(position.x, position.z);
 				tempMemory[leftCounter-1] = coordinates;
 				if (leftCounter == 4){
 					centralStation.foundObject(new Coordinates(position.x,position.z),cameraImage);

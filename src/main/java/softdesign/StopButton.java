@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 
 class StopButton implements ActionListener {
 	
-	JFrame window = new JFrame();
-	JButton button = new JButton("Stop Mission");
+	private JFrame window = new JFrame();
+	private JButton button = new JButton("Stop Mission");
 	
 	StopButton(){
 		initializeWindow();

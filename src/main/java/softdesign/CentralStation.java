@@ -264,7 +264,7 @@ public class CentralStation {
 				object.addCoordinates(newCoordinates);
 			}
 		}
-		object.color = objectColor;
+		object.setColor(objectColor);
 		fileServer.addObject(object);
 		
 		if (goalColor.detectColor() == objectColor.detectColor())

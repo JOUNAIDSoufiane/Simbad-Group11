@@ -19,7 +19,6 @@
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_4JcrwD6aEemMj_xw1Pw9FA" name="name">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
       </ownedParameter>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_KYDKMD6bEemMj_xw1Pw9FA" name="centralStation" type="_J7oS8Dw1EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_-rEzIEACEemuXditDJMcHg" name="getName" isQuery="true">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_Lz1ZIEADEemuXditDJMcHg" name="name" direction="return">
@@ -83,8 +82,8 @@
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_1r6TUD6PEemMj_xw1Pw9FA" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_ryqg0D6QEemMj_xw1Pw9FA" name="foundObstacle">
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_-josgD6QEemMj_xw1Pw9FA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_nRa1EEHDEemEmtFEDh8rlQ" name="image" type="_JZbvYDw2EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_nXUdwFDiEemq-5zDqtAY3g" name="robot" type="_C6dywDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_p2DxEFDiEemq-5zDqtAY3g" name="sonars" type="_jvaaEDw1EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_U3tWED6SEemMj_xw1Pw9FA" name="CentralStation"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_83HOYD6SEemMj_xw1Pw9FA" name="doneMapping"/>
@@ -170,32 +169,28 @@
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_KqofID3DEemHvZj1G01vhw" name="Object">
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_P6RMwD3DEemHvZj1G01vhw" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_P6RMwD3DEemHvZj1G01vhw" name="coordinates" visibility="private" type="_tVNFEDw0EemgBaKBb33t8g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_HNBtwD6dEemMj_xw1Pw9FA" value="2"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_HNExED6dEemMj_xw1Pw9FA" value="3"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_TcHi4D3DEemHvZj1G01vhw" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_n-vJ8D6VEemMj_xw1Pw9FA" name="Object">
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_suoAgD6VEemMj_xw1Pw9FA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_wRgRYD6VEemMj_xw1Pw9FA" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
-    </ownedOperation>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_TcHi4D3DEemHvZj1G01vhw" name="color" visibility="private" type="_4p4PcD3CEemHvZj1G01vhw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_eaKk0D3DEemHvZj1G01vhw" name="FileServer">
     <ownedAttribute xmi:type="uml:Property" xmi:id="_o0M5sD6SEemMj_xw1Pw9FA" name="unvisited" visibility="private" type="_tVNFEDw0EemgBaKBb33t8g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qu8IED6SEemMj_xw1Pw9FA"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_qu_ycD6SEemMj_xw1Pw9FA" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_A71BAD6TEemMj_xw1Pw9FA" name="blocked" type="_tVNFEDw0EemgBaKBb33t8g">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_A71BAD6TEemMj_xw1Pw9FA" name="blocked" visibility="private" type="_tVNFEDw0EemgBaKBb33t8g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_CVMnsD6TEemMj_xw1Pw9FA"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_CVPD8D6TEemMj_xw1Pw9FA" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_yn-EYD6TEemMj_xw1Pw9FA" name="objects" type="_KqofID3DEemHvZj1G01vhw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_yn-EYD6TEemMj_xw1Pw9FA" name="objects" visibility="private" type="_KqofID3DEemHvZj1G01vhw">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ScVYcD6VEemMj_xw1Pw9FA"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ScxdUD6VEemMj_xw1Pw9FA" value="*"/>
     </ownedAttribute>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_ItyY8EKaEem97IxHPBydwA" name="fileServer" visibility="private" isStatic="true" type="_eaKk0D3DEemHvZj1G01vhw"/>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_uNmCUEKaEem97IxHPBydwA" name="fileServer" visibility="private" isStatic="true" type="_eaKk0D3DEemHvZj1G01vhw"/>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_YJAAUD6VEemMj_xw1Pw9FA" name="updateBlocked">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_YJAAUD6VEemMj_xw1Pw9FA" name="addBlocked">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_dyXckD6VEemMj_xw1Pw9FA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_et7s8D6VEemMj_xw1Pw9FA" name="FileServer"/>
@@ -384,8 +379,8 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_FnXOYEy9EemLZfiZNeG4Sw" name="ActionEvent (Template)"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_S5tOMEy9EemLZfiZNeG4Sw" name="StopButton">
     <generalization xmi:type="uml:Generalization" xmi:id="_Un4KwEy-EemLZfiZNeG4Sw" general="_D3ZsoEy9EemLZfiZNeG4Sw"/>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_pkRhoEy9EemLZfiZNeG4Sw" name="window" type="_VpIo4Ey9EemLZfiZNeG4Sw"/>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_vnNUcEy9EemLZfiZNeG4Sw" name="button" type="_XsMFwEy9EemLZfiZNeG4Sw"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_pkRhoEy9EemLZfiZNeG4Sw" name="window" visibility="private" type="_VpIo4Ey9EemLZfiZNeG4Sw"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_vnNUcEy9EemLZfiZNeG4Sw" name="button" visibility="private" type="_XsMFwEy9EemLZfiZNeG4Sw"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_1MBA0Ey9EemLZfiZNeG4Sw" name="StopButton"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_2v5OYEy9EemLZfiZNeG4Sw" name="initializeWindow" visibility="private"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_5VnTcEy9EemLZfiZNeG4Sw" name="initializeButton" visibility="private"/>

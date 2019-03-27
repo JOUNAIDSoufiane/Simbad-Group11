@@ -343,10 +343,6 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kqq7Zz3DEemHvZj1G01vhw"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_KqricD3DEemHvZj1G01vhw" type="Class_OperationCompartment">
-        <children xmi:type="notation:Shape" xmi:id="_n-9zcD6VEemMj_xw1Pw9FA" type="Operation_ClassOperationLabel">
-          <element xmi:type="uml:Operation" href="diagrams.uml#_n-vJ8D6VEemMj_xw1Pw9FA"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_n-9zcT6VEemMj_xw1Pw9FA"/>
-        </children>
         <styles xmi:type="notation:TitleStyle" xmi:id="_KqricT3DEemHvZj1G01vhw"/>
         <styles xmi:type="notation:SortingStyle" xmi:id="_Kqricj3DEemHvZj1G01vhw"/>
         <styles xmi:type="notation:FilteringStyle" xmi:id="_Kqricz3DEemHvZj1G01vhw"/>

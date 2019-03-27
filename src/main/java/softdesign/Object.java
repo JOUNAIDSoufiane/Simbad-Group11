@@ -18,7 +18,7 @@ public class Object {
 	private ArrayList<Coordinates> coordinatesArray = new ArrayList<Coordinates>();
 	
 	
-	public Color color;
+	private Color color;
 
 	/**
 	 * 
@@ -27,5 +27,13 @@ public class Object {
 	 */
 	public void addCoordinates(Coordinates coordinates) {
 		coordinatesArray.add(coordinates);
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	public Color getColor() {
+		return color;
 	}
 };
