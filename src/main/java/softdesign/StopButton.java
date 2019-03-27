@@ -12,11 +12,11 @@ class StopButton implements ActionListener {
 	JButton button = new JButton("Stop Mission");
 	
 	StopButton(){
-		initialize_window();
-		initialize_button();
+		initializeWindow();
+		initializeButton();
 	}
 	
-	private void initialize_window() {
+	private void initializeWindow() {
 		 window.setTitle("Mission Control");
 	     window.getContentPane().setLayout(null);
 	     window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -24,7 +24,7 @@ class StopButton implements ActionListener {
 	     window.setBounds(200,200,200,200);
 	}
 	
-	private void initialize_button(){
+	private void initializeButton(){
         button.setBounds(25,50,150,40);
         button.setBackground(java.awt.Color.RED);
         window.add(button);
@@ -33,8 +33,8 @@ class StopButton implements ActionListener {
 	
 	@Override
     public void actionPerformed(ActionEvent e) {
-		CentralStation CS = CentralStation.getinstance();
-		CS.done_mapping();
-		CS.stop_mission();
+		CentralStation CS = CentralStation.getInstance();
+		CS.doneMapping();
+		CS.stopMission();
     }
 }

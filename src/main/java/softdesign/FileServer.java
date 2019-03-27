@@ -13,7 +13,7 @@ public class FileServer {
 	/**
 	 * 
 	 */
-	private static FileServer file_server = new FileServer();
+	private static FileServer fileServer = new FileServer();
 	/**
 	 * 
 	 */
@@ -24,23 +24,23 @@ public class FileServer {
 	public Object[] objects = new Object[100];
 	
 	private Coordinates[] blocked = new Coordinates[2601];
-	private int blocked_index = 0;
+	private int blockedIndex = 0;
 
 	/**
 	 * 
 	 * 
 	 */
-	public static FileServer getinstance() {
-		return file_server;
+	public static FileServer getInstance() {
+		return fileServer;
 	}
 	
-	public void update_blocked(Coordinates coordinates) {
-		blocked[blocked_index] = new Coordinates(coordinates.x, coordinates.y);
-		blocked_index++;
+	public void updateBlocked(Coordinates coordinates) {
+		blocked[blockedIndex] = new Coordinates(coordinates.x, coordinates.y);
+		blockedIndex++;
 	}
 	
 	public boolean isblocked(Coordinates coordinates) {
-		for(int i = 0; i < blocked_index; i++) {
+		for(int i = 0; i < blockedIndex; i++) {
 			if(blocked[i].x == coordinates.x && blocked[i].y == coordinates.y)
 				return true;
 		}
@@ -50,7 +50,7 @@ public class FileServer {
 	 * 
 	 * @param coordinates
 	 */
-	public void remove_coordinates(Coordinates coordinates) {
+	public void removeCoordinates(Coordinates coordinates) {
 		//replace already visited coordinate in array with coordinate 99,99
 		int location = (int) (((12.5 + coordinates.x) / 0.5 * 51) + (12.5 + coordinates.y) / 0.5); 
 
@@ -101,10 +101,10 @@ public class FileServer {
 		
 		//removing coordinates for outer walls from unvisited array
 		for(double i = -12.5; i <= 12.5; i+=0.5) {
-			remove_coordinates(new Coordinates(12.5, i));
-			remove_coordinates(new Coordinates(-12.5, i));
-			remove_coordinates(new Coordinates(i, 12.5));
-			remove_coordinates(new Coordinates(i, -12.5));
+			removeCoordinates(new Coordinates(12.5, i));
+			removeCoordinates(new Coordinates(-12.5, i));
+			removeCoordinates(new Coordinates(i, 12.5));
+			removeCoordinates(new Coordinates(i, -12.5));
 		}
 	}
 };

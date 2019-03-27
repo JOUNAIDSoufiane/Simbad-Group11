@@ -21,8 +21,8 @@ public class Robot extends Agent
 	 * 
 	 */
 				private Point3d position = new Point3d();
-				private Coordinates prev_coordinates;
-				private Coordinates[] starting_coordinates;
+				private Coordinates prevCoordinates;
+				private Coordinates[] startingCoordinates;
 				public Coordinates goal;
 
 	/**
@@ -38,37 +38,37 @@ public class Robot extends Agent
 	/**
 				 * 
 				 */
-				private int left_counter;
+				private int leftCounter;
 				
-				private int crash_counter;
+				private int crashCounter;
 				/**
 				 * 
 				 */
-				private BufferedImage camera_image;
+				private BufferedImage cameraImage;
 				
-				private Coordinates[] temp_memory = new Coordinates[4];
+				private Coordinates[] tempMemory = new Coordinates[4];
 	/**
 				 * 
 				 */
 				
-				private String behavior_pattern;
+				private String behaviorPattern;
 				
-				private CentralStation central_station;
+				private CentralStation centralStation;
 				
 
 	/**
 	 * 
 	 * @param position 
 	 * @param name 
-	 * @param central_station 
+	 * @param centralStation 
 	 */
 	public Robot(Vector3d position, String name) {
 		
 		super(position,name);
 		this.name = name;
-		this.left_counter = 0;
-		this.central_station = CentralStation.getinstance();
-		prev_coordinates = new Coordinates(position.x, position.z);
+		this.leftCounter = 0;
+		this.centralStation = CentralStation.getInstance();
+		prevCoordinates = new Coordinates(position.x, position.z);
 		
         // Add sonars
         sonars = RobotFactory.addSonarBeltSensor(this, 8);
@@ -76,27 +76,27 @@ public class Robot extends Agent
         //add camera
         camera = RobotFactory.addCameraSensor(this);
         // reserve space for image capture
-        camera_image = camera.createCompatibleImage();
+        cameraImage = camera.createCompatibleImage();
 	}
 	
 	/**
 	 * 
 	 * @return 
 	 */
-	public String get_name() {
+	public String getName() {
 		return name;
 	}
 
     public void initBehavior() {
-        System.out.println("I exist and my name is " + this.get_name());
+        System.out.println("I exist and my name is " + this.getName());
     }
     
     /**
 	 * 
-	 * @param behavior_pattern 
+	 * @param behaviorPattern 
 	 */  
-    public void set_behavior(String behavior) {
-    	behavior_pattern = behavior;
+    public void setBehavior(String behavior) {
+    	behaviorPattern = behavior;
     }
     /**
 	 * sets a positive translational velocity 
@@ -106,121 +106,120 @@ public class Robot extends Agent
 		this.setRotationalVelocity(0);
 		this.setTranslationalVelocity(0.5);
 		
-		if(behavior_pattern != "around_obstacle") {
+		if(behaviorPattern != "aroundObstacle") {
 			//Detecting object in front, front right while next to wall, front left while next to wall (make sure it can or can't go through the gap between wall and object)
 			if((sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) 
 					|| (sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.4 && sonars.getMeasurement(2) <= 0.5)
 					|| (sonars.hasHit(1) && sonars.getMeasurement(1) <= 0.4 &&  sonars.getMeasurement(6) <= 0.5)) {
-				central_station.found_obstacle(this, sonars);
+				centralStation.foundObstacle(this, sonars);
 			}
 		}
 			
 		//Wall following code 
-		if(behavior_pattern == "follow_wall") {
+		if(behaviorPattern == "followWall") {
 			//turn left when possible
 			if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
-				turn_left();
+				turnLeft();
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
 			
 			//remove wall coordinates on left from unvisited array
-			if((coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y)) {
-				central_station.remove_left_coords(coordinates, prev_coordinates);
-				central_station.update_blocked(coordinates, prev_coordinates);
+			if((coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y)) {
+				centralStation.removeLeftCoordinates(coordinates, prevCoordinates);
+				centralStation.updateBlocked(coordinates, prevCoordinates);
 			}
 			
 			//Check if robot has reached any robot's starting position
-			starting_coordinates = central_station.get_starting_positions();
-			for (int i = 0; i < starting_coordinates.length; i++) {
-				if(coordinates.x == starting_coordinates[i].x && coordinates.y == starting_coordinates[i].y && this.getOdometer() > 1) {
-					behavior_pattern = "spiral";
-					turn_right();
+			startingCoordinates = centralStation.getStartingPositions();
+			for (int i = 0; i < startingCoordinates.length; i++) {
+				if(coordinates.x == startingCoordinates[i].x && coordinates.y == startingCoordinates[i].y && this.getOdometer() > 1) {
+					behaviorPattern = "spiral";
+					turnRight();
 				}
 			}
 		}
 		
 		
-		else if(behavior_pattern == "spiral") {
+		else if(behaviorPattern == "spiral") {
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
 			
 			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) { // encounters obstacle
-				if (left_counter == 0)
-					camera.copyVisionImage(camera_image);
-				turn_right();
-				behavior_pattern = "around_obstacle";
+				if (leftCounter == 0)
+					camera.copyVisionImage(cameraImage);
+				turnRight();
+				behaviorPattern = "aroundObstacle";
 			}
 			
-			if((coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y)) {
-				central_station.spiral(this, coordinates, prev_coordinates);
+			if((coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y)) {
+				centralStation.spiral(this, coordinates, prevCoordinates);
 			}
 		}
 		
-		else if(behavior_pattern == "around_obstacle") {
+		else if(behaviorPattern == "aroundObstacle") {
 			
 			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3))
-				turn_left();
+				turnLeft();
 			
 			else if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(2) && !sonars.hasHit(4)){
-				turn_left();
-				left_counter++;
+				turnLeft();
+				leftCounter++;
 				this.getCoords(position);
 				Coordinates coordinates = new Coordinates(position.x, position.z);
-				temp_memory[left_counter-1] = coordinates;
-				if (left_counter == 4){
-					central_station.found_object(new Coordinates(position.x,position.z),camera_image);
-					central_station.map_object(temp_memory);
-					left_counter = 0;
-					behavior_pattern = "spiral";
+				tempMemory[leftCounter-1] = coordinates;
+				if (leftCounter == 4){
+					centralStation.foundObject(new Coordinates(position.x,position.z),cameraImage);
+					centralStation.mapObject(tempMemory);
+					leftCounter = 0;
+					behaviorPattern = "spiral";
 				}
 			}
 			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) {
-				turn_right();
+				turnRight();
 			}
 		}
-		else if(behavior_pattern == "move_to")
-			move_to();
+		else if(behaviorPattern == "moveTo")
+			moveTo();
     }
     
-    public void move_to() {
+    public void moveTo() {
     	this.getCoords(position);
 		Coordinates coordinates = new Coordinates(position.x, position.z);
 		
 		if (sonars.hasHit(0) && sonars.getMeasurement(0) < 0.1) // XXX CRASH FIX
-			turn_left();
+			turnLeft();
 		else if (sonars.hasHit(1) && sonars.getMeasurement(1) < 0.2) // XXX CRASH FIX
-			turn_right();
+			turnRight();
 		else if (sonars.hasHit(7) && sonars.getMeasurement(7) < 0.2) // XXX CRASH FIX
-			turn_left();
+			turnLeft();
 		
 		
-
+		//XXX this part could check if object is a new one and map it if it is otherwise it could just do same shit it does now
 		if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4)){ // XXX makes it turn infinitely over a stand alone polygon
-			if (crash_counter < 42){
-				turn_left();
-				crash_counter++;
+			if (crashCounter < 42){
+				turnLeft();
+				crashCounter++;
 			}
 			else{
 				System.out.println("too many left turns");
-				turn_right();
-				crash_counter = 0;
+				turnRight();
+				crashCounter = 0;
 			}
 	    }
 	    	
-		central_station.update_coordinates(this, coordinates);
+		centralStation.updateCoordinates(this, coordinates);
 		
 		if(coordinates.x == goal.x && coordinates.y == goal.y) {
-			central_station.update_coordinates(this, coordinates);
-			//TODO implement to turn towards free coordinates to start spiraling so that it doesn't drive around one time before going to next coordinates
-			central_station.isfree(this, coordinates, prev_coordinates);
+			centralStation.updateCoordinates(this, coordinates);
+			centralStation.isFree(this, coordinates, prevCoordinates);
 			System.out.println("Reached Goal. Now Spiraling");
-			crash_counter = 0;
-			behavior_pattern = "spiral";
+			crashCounter = 0;
+			behaviorPattern = "spiral";
 		}
-		else if((coordinates.x != prev_coordinates.x)) {
-			if(coordinates.x == goal.x && central_station.nothing_between(coordinates, goal)) {
-				turn_right();
-				crash_counter = 0;
+		else if((coordinates.x != prevCoordinates.x)) {
+			if(coordinates.x == goal.x && centralStation.nothingBetween(coordinates, goal)) {
+				turnRight();
+				crashCounter = 0;
 			}
 		}
 		
@@ -228,7 +227,7 @@ public class Robot extends Agent
     /**
 	 * turns 90 degrees left  
 	 */  
-    public void turn_left(){ 
+    public void turnLeft(){ 
 		this.setTranslationalVelocity(0);
 		this.rotateY(90 * Math.PI / 180); // 90 degrees
 			
@@ -236,7 +235,7 @@ public class Robot extends Agent
     /**
 	 * turns 90 degrees right  
 	 */  
-    public void turn_right(){
+    public void turnRight(){
 		this.setTranslationalVelocity(0);
 		this.rotateY(270 * Math.PI / 180); // 270 degrees
 		
@@ -244,7 +243,7 @@ public class Robot extends Agent
     /**
 	 * turns 180 degrees   
 	 */     
-    public void turn_around(){ 
+    public void turnAround(){ 
 		this.setTranslationalVelocity(0);
 		this.rotateY(Math.PI); // 180 degrees
     }
@@ -258,23 +257,23 @@ public class Robot extends Agent
     
 	public void performBehavior() {
 		
-		if(behavior_pattern != "stop" && behavior_pattern != "finished") {
+		if(behaviorPattern != "stop" && behaviorPattern != "finished") {
 			//Robot starts moving straight
 			move();
 			
 			//robot sends its position to central station whenever its position has changed coordinates
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
-			if(coordinates.x != prev_coordinates.x || coordinates.y != prev_coordinates.y) {
-				central_station.update_coordinates(this, coordinates);
-				prev_coordinates = coordinates;
+			if(coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y) {
+				centralStation.updateCoordinates(this, coordinates);
+				prevCoordinates = coordinates;
 			}
 		}
 		
 }
     
 	public String get_behavior() {
-		return behavior_pattern;
+		return behaviorPattern;
 	}
 
 };

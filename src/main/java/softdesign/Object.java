@@ -13,7 +13,7 @@ public class Object {
 	/**
 	 * 
 	 */
-	public Coordinates[] coordinates_array;
+	public Coordinates[] coordinatesArray;
 	
 	
 	public Color color;
@@ -24,6 +24,6 @@ public class Object {
 	 * @param color 
 	 */
 	public Object(int size) {
-		coordinates_array = new Coordinates[size];
+		coordinatesArray = new Coordinates[size];
 	}
 };

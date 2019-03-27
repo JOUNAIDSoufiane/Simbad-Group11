@@ -18,24 +18,25 @@ public class Main {
         EnvironmentDescription environment = new Environment();
         
         //getting instance of Central Station
-        CentralStation CS = CentralStation.getinstance();
+        CentralStation centralStation = CentralStation.getInstance();
         
         //Creating button to stop the mission
         new StopButton();
         
         // adding two robots
-        Robot robot1 = CS.deploy_robot(new Vector3d(5, 0, -6.55), "Robot 1");
-        Robot robot2 = CS.deploy_robot(new Vector3d(-7, 0, 4.95), "Robot 2");
+        Robot robot1 = centralStation.deployRobot(new Vector3d(5, 0, -6.55), "Robot 1");
+        Robot robot2 = centralStation.deployRobot(new Vector3d(-7, 0, 4.95), "Robot 2");
         
 
         // add the two robots to the environment
         environment.add(robot1);
         environment.add(robot2);
         
-        CS.start_mission(new Color(255,0,0));
+        centralStation.startMission(new Color(255,0,0));
         
         // here we create an instance of the whole Simbad simulator and we assign the newly created environment 
         Simbad frame = new Simbad(environment, false);
+        frame.setName("Misson Control");
         frame.update(frame.getGraphics());
         
     }

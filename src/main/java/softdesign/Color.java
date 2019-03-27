@@ -22,7 +22,7 @@ public class Color {
 	 */
 	public int blue;
 	
-	public String detect_color(){
+	public String detectColor(){
 		if (red > 250 && green < 50 && blue < 50)
 			return "red";
 		else if (red < 50 && green > 250 && blue < 50)
