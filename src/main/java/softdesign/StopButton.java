@@ -19,7 +19,7 @@ class StopButton implements ActionListener {
 	private void initializeWindow() {
 		 window.setTitle("Mission Control");
 	     window.getContentPane().setLayout(null);
-	     window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	     window.setVisible(true);
 	     window.setBounds(200,200,200,200);
 	}

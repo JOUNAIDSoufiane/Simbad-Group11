@@ -5,6 +5,8 @@
 
 package main.java.softdesign;
 
+import java.util.ArrayList;
+
 /************************************************************/
 /**
 * 
@@ -13,7 +15,7 @@ public class Object {
 	/**
 	 * 
 	 */
-	public Coordinates[] coordinatesArray;
+	private ArrayList<Coordinates> coordinatesArray = new ArrayList<Coordinates>();
 	
 	
 	public Color color;
@@ -23,7 +25,7 @@ public class Object {
 	 * @param obstacle_coords 
 	 * @param color 
 	 */
-	public Object(int size) {
-		coordinatesArray = new Coordinates[size];
+	public void addCoordinates(Coordinates coordinates) {
+		coordinatesArray.add(coordinates);
 	}
 };

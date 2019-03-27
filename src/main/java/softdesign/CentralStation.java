@@ -28,8 +28,6 @@ public class CentralStation {
 	 */
 	private static String[] behaviorPatterns;
 	private Color objectColor;
-	
-	private int objectCounter = 0;
 	/**
 	 * 
 	 */
@@ -82,8 +80,12 @@ public class CentralStation {
 		goalColor = color; 
 	}
 	
-	public Coordinates[] getStartingPositions() {
-		return startingPositions;
+	public boolean reachedStartingPositions(Coordinates coordinates) {
+		for(int i = 0; i < startingPositions.length; i++){
+			if(coordinates.x == startingPositions[i].x && coordinates.y == startingPositions[i].y)
+				return true;
+		}
+		return false;
 	}
 	
 	public void spiral(Robot robot, Coordinates coordinates, Coordinates prev) {
@@ -101,8 +103,8 @@ public class CentralStation {
 		}
 	}
 	
-	public void updateBlocked(Coordinates coordinates, Coordinates prev) {
-		fileServer.updateBlocked(getLeftCoordinates(coordinates, prev));
+	public void addBlocked(Coordinates coordinates, Coordinates prev) {
+		fileServer.addBlocked(getLeftCoordinates(coordinates, prev));
 	}
 	
 	//Give coordinate to move to for next spiral
@@ -141,17 +143,6 @@ public class CentralStation {
 		}
 	}
 	
-	
-	//FIXME For cleanUp to check if coordinate is object's coordinate Somehow implement that lol 
-	public boolean isObject(Coordinates coordinates) {
-		for(int i = 0; i < objectCounter; i++) {
-			for(int j = 0; j < fileServer.objects[i].coordinatesArray.length; j++) {
-				if(coordinates.x == fileServer.objects[i].coordinatesArray[j].x && coordinates.y == fileServer.objects[i].coordinatesArray[j].y)
-					return true;
-			}
-		}
-		return false;
-	}
 	//Checks if there is a blocked coordinate between robot and goal coordinate on x axis
 	public boolean nothingBetween(Coordinates coordinates, Coordinates goal) {
 		if(coordinates.y < goal.y) {
@@ -260,35 +251,25 @@ public class CentralStation {
 		}
 		
 		
-		if(origin.y > x.y) // TODO : Meaningful comments 
-			directiony = -1;
-		else
-			directiony = 1;
+		directiony = origin.y > x.y ? -1 : 1;
+		directionx = origin.x > y.x ? -1 : 1;
 		
-		if(origin.x > y.x)
-			directionx = -1;
-		else 
-			directionx = 1;
-		
-		int arraySize = (int)((width+0.5)/0.5) *(int)((length+0.5)/0.5);
-		fileServer.objects[objectCounter] = new Object(arraySize);
-		fileServer.objects[objectCounter].color = objectColor;
-		int counter = 0;
-		
-		
-		if (goalColor.detectColor() == fileServer.objects[objectCounter].color.detectColor())
-			System.out.println("Found " + fileServer.objects[objectCounter].color.detectColor() + " Object");
+		Object object = new Object();
 		
 		for (double i = 0; i <= width; i+= 0.5){ // removing the coordinates occupied by the object from the unvisited array
 			for (double j = 0; j <= length; j+=0.5){
 				Coordinates newCoordinates = new Coordinates(origin.x +i * directionx, origin.y + j * directiony);
 				fileServer.removeCoordinates(newCoordinates);
-				fileServer.updateBlocked(newCoordinates);
-				fileServer.objects[objectCounter].coordinatesArray[counter] = newCoordinates;
-				counter++;
+				fileServer.addBlocked(newCoordinates);
+				object.addCoordinates(newCoordinates);
 			}
 		}
-		objectCounter++;
+		object.color = objectColor;
+		fileServer.addObject(object);
+		
+		if (goalColor.detectColor() == objectColor.detectColor())
+			System.out.println("Found " + objectColor.detectColor() + " Object");
+		
 
 	}
 	/**

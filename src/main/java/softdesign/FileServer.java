@@ -4,6 +4,7 @@
 
 package main.java.softdesign;
 
+import java.util.ArrayList;
 
 /************************************************************/
 /**
@@ -21,11 +22,9 @@ public class FileServer {
 	/**
 	 * 
 	 */
-	public Object[] objects = new Object[100];
+	private ArrayList<Object> objects = new ArrayList<Object>();
 	
-	private Coordinates[] blocked = new Coordinates[2601];
-	private int blockedIndex = 0;
-
+	private ArrayList<Coordinates> blocked = new ArrayList<Coordinates>();
 	/**
 	 * 
 	 * 
@@ -34,14 +33,18 @@ public class FileServer {
 		return fileServer;
 	}
 	
-	public void updateBlocked(Coordinates coordinates) {
-		blocked[blockedIndex] = new Coordinates(coordinates.x, coordinates.y);
-		blockedIndex++;
+	public void addBlocked(Coordinates coordinates) {
+		blocked.add(coordinates);
+	}
+	
+	public void addObject(Object object) {
+		objects.add(object);
 	}
 	
 	public boolean isblocked(Coordinates coordinates) {
-		for(int i = 0; i < blockedIndex; i++) {
-			if(blocked[i].x == coordinates.x && blocked[i].y == coordinates.y)
+		for(int i = 0; i < blocked.size(); i++) {
+			Coordinates coords = blocked.get(i);
+			if(coords.x == coordinates.x && coords.y == coordinates.y)
 				return true;
 		}
 		return false;

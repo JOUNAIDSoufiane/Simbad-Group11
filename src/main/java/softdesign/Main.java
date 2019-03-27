@@ -32,6 +32,7 @@ public class Main {
         environment.add(robot1);
         environment.add(robot2);
         
+        //Starting mission with red as color for the target box
         centralStation.startMission(new Color(255,0,0));
         
         // here we create an instance of the whole Simbad simulator and we assign the newly created environment 

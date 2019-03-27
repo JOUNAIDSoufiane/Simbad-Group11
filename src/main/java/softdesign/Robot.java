@@ -1,7 +1,6 @@
 package main.java.softdesign;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -22,7 +21,6 @@ public class Robot extends Agent
 	 */
 				private Point3d position = new Point3d();
 				private Coordinates prevCoordinates;
-				private Coordinates[] startingCoordinates;
 				public Coordinates goal;
 
 	/**
@@ -60,7 +58,6 @@ public class Robot extends Agent
 	 * 
 	 * @param position 
 	 * @param name 
-	 * @param centralStation 
 	 */
 	public Robot(Vector3d position, String name) {
 		
@@ -93,14 +90,13 @@ public class Robot extends Agent
     
     /**
 	 * 
-	 * @param behaviorPattern 
+	 * @param behavior
 	 */  
     public void setBehavior(String behavior) {
     	behaviorPattern = behavior;
     }
     /**
 	 * sets a positive translational velocity 
-     * @throws IOException 
 	 */  
     public void move() {
 		this.setRotationalVelocity(0);
@@ -126,16 +122,13 @@ public class Robot extends Agent
 			//remove wall coordinates on left from unvisited array
 			if((coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y)) {
 				centralStation.removeLeftCoordinates(coordinates, prevCoordinates);
-				centralStation.updateBlocked(coordinates, prevCoordinates);
+				centralStation.addBlocked(coordinates, prevCoordinates);
 			}
 			
 			//Check if robot has reached any robot's starting position
-			startingCoordinates = centralStation.getStartingPositions();
-			for (int i = 0; i < startingCoordinates.length; i++) {
-				if(coordinates.x == startingCoordinates[i].x && coordinates.y == startingCoordinates[i].y && this.getOdometer() > 1) {
-					behaviorPattern = "spiral";
-					turnRight();
-				}
+			if(centralStation.reachedStartingPositions(coordinates) && this.getOdometer() > 1) {
+				behaviorPattern = "spiral";
+				turnRight();
 			}
 		}
 		
@@ -151,9 +144,8 @@ public class Robot extends Agent
 				behaviorPattern = "aroundObstacle";
 			}
 			
-			if((coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y)) {
+			if((coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y))
 				centralStation.spiral(this, coordinates, prevCoordinates);
-			}
 		}
 		
 		else if(behaviorPattern == "aroundObstacle") {
