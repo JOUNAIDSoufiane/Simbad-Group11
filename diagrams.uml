@@ -78,9 +78,6 @@
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_J7oS8Dw1EemgBaKBb33t8g" name="CentralStation">
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_7lofcEJjEemeiqsZ2UFmDQ" name="centralStation" visibility="private" isStatic="true" type="_J7oS8Dw1EemgBaKBb33t8g">
-      <defaultValue xmi:type="uml:Expression" xmi:id="_EbRqcEJkEemeiqsZ2UFmDQ" type="_J7oS8Dw1EemgBaKBb33t8g"/>
-    </ownedAttribute>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_8Nuh4D6MEemMj_xw1Pw9FA" name="robots" visibility="private" type="_C6dywDw0EemgBaKBb33t8g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ChC6ED6NEemMj_xw1Pw9FA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ChFWUD6NEemMj_xw1Pw9FA" value="2"/>
@@ -272,7 +269,6 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ScVYcD6VEemMj_xw1Pw9FA"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ScxdUD6VEemMj_xw1Pw9FA" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_ItyY8EKaEem97IxHPBydwA" name="fileServer" visibility="private" isStatic="true" type="_eaKk0D3DEemHvZj1G01vhw"/>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_uNmCUEKaEem97IxHPBydwA" name="fileServer" visibility="private" isStatic="true" type="_eaKk0D3DEemHvZj1G01vhw"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_YJAAUD6VEemMj_xw1Pw9FA" name="addBlocked">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_dyXckD6VEemMj_xw1Pw9FA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
@@ -368,7 +364,9 @@
       <value xmi:type="uml:LiteralString" xmi:id="_ayAIEED0EemEmtFEDh8rlQ" name="robot1" value="[&quot;5,-6.55&quot;"/>
       <value xmi:type="uml:LiteralString" xmi:id="_RkIDQED0EemEmtFEDh8rlQ" name="robot2" value="&quot;-7,4.95&quot;]"/>
     </slot>
-    <slot xmi:type="uml:Slot" xmi:id="_U42noEKaEem97IxHPBydwA" definingFeature="_g2CLUEKaEem97IxHPBydwA"/>
+    <slot xmi:type="uml:Slot" xmi:id="_U42noEKaEem97IxHPBydwA" definingFeature="_g2CLUEKaEem97IxHPBydwA">
+      <value xmi:type="uml:LiteralString" xmi:id="_3zkFIFGPEemV0K2Kmey5LQ" name="centralStation" value="centralStation"/>
+    </slot>
     <slot xmi:type="uml:Slot" xmi:id="_zy6lEFGNEemAo9mRLFmeKQ" definingFeature="_KhqTEFF8EemAo9mRLFmeKQ">
       <value xmi:type="uml:LiteralInteger" xmi:id="_EixNkFGOEemAo9mRLFmeKQ" name="red" value="255"/>
       <value xmi:type="uml:LiteralInteger" xmi:id="_FiCSMFGOEemAo9mRLFmeKQ" name="green"/>
@@ -386,9 +384,7 @@
   </packagedElement>
   <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_bwohIEAQEemEmtFEDh8rlQ" name="InstanceSpecification2" classifier="_I3ExQD_8EemuXditDJMcHg">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_cFxqsEAQEemEmtFEDh8rlQ" source="InstanceEnd" references="_wrx60EAPEemEmtFEDh8rlQ"/>
-    <slot xmi:type="uml:Slot" xmi:id="_cFyRwEAQEemEmtFEDh8rlQ" definingFeature="_I3F_YD_8EemuXditDJMcHg">
-      <value xmi:type="uml:InstanceValue" xmi:id="_cFyRwUAQEemEmtFEDh8rlQ" name="InstanceValue1" type="_C6dywDw0EemgBaKBb33t8g"/>
-    </slot>
+    <slot xmi:type="uml:Slot" xmi:id="_cFyRwEAQEemEmtFEDh8rlQ" definingFeature="_I3F_YD_8EemuXditDJMcHg"/>
     <slot xmi:type="uml:Slot" xmi:id="_cFyRwkAQEemEmtFEDh8rlQ" definingFeature="_I3F_YT_8EemuXditDJMcHg">
       <value xmi:type="uml:InstanceValue" xmi:id="_cFy40EAQEemEmtFEDh8rlQ" name="InstanceValue1" type="_J7oS8Dw1EemgBaKBb33t8g" instance="_wrx60EAPEemEmtFEDh8rlQ"/>
     </slot>
