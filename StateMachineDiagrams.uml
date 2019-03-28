@@ -5,6 +5,7 @@
       <transition xmi:type="uml:Transition" xmi:id="_G05tcFF8Eemq6dE8VI9ZCg" source="_CZZLcFF8Eemq6dE8VI9ZCg" target="_aApDMFF0Eeml-45zlyCf3w"/>
       <transition xmi:type="uml:Transition" xmi:id="_YlGYoFF8Eemq6dE8VI9ZCg" name="StopButton pressed by user" source="_aApDMFF0Eeml-45zlyCf3w" target="_JQIZwFF8Eemq6dE8VI9ZCg"/>
       <transition xmi:type="uml:Transition" xmi:id="_vdE18FF8Eemq6dE8VI9ZCg" source="_JQIZwFF8Eemq6dE8VI9ZCg" target="_tWhZIFF8Eemq6dE8VI9ZCg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_37YNQFGjEemHtd-r4eEm2Q" name="mission ended by CentralStation" source="_aApDMFF0Eeml-45zlyCf3w" target="_0e0m0FGjEemHtd-r4eEm2Q"/>
       <subvertex xmi:type="uml:State" xmi:id="_aApDMFF0Eeml-45zlyCf3w" name="init">
         <doActivity xmi:type="uml:Activity" xmi:id="_i1p8EFF0Eeml-45zlyCf3w" name="initialize window and button" isReentrant="true"/>
       </subvertex>
@@ -13,6 +14,7 @@
         <doActivity xmi:type="uml:Activity" xmi:id="_WAREYFF8Eemq6dE8VI9ZCg" name="send abort mission signal to CentralStation"/>
       </subvertex>
       <subvertex xmi:type="uml:FinalState" xmi:id="_tWhZIFF8Eemq6dE8VI9ZCg" name="FinalState"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_0e0m0FGjEemHtd-r4eEm2Q" name="FinalState (if button is never used)"/>
     </region>
   </packagedElement>
   <packagedElement xmi:type="uml:StateMachine" xmi:id="__49ZkFF8Eemq6dE8VI9ZCg" name="FileServer">
