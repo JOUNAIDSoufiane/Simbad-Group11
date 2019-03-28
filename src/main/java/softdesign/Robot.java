@@ -172,7 +172,7 @@ public class Robot extends Agent
 			moveTo();
     }
     
-    public void moveTo() {
+    private void moveTo() {
     	this.getCoords(position);
 		Coordinates coordinates = new Coordinates(position.x, position.z);
 		
@@ -184,12 +184,11 @@ public class Robot extends Agent
 				turnLeft();
 	    }
 	    	
-		centralStation.updateCoordinates(this, coordinates);
+		centralStation.updateCoordinates(coordinates);
 		
 		if(coordinates.x == goal.x && coordinates.y == goal.y) {
-			centralStation.updateCoordinates(this, coordinates);
+			centralStation.updateCoordinates(coordinates);
 			centralStation.isFree(this, coordinates, prevCoordinates);
-			System.out.println("Reached Goal. Now Spiraling");
 			behaviorPattern = "spiral";
 		}
 		else if((coordinates.x != prevCoordinates.x) && (coordinates.x == goal.x && centralStation.nothingBetween(coordinates, goal))) {
@@ -238,7 +237,7 @@ public class Robot extends Agent
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
 			if(coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y) {
-				centralStation.updateCoordinates(this, coordinates);
+				centralStation.updateCoordinates(coordinates);
 				prevCoordinates = coordinates;
 			}
 		}

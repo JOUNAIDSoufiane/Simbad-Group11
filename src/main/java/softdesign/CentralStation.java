@@ -5,9 +5,7 @@
 package main.java.softdesign;
 
 import java.awt.image.BufferedImage;
-
 import javax.vecmath.Vector3d;
-
 import simbad.sim.RangeSensorBelt;
 
 /************************************************************/
@@ -114,8 +112,6 @@ public class CentralStation {
 	
 	//Give coordinate to move to for next spiral
 	public void cleanUp() {
-		System.out.println("Now Cleaning");
-		
 		//remove all unvisited coordinates that don't have any adjacent unvisited coordinates, since boxes need to occupy at least 2 adjacent coordinates
 		for(double i = -12; i <= 12; i+=0.5) {
 			for(double j = -12; j <= 12; j+=0.5) {
@@ -138,7 +134,6 @@ public class CentralStation {
 					robots[1].setBehavior(behaviorPatterns[4]);
 					robots[0].setGoal(coordinates);
 					robots[0].setBehavior(behaviorPatterns[4]);
-					System.out.println("Coordinate: " + i + " " + j);
 					break outerloop;
 				}
 			}
@@ -170,7 +165,7 @@ public class CentralStation {
 	 * @param robot
 	 * @param coordinates
 	 */
-	public void updateCoordinates(Robot robot, Coordinates coordinates) {
+	public void updateCoordinates(Coordinates coordinates) {
 		fileServer.removeCoordinates(coordinates);
 	}
 	
@@ -250,6 +245,8 @@ public class CentralStation {
 		directionx = origin.x > y.x ? -1 : 1;
 		
 		Object object = new Object();
+		Coordinates center = new Coordinates((coordinates[0].x + coordinates[1].x +coordinates[2].x +coordinates[3].x)/4,
+				(coordinates[0].y + coordinates[1].y +coordinates[2].y +coordinates[3].y)/4);
 		
 		for (double i = 0; i <= width; i+= 0.5){ // removing the coordinates occupied by the object from the unvisited array
 			for (double j = 0; j <= length; j+=0.5){
@@ -263,7 +260,7 @@ public class CentralStation {
 		fileServer.addObject(object);
 		
 		if (goalColor.detectColor() == object.getColor().detectColor())
-			System.out.println("Found " + object.getColor().detectColor() + " Object");
+			System.out.println("Found " + object.getColor().detectColor() + " Object at Coordinates: " + center.x + ", " + center.y);
 	}
 	/**
 	 * 
@@ -370,7 +367,6 @@ public class CentralStation {
 		
 		//getting instance of File Server
 		fileServer = FileServer.getInstance();
-		
 	}
 
 	/**
@@ -385,10 +381,7 @@ public class CentralStation {
 	}
 	
 	public void stopMission() {
-		robots[0].stop();
-		robots[1].stop();
-		robots[0].setBehavior(behaviorPatterns[2]);
-		robots[1].setBehavior(behaviorPatterns[2]);
+		doneMapping();
 		System.out.println("Mission Stopped.");
 	}
 };

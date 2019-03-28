@@ -34,7 +34,7 @@ class StopButton implements ActionListener {
 	@Override
     public void actionPerformed(ActionEvent e) {
 		CentralStation CS = CentralStation.getInstance();
-		CS.doneMapping();
+		button.setEnabled(false);
 		CS.stopMission();
     }
 }

@@ -15,7 +15,7 @@ public class Object {
 	/**
 	 * 
 	 */
-	private ArrayList<Coordinates> coordinatesArray = new ArrayList<Coordinates>();
+	private ArrayList<Coordinates> coordinates = new ArrayList<Coordinates>();
 	
 	
 	private Color color;
@@ -26,7 +26,7 @@ public class Object {
 	 * @param color 
 	 */
 	public void addCoordinates(Coordinates coordinates) {
-		coordinatesArray.add(coordinates);
+		this.coordinates.add(coordinates);
 	}
 	
 	public void setColor(Color color) {
@@ -38,6 +38,6 @@ public class Object {
 	}
 	
 	public boolean contains(Coordinates coordinates) {
-		return coordinatesArray.contains(coordinates);
+		return this.coordinates.contains(coordinates);
 	}
 };
