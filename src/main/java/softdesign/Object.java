@@ -36,4 +36,8 @@ public class Object {
 	public Color getColor() {
 		return color;
 	}
+	
+	public boolean contains(Coordinates coordinates) {
+		return coordinatesArray.contains(coordinates);
+	}
 };

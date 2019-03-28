@@ -41,6 +41,15 @@ public class FileServer {
 		objects.add(object);
 	}
 	
+	public boolean isObject(Coordinates coordinates) {
+		for(int i = 0; i < objects.size(); i++) {
+			Object object = objects.get(i);
+			if(object.contains(coordinates))
+				return true;
+		}
+		return false;
+	}
+	
 	public boolean isblocked(Coordinates coordinates) {
 		for(int i = 0; i < blocked.size(); i++) {
 			Coordinates coords = blocked.get(i);

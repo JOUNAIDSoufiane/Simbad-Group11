@@ -21,7 +21,7 @@ public class Robot extends Agent
 	 */
 				private Point3d position = new Point3d();
 				private Coordinates prevCoordinates;
-				public Coordinates goal;
+				private Coordinates goal;
 
 	/**
 				 * 
@@ -38,7 +38,6 @@ public class Robot extends Agent
 				 */
 				private int leftCounter;
 				
-				private int crashCounter;
 				/**
 				 * 
 				 */
@@ -82,6 +81,10 @@ public class Robot extends Agent
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	public void setGoal(Coordinates coordinates) {
+		this.goal = coordinates;
 	}
 
     public void initBehavior() {
@@ -157,15 +160,13 @@ public class Robot extends Agent
 				leftCounter++;
 				tempMemory[leftCounter-1] = coordinates;
 				if (leftCounter == 4){
-					centralStation.foundObject(new Coordinates(position.x,position.z),cameraImage);
-					centralStation.mapObject(tempMemory);
+					centralStation.mapObject(tempMemory, cameraImage);
 					leftCounter = 0;
 					behaviorPattern = "spiral";
 				}
 			}
-			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5) {
+			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5)
 				turnRight();
-			}
 		}
 		else if(behaviorPattern == "moveTo")
 			moveTo();
@@ -175,25 +176,12 @@ public class Robot extends Agent
     	this.getCoords(position);
 		Coordinates coordinates = new Coordinates(position.x, position.z);
 		
-		if (sonars.hasHit(0) && sonars.getMeasurement(0) < 0.1) // XXX CRASH FIX
-			turnLeft();
-		else if (sonars.hasHit(1) && sonars.getMeasurement(1) < 0.2) // XXX CRASH FIX
-			turnRight();
-		else if (sonars.hasHit(7) && sonars.getMeasurement(7) < 0.2) // XXX CRASH FIX
-			turnLeft();
-		
-		
 		//XXX this part could check if object is a new one and map it if it is otherwise it could just do same shit it does now
-		if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4)){ // XXX makes it turn infinitely over a stand alone polygon
-			if (crashCounter < 42){
-				turnLeft();
-				crashCounter++;
-			}
-			else{
-				System.out.println("too many left turns");
+		if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4)){
+			if(centralStation.isObject(coordinates, prevCoordinates))
 				turnRight();
-				crashCounter = 0;
-			}
+			else 
+				turnLeft();
 	    }
 	    	
 		centralStation.updateCoordinates(this, coordinates);
@@ -202,14 +190,10 @@ public class Robot extends Agent
 			centralStation.updateCoordinates(this, coordinates);
 			centralStation.isFree(this, coordinates, prevCoordinates);
 			System.out.println("Reached Goal. Now Spiraling");
-			crashCounter = 0;
 			behaviorPattern = "spiral";
 		}
-		else if((coordinates.x != prevCoordinates.x)) {
-			if(coordinates.x == goal.x && centralStation.nothingBetween(coordinates, goal)) {
+		else if((coordinates.x != prevCoordinates.x) && (coordinates.x == goal.x && centralStation.nothingBetween(coordinates, goal))) {
 				turnRight();
-				crashCounter = 0;
-			}
 		}
 		
     }

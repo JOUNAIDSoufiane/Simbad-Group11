@@ -24,21 +24,21 @@ public class Color {
 	
 	public String detectColor(){
 		if (red > 250 && green < 50 && blue < 50)
-			return "red";
+			return "Red";
 		else if (red < 50 && green > 250 && blue < 50)
-			return "green";
+			return "Green";
 		else if (red < 50 && green < 50 && blue > 250)
-			return "blue";
+			return "Blue";
 		else if (red > 200 && green > 200 && blue < 50)
-			return "yellow";
+			return "Yellow";
 		else if (red < 50 && green > 200 && blue > 200)
-			return "cyan";
+			return "Cyan";
 		else if (red > 200 && green < 50 && blue > 200)
-			return "magenta";
+			return "Magenta";
 		else if (red < 50 && green < 50 && blue < 50)
-			return "black";
+			return "Black";
 		else
-			return "fail";
+			return "Unknown Color";
 	}
 
 	/**

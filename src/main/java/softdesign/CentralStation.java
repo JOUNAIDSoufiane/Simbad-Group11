@@ -27,7 +27,6 @@ public class CentralStation {
 	 * 
 	 */
 	private static String[] behaviorPatterns;
-	private Color objectColor;
 	/**
 	 * 
 	 */
@@ -43,6 +42,7 @@ public class CentralStation {
 	/**
 	 * 
 	 */
+	
 	public static CentralStation getInstance() {
 		return centralStation;
 	}
@@ -51,7 +51,6 @@ public class CentralStation {
 	 * 
 	 * @param position
 	 * @param name
-	 * @param count
 	 */
 	public Robot deployRobot(Vector3d position, String name) {
 		//parse name to find robot's number
@@ -67,6 +66,12 @@ public class CentralStation {
 		//remove the robot's current position 
 		fileServer.removeCoordinates(new Coordinates(position.x, position.z));
 		return robots[robotsNumber - 1];
+	}
+	
+	//Checks if Coordinates to the left of robot are an Object's coordinates
+	public boolean isObject(Coordinates coordinates, Coordinates prev) {
+		Coordinates left = getLeftCoordinates(coordinates, prev);
+		return fileServer.isObject(left);
 	}
 	
 	/**
@@ -129,9 +134,9 @@ public class CentralStation {
 			for(double j = -12.5; j <= 12.5; j+=0.5) {
 				Coordinates coordinates = new Coordinates(i,j);
 				if(!fileServer.visited(coordinates)) {
-					robots[1].goal = coordinates;							//XXX Where to move to
+					robots[1].setGoal(coordinates);		
 					robots[1].setBehavior(behaviorPatterns[4]);
-					robots[0].goal = coordinates;							//XXX Where to move to
+					robots[0].setGoal(coordinates);
 					robots[0].setBehavior(behaviorPatterns[4]);
 					System.out.println("Coordinate: " + i + " " + j);
 					break outerloop;
@@ -163,13 +168,10 @@ public class CentralStation {
 	/**
 	 * 
 	 * @param robot
-	 * @param position
+	 * @param coordinates
 	 */
 	public void updateCoordinates(Robot robot, Coordinates coordinates) {
-		
-		if (!fileServer.visited(coordinates))
-			fileServer.removeCoordinates(coordinates);
-				
+		fileServer.removeCoordinates(coordinates);
 	}
 	
 	private Coordinates getLeftCoordinates(Coordinates coordinates, Coordinates prev) {
@@ -198,25 +200,18 @@ public class CentralStation {
 		
 	}
 	
-	//removes coordinates to left of robot from unvisited array
+	//removes coordinates to left of robot and the left of that coordinate (since walls cover 2 coordinates and robot is 1 coordinate from wall) from unvisited array
 	public void removeLeftCoordinates(Coordinates coordinates, Coordinates prev) {
-		Coordinates left, leftOfLeft;
-		if(coordinates.x - prev.x > 0) {
-			left = new Coordinates(coordinates.x, coordinates.y - 0.5);
+		Coordinates left = getLeftCoordinates(coordinates, prev), leftOfLeft;
+		
+		if(coordinates.x - prev.x > 0)
 			leftOfLeft = new Coordinates(coordinates.x, coordinates.y - 1.0);
-		}
-		else if(coordinates.x - prev.x < 0) {
-			left = new Coordinates(coordinates.x, coordinates.y + 0.5);
+		else if(coordinates.x - prev.x < 0)
 			leftOfLeft = new Coordinates(coordinates.x, coordinates.y + 1.0);
-		}
-		else if(coordinates.y - prev.y > 0) {
-			left = new Coordinates(coordinates.x + 0.5, coordinates.y);
+		else if(coordinates.y - prev.y > 0)
 			leftOfLeft = new Coordinates(coordinates.x + 1.0, coordinates.y);
-		}
-		else {
-			left = new Coordinates(coordinates.x - 0.5, coordinates.y);
+		else
 			leftOfLeft = new Coordinates(coordinates.x - 1.0, coordinates.y);
-		}
 			
 		fileServer.removeCoordinates(left);
 		
@@ -224,7 +219,7 @@ public class CentralStation {
 			fileServer.removeCoordinates(leftOfLeft);
 	}
 
-	public void mapObject(Coordinates[] coordinates) {
+	public void mapObject(Coordinates[] coordinates, BufferedImage cameraImage) {
 		
 		//   OBJECT IN INVERTED SIMBAD AXIS (Origin,(vector) y, (vector) x)
 		//
@@ -264,21 +259,18 @@ public class CentralStation {
 				object.addCoordinates(newCoordinates);
 			}
 		}
-		object.setColor(objectColor);
+		object.setColor(getColor(cameraImage));
 		fileServer.addObject(object);
 		
-		if (goalColor.detectColor() == objectColor.detectColor())
-			System.out.println("Found " + objectColor.detectColor() + " Object");
-		
-
+		if (goalColor.detectColor() == object.getColor().detectColor())
+			System.out.println("Found " + object.getColor().detectColor() + " Object");
 	}
 	/**
 	 * 
-	 * @param coordinates 
-	 * @param color 
+	 * @param cameraImage
 	 * @return 
 	 */
-	public void foundObject(Coordinates coordinates, BufferedImage cameraImage) {
+	private Color getColor(BufferedImage cameraImage) {
 		
 		int rgbValue = cameraImage.getRGB(cameraImage.getHeight() - 1, cameraImage.getWidth()/2);
 		
@@ -286,9 +278,7 @@ public class CentralStation {
 		int green = (rgbValue & 0xff00) >> 8;
 		int red = (rgbValue & 0xff0000) >> 16;
 		
-		Color color = new Color(red,green,blue);
-		
-		objectColor = color;
+		return new Color(red,green,blue);
 	}
 	
     public void isFree(Robot robot, Coordinates coordinates, Coordinates prev) {
@@ -367,7 +357,7 @@ public class CentralStation {
 		//instantiating the robots array to hold maximum of 2 robots
 		robots = new Robot[2];
 		
-		//instantiating array to store current position of robots as coordinates for maximum 2 robots
+		//instantiating array to store current position of robots as coordinates for maximum of 2 robots
 		startingPositions = new Coordinates[2];
 		
 		//Instantiating array with all possible behavior patterns
