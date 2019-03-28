@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_qGA0AFFjEeml-45zlyCf3w" name="RootElement">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_I1EvEFF0Eeml-45zlyCf3w" name="StopButton">
+    <region xmi:type="uml:Region" xmi:id="_N-LW4FF0Eeml-45zlyCf3w" name="Region1">
+      <transition xmi:type="uml:Transition" xmi:id="_G05tcFF8Eemq6dE8VI9ZCg" source="_CZZLcFF8Eemq6dE8VI9ZCg" target="_aApDMFF0Eeml-45zlyCf3w"/>
+      <transition xmi:type="uml:Transition" xmi:id="_YlGYoFF8Eemq6dE8VI9ZCg" name="StopButton pressed by user" source="_aApDMFF0Eeml-45zlyCf3w" target="_JQIZwFF8Eemq6dE8VI9ZCg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_vdE18FF8Eemq6dE8VI9ZCg" source="_JQIZwFF8Eemq6dE8VI9ZCg" target="_tWhZIFF8Eemq6dE8VI9ZCg"/>
+      <subvertex xmi:type="uml:State" xmi:id="_aApDMFF0Eeml-45zlyCf3w" name="init">
+        <doActivity xmi:type="uml:Activity" xmi:id="_i1p8EFF0Eeml-45zlyCf3w" name="initialize window and button" isReentrant="true"/>
+      </subvertex>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_CZZLcFF8Eemq6dE8VI9ZCg" name="Initial"/>
+      <subvertex xmi:type="uml:State" xmi:id="_JQIZwFF8Eemq6dE8VI9ZCg" name="inform CentralStation">
+        <doActivity xmi:type="uml:Activity" xmi:id="_WAREYFF8Eemq6dE8VI9ZCg" name="send abort mission signal to CentralStation"/>
+      </subvertex>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_tWhZIFF8Eemq6dE8VI9ZCg" name="FinalState"/>
+    </region>
+  </packagedElement>
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="__49ZkFF8Eemq6dE8VI9ZCg" name="FileServer">
+    <region xmi:type="uml:Region" xmi:id="_BJyvUFF9Eemq6dE8VI9ZCg" name="Region1">
+      <transition xmi:type="uml:Transition" xmi:id="_WdTTwFF-Eemr0vQgMo_Umg" source="_DlsKAFF9Eemq6dE8VI9ZCg" target="_M4fVoFF-Eemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_ekv8AFF-Eemr0vQgMo_Umg" source="_M4fVoFF-Eemr0vQgMo_Umg" target="_Xr1jcFF-Eemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_Eh8sAFF_Eemr0vQgMo_Umg" name="request data from CentralStation" source="_Xr1jcFF-Eemr0vQgMo_Umg" target="_2RdB4FF-Eemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_NQyrcFF_Eemr0vQgMo_Umg" source="_2RdB4FF-Eemr0vQgMo_Umg" target="_Xr1jcFF-Eemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_oS6N8FF_Eemr0vQgMo_Umg" name="incoming data from CentralStation" source="_Xr1jcFF-Eemr0vQgMo_Umg" target="_QDSBMFF_Eemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_0dZN0FF_Eemr0vQgMo_Umg" source="_QDSBMFF_Eemr0vQgMo_Umg" target="_Xr1jcFF-Eemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_572akFF_Eemr0vQgMo_Umg" name="finished mapping" source="_Xr1jcFF-Eemr0vQgMo_Umg" target="_4BdKcFF_Eemr0vQgMo_Umg"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_DlsKAFF9Eemq6dE8VI9ZCg" name="Initial"/>
+      <subvertex xmi:type="uml:State" xmi:id="_M4fVoFF-Eemr0vQgMo_Umg" name="init">
+        <doActivity xmi:type="uml:Activity" xmi:id="_SBQmQFF-Eemr0vQgMo_Umg" name="initialize arrays"/>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_Xr1jcFF-Eemr0vQgMo_Umg" name="wait for CentralStation">
+        <doActivity xmi:type="uml:Activity" xmi:id="_dk62sFF-Eemr0vQgMo_Umg" name="wait for incoming data from CentralStation"/>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_2RdB4FF-Eemr0vQgMo_Umg" name="search arrays">
+        <doActivity xmi:type="uml:Activity" xmi:id="__YA9wFF-Eemr0vQgMo_Umg" name="search for requested data in stored arrays"/>
+        <exit xmi:type="uml:Activity" xmi:id="_CIVJQFF_Eemr0vQgMo_Umg" name="return requested data"/>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_QDSBMFF_Eemr0vQgMo_Umg" name="update arrays">
+        <doActivity xmi:type="uml:Activity" xmi:id="_gRt-sFF_Eemr0vQgMo_Umg" name="update arrays with received data"/>
+      </subvertex>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_4BdKcFF_Eemr0vQgMo_Umg" name="FinalState"/>
+    </region>
+  </packagedElement>
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_BXvkYFGAEemr0vQgMo_Umg" name="CentralStation">
+    <region xmi:type="uml:Region" xmi:id="_CdV6gFGAEemr0vQgMo_Umg" name="Region1">
+      <transition xmi:type="uml:Transition" xmi:id="_bWdJIFGAEemr0vQgMo_Umg" source="_En01EFGAEemr0vQgMo_Umg" target="_Idv9wFGAEemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_mxtusFGEEemr0vQgMo_Umg" name="StopButton pressed by user" source="_jHyXcFGAEemr0vQgMo_Umg" target="_j0wOUFGEEemr0vQgMo_Umg">
+        <effect xmi:type="uml:Activity" xmi:id="_0xhRcFGEEemr0vQgMo_Umg" name="print mission relevant data"/>
+      </transition>
+      <transition xmi:type="uml:Transition" xmi:id="_382lAFGEEemr0vQgMo_Umg" name="StartButton pressed" guard="_MSYTsFGFEemr0vQgMo_Umg" source="_Idv9wFGAEemr0vQgMo_Umg" target="_jHyXcFGAEemr0vQgMo_Umg">
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_MSYTsFGFEemr0vQgMo_Umg" name="color given">
+          <specification xmi:type="uml:LiteralString" xmi:id="_MSYTsVGFEemr0vQgMo_Umg" name="color_given" value="color given"/>
+        </ownedRule>
+        <effect xmi:type="uml:Activity" xmi:id="_PKd7IFGFEemr0vQgMo_Umg" name="start mission"/>
+      </transition>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_En01EFGAEemr0vQgMo_Umg" name="Initial"/>
+      <subvertex xmi:type="uml:State" xmi:id="_Idv9wFGAEemr0vQgMo_Umg" name="init">
+        <doActivity xmi:type="uml:Activity" xmi:id="_Z-6HYFGAEemr0vQgMo_Umg" name="get instance of FileServer"/>
+        <entry xmi:type="uml:Activity" xmi:id="_VXvvAFGAEemr0vQgMo_Umg" name="create 2 robots"/>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_jHyXcFGAEemr0vQgMo_Umg" name="mission running">
+        <region xmi:type="uml:Region" xmi:id="_j6IaYFGAEemr0vQgMo_Umg" name="Region1">
+          <transition xmi:type="uml:Transition" xmi:id="_ygCT0FGAEemr0vQgMo_Umg" source="_wsDNsFGAEemr0vQgMo_Umg" target="_j6LdsFGAEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_RjJmkFGBEemr0vQgMo_Umg" name="Robot encountered wall" source="_95F2wFGAEemr0vQgMo_Umg" target="_95F2wFGAEemr0vQgMo_Umg">
+            <effect xmi:type="uml:Activity" xmi:id="_fTRukFGBEemr0vQgMo_Umg" name="adjust Robot's direction"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_In5tYFGCEemr0vQgMo_Umg" name="Robot encountered object" source="_95F2wFGAEemr0vQgMo_Umg" target="_hpzhEFGBEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_eH318FGCEemr0vQgMo_Umg" source="_hpzhEFGBEemr0vQgMo_Umg" target="_M5gsgFGCEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_ggFDcFGCEemr0vQgMo_Umg" name="Robot visited new coordinate" source="_95F2wFGAEemr0vQgMo_Umg" target="_M5gsgFGCEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_m3Qn8FGCEemr0vQgMo_Umg" source="_j6LdsFGAEemr0vQgMo_Umg" target="_95F2wFGAEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_rOuXcFGCEemr0vQgMo_Umg" source="_M5gsgFGCEemr0vQgMo_Umg" target="_95F2wFGAEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_8ouwMFGCEemr0vQgMo_Umg" name="Robot reached starting position (while following wall)" source="_95F2wFGAEemr0vQgMo_Umg" target="_j6LdsFGAEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_ici6sFGDEemr0vQgMo_Umg" name="Robot finished spiraling" source="_95F2wFGAEemr0vQgMo_Umg" target="_WctEkFGDEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_oOz0QFGDEemr0vQgMo_Umg" source="_WctEkFGDEemr0vQgMo_Umg" target="_j6LdsFGAEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_vqpTsFGDEemr0vQgMo_Umg" guard="_4l6lkFGDEemr0vQgMo_Umg" source="_WctEkFGDEemr0vQgMo_Umg" target="_sg3fUFGDEemr0vQgMo_Umg">
+            <ownedRule xmi:type="uml:Constraint" xmi:id="_4l6lkFGDEemr0vQgMo_Umg" name="mapping done">
+              <specification xmi:type="uml:LiteralString" xmi:id="_YaPS0FGEEemr0vQgMo_Umg" name="done_mapping" value="mapping done"/>
+            </ownedRule>
+          </transition>
+          <subvertex xmi:type="uml:State" xmi:id="_j6LdsFGAEemr0vQgMo_Umg" name="update Robot behavior">
+            <entry xmi:type="uml:Activity" xmi:id="_6e0IQFGAEemr0vQgMo_Umg" name="assign Robot new behavior pattern"/>
+          </subvertex>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_wsDNsFGAEemr0vQgMo_Umg" name=""/>
+          <subvertex xmi:type="uml:State" xmi:id="_95F2wFGAEemr0vQgMo_Umg" name="wait for message from Robot">
+            <doActivity xmi:type="uml:Activity" xmi:id="_Mr8AAFGBEemr0vQgMo_Umg" name="wait for Robot"/>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_hpzhEFGBEemr0vQgMo_Umg" name="image processing">
+            <entry xmi:type="uml:Activity" xmi:id="_FKgZcFGCEemr0vQgMo_Umg" name="process image to identify color of encountered object"/>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_M5gsgFGCEemr0vQgMo_Umg" name="update FileServer">
+            <entry xmi:type="uml:Activity" xmi:id="_Sg06UFGCEemr0vQgMo_Umg" name="update unvisited or blocked array"/>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_WctEkFGDEemr0vQgMo_Umg" name="read FileServer">
+            <entry xmi:type="uml:Activity" xmi:id="_eOwEkFGDEemr0vQgMo_Umg" name="retrieve unvisited coordinates"/>
+          </subvertex>
+          <subvertex xmi:type="uml:FinalState" xmi:id="_sg3fUFGDEemr0vQgMo_Umg" name="Regular FinalState"/>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_j0wOUFGEEemr0vQgMo_Umg" name="Alternative FinalState"/>
+    </region>
+  </packagedElement>
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_k74ZAFGFEemr0vQgMo_Umg" name="Robot">
+    <region xmi:type="uml:Region" xmi:id="_lcOtAFGFEemr0vQgMo_Umg" name="Region1">
+      <transition xmi:type="uml:Transition" xmi:id="_Aetb4FGGEemr0vQgMo_Umg" source="_pwWNkFGFEemr0vQgMo_Umg" target="_q0z7QFGFEemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_EpDVYFGGEemr0vQgMo_Umg" source="_q0z7QFGFEemr0vQgMo_Umg" target="_BodSMFGGEemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_dZMYwFGHEemr0vQgMo_Umg" name="mission stopped by CentralStation" source="_BodSMFGGEemr0vQgMo_Umg" target="_bIIVEFGHEemr0vQgMo_Umg"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_pwWNkFGFEemr0vQgMo_Umg" name="Initial"/>
+      <subvertex xmi:type="uml:State" xmi:id="_q0z7QFGFEemr0vQgMo_Umg" name="init">
+        <doActivity xmi:type="uml:Activity" xmi:id="_6dhVgFGFEemr0vQgMo_Umg" name="get instance from CentralStation"/>
+        <entry xmi:type="uml:Activity" xmi:id="_37alIFGFEemr0vQgMo_Umg" name="initialize sensors"/>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_BodSMFGGEemr0vQgMo_Umg" name="mission running">
+        <region xmi:type="uml:Region" xmi:id="_CwQAslGGEemr0vQgMo_Umg" name="Region1">
+          <transition xmi:type="uml:Transition" xmi:id="_GpLaEFGGEemr0vQgMo_Umg" source="_FeFf8FGGEemr0vQgMo_Umg" target="_CwRO0FGGEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_tvkmwFGGEemr0vQgMo_Umg" name="found object" source="_CwRO0FGGEemr0vQgMo_Umg" target="_UKYVQFGGEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_wTeG4FGGEemr0vQgMo_Umg" source="_UKYVQFGGEemr0vQgMo_Umg" target="_CwRO0FGGEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_yz4OIFGGEemr0vQgMo_Umg" name="every &quot;step&quot; in simulator" source="_CwRO0FGGEemr0vQgMo_Umg" target="_CwRO0FGGEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_N0qT4FGHEemr0vQgMo_Umg" name="found wall" source="_CwRO0FGGEemr0vQgMo_Umg" target="__--WcFGGEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_YLchgFGHEemr0vQgMo_Umg" source="__--WcFGGEemr0vQgMo_Umg" target="_CwRO0FGGEemr0vQgMo_Umg"/>
+          <subvertex xmi:type="uml:State" xmi:id="_CwRO0FGGEemr0vQgMo_Umg" name="perform behavior">
+            <doActivity xmi:type="uml:Activity" xmi:id="_M31UsFGGEemr0vQgMo_Umg" name="explore environment according to given behavior pattern"/>
+          </subvertex>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_FeFf8FGGEemr0vQgMo_Umg" name=""/>
+          <subvertex xmi:type="uml:State" xmi:id="_UKYVQFGGEemr0vQgMo_Umg" name="report encountered object">
+            <doActivity xmi:type="uml:Activity" xmi:id="_kxbAAFGGEemr0vQgMo_Umg" name="save current coordinates"/>
+            <entry xmi:type="uml:Activity" xmi:id="_ieGSgFGGEemr0vQgMo_Umg" name="take picture"/>
+            <exit xmi:type="uml:Activity" xmi:id="_oUI40FGGEemr0vQgMo_Umg" name="send aquired data to CentralStation"/>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="__--WcFGGEemr0vQgMo_Umg" name="report encountered wall">
+            <doActivity xmi:type="uml:Activity" xmi:id="_HrU-IFGHEemr0vQgMo_Umg" name="send data of sensors to CentralStation"/>
+          </subvertex>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_bIIVEFGHEemr0vQgMo_Umg" name="FinalState"/>
+    </region>
+  </packagedElement>
+  <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_R4czEFF_Eemr0vQgMo_Umg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_R4eoQFF_Eemr0vQgMo_Umg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+    </eAnnotations>
+    <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+  </profileApplication>
+</uml:Model>
