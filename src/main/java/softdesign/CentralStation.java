@@ -77,9 +77,7 @@ public class CentralStation {
 			robot.turnLeft();
 		}
 		// When front is blocked
-		else if (!sonars.hasHit(2) && !sonars.hasHit(6))
-		{	
-			
+		else if (!sonars.hasHit(2) && !sonars.hasHit(6)){	
 			/*	    _________
 			 * 	   |
 			 * 	    O
@@ -87,7 +85,6 @@ public class CentralStation {
 			 */
 			if(sonars.hasHit(1) && !sonars.hasHit(4))
 				robot.turnRight();
-			
 			/*  _________
 			 *    	     |
 			 *  	    O	
