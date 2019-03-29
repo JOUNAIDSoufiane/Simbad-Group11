@@ -38,17 +38,16 @@ public class CentralStation {
 	 */
 	private Color goalColor;
 	/**
-	 * 
+	 * @return
 	 */
-	
 	public static CentralStation getInstance() {
 		return centralStation;
 	}
-	
 	/**
 	 * 
 	 * @param position
 	 * @param name
+	 * @return
 	 */
 	public Robot deployRobot(Vector3d position, String name) {
 		//parse name to find robot's number
@@ -65,10 +64,16 @@ public class CentralStation {
 		fileServer.removeCoordinates(new Coordinates(position.x, position.z));
 		return robots[robotsNumber - 1];
 	}
-	
-	//Checks if Coordinates to the left of robot are an Object's coordinates
-	public boolean isObject(Coordinates coordinates, Coordinates prev) {
-		Coordinates left = getLeftCoordinates(coordinates, prev);
+	/**
+	 * 
+	 * @param coordinates
+	 * @param prevCoordinates
+	 * @return
+	 * 
+	 * Checks if Coordinates to the left of robot are an Object's coordinates
+	 */
+	public boolean isObject(Coordinates coordinates, Coordinates prevCoordinates) {
+		Coordinates left = getLeftCoordinates(coordinates, prevCoordinates);
 		return fileServer.isObject(left);
 	}
 	
@@ -82,7 +87,11 @@ public class CentralStation {
 		robots[1].setBehavior(behaviorPatterns[0]);
 		goalColor = color; 
 	}
-	
+	/**
+	 * 
+	 * @param coordinates 
+	 * @return
+	 */
 	public boolean reachedStartingPositions(Coordinates coordinates) {
 		for(int i = 0; i < startingPositions.length; i++){
 			if(coordinates.x == startingPositions[i].x && coordinates.y == startingPositions[i].y)
@@ -90,14 +99,18 @@ public class CentralStation {
 		}
 		return false;
 	}
-	
-	public void spiral(Robot robot, Coordinates coordinates, Coordinates prev) {
-		Coordinates nextCoordinates = getNextCoordinates(coordinates, prev), left = getLeftCoordinates(coordinates, prev);
+	/**
+	 * 
+	 * @param robot
+	 * @param coordinates
+	 * @param prevCoordinates
+	 */
+	public void spiral(Robot robot, Coordinates coordinates, Coordinates prevCoordinates) {
+		Coordinates nextCoordinates = getNextCoordinates(coordinates, prevCoordinates), left = getLeftCoordinates(coordinates, prevCoordinates);
 
 		if(fileServer.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && fileServer.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
-				&& fileServer.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && fileServer.visited(new Coordinates(coordinates.x, coordinates.y - 0.5))) {
-			cleanUp();       // NO CONGESTING, LET THEM BRAWL EACH OTHER AND MAY THE WINNER TAKE IT ALL
-		} 
+				&& fileServer.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && fileServer.visited(new Coordinates(coordinates.x, coordinates.y - 0.5)))
+			cleanUp();
 		else {
 			if (!fileServer.visited(left))
 				robot.turnLeft();
@@ -105,12 +118,18 @@ public class CentralStation {
 				robot.turnRight();
 		}
 	}
-	
-	public void addBlocked(Coordinates coordinates, Coordinates prev) {
-		fileServer.addBlocked(getLeftCoordinates(coordinates, prev));
+	/**
+	 * 
+	 * @param coordinates
+	 * @param prevCoordinates
+	 */
+	public void addBlocked(Coordinates coordinates, Coordinates prevCoordinates) {
+		fileServer.addBlocked(getLeftCoordinates(coordinates, prevCoordinates));
 	}
-	
-	//Give coordinate to move to for next spiral
+	/**
+	 * 
+	 * Give coordinate to move to for next spiral
+	 */
 	public void cleanUp() {
 		//remove all unvisited coordinates that don't have any adjacent unvisited coordinates, since boxes need to occupy at least 2 adjacent coordinates
 		for(double i = -12; i <= 12; i+=0.5) {
@@ -142,8 +161,14 @@ public class CentralStation {
 			}
 		}
 	}
-	
-	//Checks if there is a blocked coordinate between robot and goal coordinate on x axis
+	/**
+	 * 
+	 * @param coordinates
+	 * @param goal
+	 * @return
+	 * 
+	 * Checks if there is a blocked coordinate between robot and goal coordinate on x axis
+	 */
 	public boolean nothingBetween(Coordinates coordinates, Coordinates goal) {
 		if(coordinates.y < goal.y) {
 			for(double i = coordinates.y + 0.5; i < goal.y; i+=0.5) {
@@ -162,48 +187,66 @@ public class CentralStation {
 	
 	/**
 	 * 
-	 * @param robot
 	 * @param coordinates
 	 */
 	public void updateCoordinates(Coordinates coordinates) {
 		fileServer.removeCoordinates(coordinates);
 	}
-	
-	private Coordinates getLeftCoordinates(Coordinates coordinates, Coordinates prev) {
+	/**
+	 * 
+	 * @param coordinates
+	 * @param prevCoordinates
+	 * @return
+	 * 
+	 * Calculates coordinates to left of robot
+	 */
+	private Coordinates getLeftCoordinates(Coordinates coordinates, Coordinates prevCoordinates) {
 
-		if(coordinates.x - prev.x > 0) 
+		if(coordinates.x - prevCoordinates.x > 0) 
 			return new Coordinates(coordinates.x, coordinates.y - 0.5);
-		else if(coordinates.x - prev.x < 0)
+		else if(coordinates.x - prevCoordinates.x < 0)
 			return new Coordinates(coordinates.x, coordinates.y + 0.5);
-		else if(coordinates.y - prev.y > 0)
+		else if(coordinates.y - prevCoordinates.y > 0)
 			return new Coordinates(coordinates.x + 0.5, coordinates.y);
 		else
 			return new Coordinates(coordinates.x - 0.5, coordinates.y);
 		
 	}
+	/**
+	 * 
+	 * @param coordinates
+	 * @param prevCoordinates
+	 * @return
+	 * 
+	 * Calculates coordinates in front of robot
+	 */
+	private Coordinates getNextCoordinates(Coordinates coordinates, Coordinates prevCoordinates) {
 	
-	private Coordinates getNextCoordinates(Coordinates coordinates, Coordinates prev) {
-	
-		if(coordinates.x - prev.x > 0)
+		if(coordinates.x - prevCoordinates.x > 0)
 			return new Coordinates(coordinates.x + 0.5, coordinates.y);
-		else if(coordinates.x - prev.x < 0)
+		else if(coordinates.x - prevCoordinates.x < 0)
 			return new Coordinates(coordinates.x - 0.5, coordinates.y);
-		else if(coordinates.y - prev.y > 0)
+		else if(coordinates.y - prevCoordinates.y > 0)
 			return new Coordinates(coordinates.x, coordinates.y + 0.5);
 		else
 			return new Coordinates(coordinates.x, coordinates.y - 0.5);
 		
 	}
-	
-	//removes coordinates to left of robot and the left of that coordinate (since walls cover 2 coordinates and robot is 1 coordinate from wall) from unvisited array
-	public void removeLeftCoordinates(Coordinates coordinates, Coordinates prev) {
-		Coordinates left = getLeftCoordinates(coordinates, prev), leftOfLeft;
+	/**
+	 * 
+	 * @param coordinates
+	 * @param prevCoordinates
+	 * 
+	 * Marks the next two coordinates to left of robot as visited (since walls cover 2 coordinates and robot is 1 coordinate from wall)
+	 */
+	public void removeLeftCoordinates(Coordinates coordinates, Coordinates prevCoordinates) {
+		Coordinates left = getLeftCoordinates(coordinates, prevCoordinates), leftOfLeft;
 		
-		if(coordinates.x - prev.x > 0)
+		if(coordinates.x - prevCoordinates.x > 0)
 			leftOfLeft = new Coordinates(coordinates.x, coordinates.y - 1.0);
-		else if(coordinates.x - prev.x < 0)
+		else if(coordinates.x - prevCoordinates.x < 0)
 			leftOfLeft = new Coordinates(coordinates.x, coordinates.y + 1.0);
-		else if(coordinates.y - prev.y > 0)
+		else if(coordinates.y - prevCoordinates.y > 0)
 			leftOfLeft = new Coordinates(coordinates.x + 1.0, coordinates.y);
 		else
 			leftOfLeft = new Coordinates(coordinates.x - 1.0, coordinates.y);
@@ -213,7 +256,14 @@ public class CentralStation {
 		if(leftOfLeft.x >= -12.5 && leftOfLeft.x <= 12.5 && leftOfLeft.y >= -12.5 && leftOfLeft.y <= 12.5 )
 			fileServer.removeCoordinates(leftOfLeft);
 	}
-
+	/**
+	 * 
+	 * @param coordinates
+	 * @param cameraImage
+	 * 
+	 * Maps objects by calculating all coordinates it's covering and getting the color of the object 
+	 * Stores data on file server
+	 */
 	public void mapObject(Coordinates[] coordinates, BufferedImage cameraImage) {
 		
 		//   OBJECT IN INVERTED SIMBAD AXIS (Origin,(vector) y, (vector) x)
@@ -277,16 +327,23 @@ public class CentralStation {
 		
 		return new Color(red,green,blue);
 	}
-	
-    public void isFree(Robot robot, Coordinates coordinates, Coordinates prev) {
-    	Coordinates left = getLeftCoordinates(coordinates, prev);
+	/**
+	 * 
+	 * @param robot
+	 * @param coordinates
+	 * @param prevCoordinates
+	 * 
+	 * Checks which coordinates around the robot are unvisited and turns robot in the accroding direction
+	 */
+    public void isFree(Robot robot, Coordinates coordinates, Coordinates prevCoordinates) {
+    	Coordinates left = getLeftCoordinates(coordinates, prevCoordinates);
     	Coordinates right;
     	
-    	if(coordinates.x - prev.x > 0) 
+    	if(coordinates.x - prevCoordinates.x > 0) 
 			right = new Coordinates(coordinates.x, coordinates.y + 0.5);
-		else if(coordinates.x - prev.x < 0)
+		else if(coordinates.x - prevCoordinates.x < 0)
 			right = new Coordinates(coordinates.x, coordinates.y - 0.5);
-		else if(coordinates.y - prev.y > 0)
+		else if(coordinates.y - prevCoordinates.y > 0)
 			right = new Coordinates(coordinates.x - 0.5, coordinates.y);
 		else
 			right = new Coordinates(coordinates.x + 0.5, coordinates.y);
@@ -296,7 +353,13 @@ public class CentralStation {
     	else if(!fileServer.visited(right))
     		robot.turnRight();
     }
-    
+    /**
+	 * 
+	 * @param robot
+	 * @param sonars
+	 * 
+	 * Coordinates all possible encounters with objects and walls
+	 */
 	public void foundObstacle(Robot robot, RangeSensorBelt sonars){
 		
 		//Hitting dead end 
@@ -346,7 +409,6 @@ public class CentralStation {
 				robot.turnLeft();
 		}
 	}
-
 	/**
 	 * 
 	 */
@@ -368,7 +430,6 @@ public class CentralStation {
 		//getting instance of File Server
 		fileServer = FileServer.getInstance();
 	}
-
 	/**
 	 * 
 	 */
@@ -379,7 +440,9 @@ public class CentralStation {
 		robots[1].setBehavior(behaviorPatterns[2]);
 		fileServer.count();
 	}
-	
+	/**
+	 * 
+	 */
 	public void stopMission() {
 		doneMapping();
 		System.out.println("Mission Stopped.");

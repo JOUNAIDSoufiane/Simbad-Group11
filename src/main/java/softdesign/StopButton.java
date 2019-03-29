@@ -7,15 +7,24 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 class StopButton implements ActionListener {
-	
+	/**
+	 * 
+	 */
 	private JFrame window = new JFrame();
+	/**
+	 * 
+	 */
 	private JButton button = new JButton("Stop Mission");
-	
+	/**
+	 * 
+	 */
 	StopButton(){
 		initializeWindow();
 		initializeButton();
 	}
-	
+	/**
+	 * 
+	 */
 	private void initializeWindow() {
 		 window.setTitle("Mission Control");
 	     window.getContentPane().setLayout(null);
@@ -23,16 +32,22 @@ class StopButton implements ActionListener {
 	     window.setVisible(true);
 	     window.setBounds(200,200,200,200);
 	}
-	
+	/**
+	 * 
+	 */
 	private void initializeButton(){
         button.setBounds(25,50,150,40);
         button.setBackground(java.awt.Color.RED);
         window.add(button);
         button.addActionListener(this);
     }
-	
+	/**
+	 * @param event
+	 * 
+	 * When button is clicked, call central station to stop mission and disable button so it can't be clicked again
+	 */
 	@Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent event) {
 		CentralStation CS = CentralStation.getInstance();
 		button.setEnabled(false);
 		CS.stopMission();

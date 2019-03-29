@@ -21,7 +21,11 @@ public class Color {
 	 * 
 	 */
 	public int blue;
-	
+	/**
+	 * @return
+	 * 
+	 * Detects color given and returns corresponding color name as string
+	 */
 	public String detectColor(){
 		if (red > 250 && green < 50 && blue < 50)
 			return "Red";
@@ -40,7 +44,6 @@ public class Color {
 		else
 			return "Unknown Color";
 	}
-
 	/**
 	 * 
 	 * @param red 

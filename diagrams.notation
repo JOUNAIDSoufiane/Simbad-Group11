@@ -147,10 +147,6 @@
           <element xmi:type="uml:Operation" href="diagrams.uml#_LJPI0D6WEemMj_xw1Pw9FA"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_LJhcsT6WEemMj_xw1Pw9FA"/>
         </children>
-        <children xmi:type="notation:Shape" xmi:id="_OiIS8EKWEem97IxHPBydwA" type="Operation_DataTypeOperationLabel">
-          <element xmi:type="uml:Operation" href="diagrams.uml#_Oh0J4EKWEem97IxHPBydwA"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_OiIS8UKWEem97IxHPBydwA"/>
-        </children>
         <styles xmi:type="notation:TitleStyle" xmi:id="_tVQvcTw0EemgBaKBb33t8g"/>
         <styles xmi:type="notation:SortingStyle" xmi:id="_tVQvcjw0EemgBaKBb33t8g"/>
         <styles xmi:type="notation:FilteringStyle" xmi:id="_tVQvczw0EemgBaKBb33t8g"/>
@@ -896,9 +892,9 @@
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_I3dLwT_8EemuXditDJMcHg"/>
       <element xmi:type="uml:Association" href="diagrams.uml#_I3ExQD_8EemuXditDJMcHg"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_I3dLwj_8EemuXditDJMcHg" points="[212, 400, -643984, -643984]$[301, 436, -643984, -643984]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_I4TgUD_8EemuXditDJMcHg" id="(1.0,0.5333333333333333)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_I4TgUT_8EemuXditDJMcHg" id="(0.0,0.32388663967611336)"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_I3dLwj_8EemuXditDJMcHg" points="[221, 411, -643984, -643984]$[300, 653, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_I4TgUD_8EemuXditDJMcHg" id="(1.0,0.5310077519379846)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_I4TgUT_8EemuXditDJMcHg" id="(0.0,0.3230769230769231)"/>
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_-tk8QD_8EemuXditDJMcHg" type="Association_Edge" source="_J7qIIDw1EemgBaKBb33t8g" target="_eaMaAD3DEemHvZj1G01vhw">
       <children xmi:type="notation:DecorationNode" xmi:id="_-tk8Qz_8EemuXditDJMcHg" type="Association_StereotypeLabel">

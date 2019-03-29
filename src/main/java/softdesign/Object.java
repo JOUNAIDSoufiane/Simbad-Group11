@@ -16,27 +16,36 @@ public class Object {
 	 * 
 	 */
 	private ArrayList<Coordinates> coordinates = new ArrayList<Coordinates>();
-	
-	
-	private Color color;
-
 	/**
 	 * 
-	 * @param obstacle_coords 
-	 * @param color 
+	 */
+	private Color color;
+	/**
+	 * 
+	 * @param coordinates
 	 */
 	public void addCoordinates(Coordinates coordinates) {
 		this.coordinates.add(coordinates);
 	}
-	
+	/**
+	 * 
+	 * @param color
+	 */
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public Color getColor() {
 		return color;
 	}
-	
+	/**
+	 * 
+	 * @param coordinates
+	 * @return
+	 */
 	public boolean contains(Coordinates coordinates) {
 		return this.coordinates.contains(coordinates);
 	}

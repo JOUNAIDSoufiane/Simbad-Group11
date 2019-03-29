@@ -73,9 +73,6 @@
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
       </ownedParameter>
     </ownedOperation>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_Oh0J4EKWEem97IxHPBydwA" name="Coordinates">
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_TNG0UEKWEem97IxHPBydwA" name="copy" type="_tVNFEDw0EemgBaKBb33t8g"/>
-    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_J7oS8Dw1EemgBaKBb33t8g" name="CentralStation">
     <ownedAttribute xmi:type="uml:Property" xmi:id="_8Nuh4D6MEemMj_xw1Pw9FA" name="robots" visibility="private" type="_C6dywDw0EemgBaKBb33t8g">
@@ -124,11 +121,11 @@
     <ownedOperation xmi:type="uml:Operation" xmi:id="_OZ_hcFF6EemAo9mRLFmeKQ" name="spiral">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_V2MNQFF6EemAo9mRLFmeKQ" name="robot" type="_C6dywDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_XW3V0FF6EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_Z8ZNoFF6EemAo9mRLFmeKQ" name="prev" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_Z8ZNoFF6EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_aaEBEFF6EemAo9mRLFmeKQ" name="addBlocked">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_hslzgFF6EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_i7BVgFF6EemAo9mRLFmeKQ" name="prev" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_i7BVgFF6EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_kIFlkFF6EemAo9mRLFmeKQ" name="cleanUp"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_mvu9QFF6EemAo9mRLFmeKQ" name="nothingBetween">
@@ -140,15 +137,15 @@
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_85tFEFF6EemAo9mRLFmeKQ" name="getLeftCoordinates" visibility="private">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_FbhVIFF7EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_GqDk0FF7EemAo9mRLFmeKQ" name="prev" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_GqDk0FF7EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_I1bQMFF7EemAo9mRLFmeKQ" name="getNextCoordinates" visibility="private">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_Me_X4FF7EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_NnhGMFF7EemAo9mRLFmeKQ" name="prev" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_NnhGMFF7EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_OT3O0FF7EemAo9mRLFmeKQ" name="removeLeftCoordinates" visibility="public">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_Ty3OIFF7EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_VLvsoFF7EemAo9mRLFmeKQ" name="prev" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_VLvsoFF7EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_XiF48FF7EemAo9mRLFmeKQ" name="mapObject">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_dHk6wFF7EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
@@ -160,7 +157,7 @@
     <ownedOperation xmi:type="uml:Operation" xmi:id="_sKqfcFF7EemAo9mRLFmeKQ" name="isFree">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_vspYcFF7EemAo9mRLFmeKQ" name="robot" type="_C6dywDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_w7piMFF7EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
-      <ownedParameter xmi:type="uml:Parameter" xmi:id="_ykS7AFF7EemAo9mRLFmeKQ" name="prev" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_ykS7AFF7EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_0wIgcFF7EemAo9mRLFmeKQ" name="stopMission"/>
   </packagedElement>

@@ -57,10 +57,6 @@ public class Environment extends EnvironmentDescription {
         room1Wall3.setColor(new Color3f(Color.BLUE));
         add(room1Wall3);
         
-//        Wall room1wall4 = new Wall(new Vector3d(0.4, 0, -7.5), 1, 1, this);
-//        room1wall4.setColor(new Color3f(Color.BLUE));
-//        add(room1wall4);
-
         Wall room2Wall2 = new Wall(new Vector3d(7.5, 0, -4), 7, 1, this);
         room2Wall2.setColor(new Color3f(Color.BLUE));
         room2Wall2.rotate90(1);
@@ -129,10 +125,5 @@ public class Environment extends EnvironmentDescription {
         Box button = new Box(new Vector3d(-9, 0, -9), new Vector3f(3, 1, 3), this);
         button.setColor(new Color3f(Color.RED));
         add(button);
-        
-//        Box box4 = new Box(new Vector3d(-2, 0, 8), new Vector3f(2, 1, 2), this);
-//        box4.setColor(new Color3f(Color.RED));
-//        add(box4);
-        
     }
 }

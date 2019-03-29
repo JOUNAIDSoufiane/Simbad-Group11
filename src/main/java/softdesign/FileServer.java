@@ -23,24 +23,35 @@ public class FileServer {
 	 * 
 	 */
 	private ArrayList<Object> objects = new ArrayList<Object>();
-	
+	/**
+	 * 
+	 */
 	private ArrayList<Coordinates> blocked = new ArrayList<Coordinates>();
 	/**
 	 * 
-	 * 
+	 * @return
 	 */
 	public static FileServer getInstance() {
 		return fileServer;
 	}
-	
+	/**
+	 * @param coordinates
+	 */
 	public void addBlocked(Coordinates coordinates) {
 		blocked.add(coordinates);
 	}
-	
+	/**
+	 * @param object
+	 */
 	public void addObject(Object object) {
 		objects.add(object);
 	}
-	
+	/**
+	 * @param coordinates
+	 * @return
+	 * 
+	 * Checks whether coordinates belong to an object
+	 */
 	public boolean isObject(Coordinates coordinates) {
 		for(int i = 0; i < objects.size(); i++) {
 			Object object = objects.get(i);
@@ -49,7 +60,12 @@ public class FileServer {
 		}
 		return false;
 	}
-	
+	/**
+	 * @param coordinates
+	 * @return
+	 * 
+	 * Checks if coordinates are a wall's or an object's coordinates
+	 */
 	public boolean isblocked(Coordinates coordinates) {
 		for(int i = 0; i < blocked.size(); i++) {
 			Coordinates coords = blocked.get(i);
@@ -61,6 +77,8 @@ public class FileServer {
 	/**
 	 * 
 	 * @param coordinates
+	 * 
+	 * Marks coordinates as visited
 	 */
 	public void removeCoordinates(Coordinates coordinates) {
 		//replace already visited coordinate in array with coordinate 99,99
@@ -76,7 +94,10 @@ public class FileServer {
 	public boolean visited(Coordinates coordinates) {
 		return unvisited[(int) (((12.5 + coordinates.x) / 0.5 * 51) + (12.5 + coordinates.y) / 0.5)].x == 99;
 	}
-	
+	/**
+	 * 
+	 * Prints how many coordinates have been visited and how many are left to visit
+	 */
 	public void count() {
 		int visited_coords = 0, unvisited_coords = 0;
 		
@@ -90,14 +111,11 @@ public class FileServer {
 		System.out.println("Number of Visited Coordinates: " + visited_coords);
 		System.out.println("Number of Unvisited Coordinates: " + unvisited_coords);
 	}
-	
-	
 	/**
 	 * 
 	 *
 	 */
 	private FileServer() {
-		
 		//initialize unvisited array with all possible coordinates
 		int count = 0;
 		double x = -12.5;

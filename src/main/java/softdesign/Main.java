@@ -1,11 +1,9 @@
 package main.java.softdesign;
 
-
 import simbad.gui.*;
 import simbad.sim.*;
 
 import javax.vecmath.Vector3d;
-
 
 public class Main {
 
@@ -32,14 +30,11 @@ public class Main {
         environment.add(robot1);
         environment.add(robot2);
         
-        //Starting mission with red as color for the target box
+        //Starting mission with color for target box given in its rgb values (in this case values correspond to red)
         centralStation.startMission(new Color(255,0,0));
         
         // here we create an instance of the whole Simbad simulator and we assign the newly created environment 
         Simbad frame = new Simbad(environment, false);
-        frame.setName("Misson Control");
         frame.update(frame.getGraphics());
-        
     }
-
 } 

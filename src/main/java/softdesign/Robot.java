@@ -10,46 +10,50 @@ import simbad.sim.CameraSensor;
 import simbad.sim.RobotFactory;
 import simbad.sim.RangeSensorBelt; 
 
-public class Robot extends Agent
-{
-	/**
+public class Robot extends Agent {
+				/**
 				 * 
 				 */
 				private String name;
-	/**
-	 * 
-	 */
+				/**
+				 * 
+				 */
 				private Point3d position = new Point3d();
+				/**
+				 * 
+				 */
 				private Coordinates prevCoordinates;
+				/**
+				 * 
+				 */
 				private Coordinates goal;
-
-	/**
+				/**
 				 * 
 				 */
 				private CameraSensor camera;
-
-	/**
+				/**
 				 * 
 				 */
 				private RangeSensorBelt sonars;
-
-	/**
+				/**
 				 * 
 				 */
 				private int leftCounter;
-				
 				/**
 				 * 
 				 */
 				private BufferedImage cameraImage;
-				
-				private Coordinates[] tempMemory = new Coordinates[4];
-	/**
+				/**
 				 * 
 				 */
-				
+				private Coordinates[] tempMemory = new Coordinates[4];
+				/**
+				 * 
+				 */
 				private String behaviorPattern;
-				
+				/**
+				 * 
+				 */
 				private CentralStation centralStation;
 				
 
@@ -59,7 +63,6 @@ public class Robot extends Agent
 	 * @param name 
 	 */
 	public Robot(Vector3d position, String name) {
-		
 		super(position,name);
 		this.name = name;
 		this.leftCounter = 0;
@@ -82,15 +85,18 @@ public class Robot extends Agent
 	public String getName() {
 		return name;
 	}
-	
+	/**
+	 * 
+	 */
 	public void setGoal(Coordinates coordinates) {
 		this.goal = coordinates;
 	}
-
+	/**
+	 * 
+	 */
     public void initBehavior() {
         System.out.println("I exist and my name is " + this.getName());
     }
-    
     /**
 	 * 
 	 * @param behavior
@@ -99,7 +105,7 @@ public class Robot extends Agent
     	behaviorPattern = behavior;
     }
     /**
-	 * sets a positive translational velocity 
+	 * sets a positive translational velocity, coordinates all different behavior patterns and obstacle avoidance
 	 */  
     public void move() {
 		this.setRotationalVelocity(0);
@@ -117,7 +123,7 @@ public class Robot extends Agent
 			}
 		}
 			
-		//Wall following code 
+		//Following along wall with wall on the robot's left side
 		if(behaviorPattern == "followWall") {
 			//turn left when possible
 			if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
@@ -136,47 +142,59 @@ public class Robot extends Agent
 			}
 		}
 		
-		
+		//Coordinates the inward spiral
 		else if(behaviorPattern == "spiral") {
 
-			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) { // encounters obstacle
-				if (leftCounter == 0)
+			//When obstacle encountered take picture, turn right, and change behavior pattern to go around the obstacle
+			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) {
+				if(leftCounter == 0)
 					camera.copyVisionImage(cameraImage);
 				turnRight();
 				behaviorPattern = "aroundObstacle";
 			}
 			
+			//As soon as robot reaches new coordinates, calls central station to coordinate robot's spiral
 			if((coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y))
 				centralStation.spiral(this, coordinates, prevCoordinates);
 		}
 		
 		else if(behaviorPattern == "aroundObstacle") {
-			
 			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3))
 				turnLeft();
 			
+			//Turn left when possible
 			else if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(2) && !sonars.hasHit(4)){
 				turnLeft();
 				leftCounter++;
+				
+				//Count left turns and store corner coordinates of object in array
 				tempMemory[leftCounter-1] = coordinates;
-				if (leftCounter == 4){
+				
+				//Once full cycle around obstacle completed, send data to central station to analyze
+				if(leftCounter == 4){
 					centralStation.mapObject(tempMemory, cameraImage);
 					leftCounter = 0;
 					behaviorPattern = "spiral";
 				}
 			}
+			
+			//Avoid crashing into obstacle in front
 			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5)
 				turnRight();
 		}
+		
+		//Coordinates robots to move to coordinates set in goal coordinates
 		else if(behaviorPattern == "moveTo")
 			moveTo();
     }
-    
+	/**
+	 * 
+	 */
     private void moveTo() {
     	this.getCoords(position);
 		Coordinates coordinates = new Coordinates(position.x, position.z);
 		
-		//XXX this part could check if object is a new one and map it if it is otherwise it could just do same shit it does now
+		//If known obstacle is to left of robot, turn right to not circle around known objects
 		if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4)){
 			if(centralStation.isObject(coordinates, prevCoordinates))
 				turnRight();
@@ -186,14 +204,18 @@ public class Robot extends Agent
 	    	
 		centralStation.updateCoordinates(coordinates);
 		
+		//When robot reaches goal coordinates, change behavior to start spiraling in area of unvisited coordinates
 		if(coordinates.x == goal.x && coordinates.y == goal.y) {
 			centralStation.updateCoordinates(coordinates);
+			
+			//Checks which direction of the robot has unvisited coordinates and turns the robot towards that direction
 			centralStation.isFree(this, coordinates, prevCoordinates);
 			behaviorPattern = "spiral";
 		}
-		else if((coordinates.x != prevCoordinates.x) && (coordinates.x == goal.x && centralStation.nothingBetween(coordinates, goal))) {
+		
+		//When robot reaches same x coordinate as goal coordinates turn right, if there is no wall or object in the way
+		else if((coordinates.x != prevCoordinates.x) && (coordinates.x == goal.x && centralStation.nothingBetween(coordinates, goal)))
 				turnRight();
-		}
 		
     }
     /**
@@ -219,21 +241,22 @@ public class Robot extends Agent
 		this.setTranslationalVelocity(0);
 		this.rotateY(Math.PI); // 180 degrees
     }
-    
+	/**
+	 * 
+	 */
     public void stop(){
 		this.setTranslationalVelocity(0);
 		this.setRotationalVelocity(0);
     }
-
-    
-    
+	/**
+	 * 
+	 */
 	public void performBehavior() {
-		
 		if(behaviorPattern != "stop" && behaviorPattern != "finished") {
 			//Robot starts moving straight
 			move();
 			
-			//robot sends its position to central station whenever its position has changed coordinates
+			//robot sends its position to central station whenever its position has changed coordinates so central station can mark those coordinates as visited
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
 			if(coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y) {
@@ -241,10 +264,9 @@ public class Robot extends Agent
 				prevCoordinates = coordinates;
 			}
 		}
-		
-}
+	}
     
-	public String get_behavior() {
+	public String getBehavior() {
 		return behaviorPattern;
 	}
 
