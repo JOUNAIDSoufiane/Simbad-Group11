@@ -71,18 +71,18 @@ public class CentralStation {
 	 * @return
 	 * 
 	 * Checks if Coordinates to the left behind the robot are an Object's coordinates
-	 * To get the left coordinates behind the robot, it gets the right coordinates of the robot's inversed travel direction
+	 * To get the left coordinates behind the robot, it gets the right coordinates of the robot's inverted travel direction
 	 */
 	public boolean isObject(Coordinates coordinates, Coordinates prevCoordinates) {
 		Coordinates right;
 		if(coordinates.x - prevCoordinates.x > 0) 
-			right =  new Coordinates(coordinates.x, coordinates.y + 0.5);
+			right =  new Coordinates(prevCoordinates.x, prevCoordinates.y + 0.5);
 		else if(coordinates.x - prevCoordinates.x < 0)
-			right =  new Coordinates(coordinates.x, coordinates.y - 0.5);
+			right =  new Coordinates(prevCoordinates.x, prevCoordinates.y - 0.5);
 		else if(coordinates.y - prevCoordinates.y > 0)
-			right =  new Coordinates(coordinates.x - 0.5, coordinates.y);
+			right =  new Coordinates(prevCoordinates.x - 0.5, prevCoordinates.y);
 		else
-			right = new Coordinates(coordinates.x + 0.5, coordinates.y);
+			right = new Coordinates(prevCoordinates.x + 0.5, prevCoordinates.y);
 		
 		return fileServer.isObject(right);
 	}
