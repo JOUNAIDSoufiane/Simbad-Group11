@@ -137,4 +137,17 @@ public class FileServer {
 			removeCoordinates(new Coordinates(i, -12.5));
 		}
 	}
+	/**
+	 * 
+	 * @param color
+	 * Checks if an object of the given color has been found and outputs its color and coordinates, if found
+	 */
+	public void foundObject(Color color) {
+		for(int i = 0; i < objects.size(); i++) {
+			Object object = objects.get(i);
+			if(object.getColor().detectColor() == color.detectColor()) {
+				System.out.println("Found " + color.detectColor() + " Object at Coordinates: " + object.getCenterCoordinates().x + ", " + object.getCenterCoordinates().y );
+			}
+		}
+	}
 };

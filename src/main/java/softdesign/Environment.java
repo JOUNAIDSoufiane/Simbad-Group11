@@ -122,8 +122,8 @@ public class Environment extends EnvironmentDescription {
         box3.setColor(new Color3f(Color.ORANGE));
         add(box3);
         
-        Box button = new Box(new Vector3d(-9, 0, -9), new Vector3f(3, 1, 3), this);
-        button.setColor(new Color3f(Color.RED));
-        add(button);
+        Box box4 = new Box(new Vector3d(-9, 0, -9), new Vector3f(3, 1, 3), this);
+        box4.setColor(new Color3f(Color.RED));
+        add(box4);
     }
 }

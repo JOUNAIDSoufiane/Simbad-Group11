@@ -70,11 +70,21 @@ public class CentralStation {
 	 * @param prevCoordinates
 	 * @return
 	 * 
-	 * Checks if Coordinates to the left of robot are an Object's coordinates
+	 * Checks if Coordinates to the left behind the robot are an Object's coordinates
+	 * To get the left coordinates behind the robot, it gets the right coordinates of the robot's inversed travel direction
 	 */
 	public boolean isObject(Coordinates coordinates, Coordinates prevCoordinates) {
-		Coordinates left = getLeftCoordinates(coordinates, prevCoordinates);
-		return fileServer.isObject(left);
+		Coordinates right;
+		if(coordinates.x - prevCoordinates.x > 0) 
+			right =  new Coordinates(coordinates.x, coordinates.y + 0.5);
+		else if(coordinates.x - prevCoordinates.x < 0)
+			right =  new Coordinates(coordinates.x, coordinates.y - 0.5);
+		else if(coordinates.y - prevCoordinates.y > 0)
+			right =  new Coordinates(coordinates.x - 0.5, coordinates.y);
+		else
+			right = new Coordinates(coordinates.x + 0.5, coordinates.y);
+		
+		return fileServer.isObject(right);
 	}
 	
 	/**
@@ -307,10 +317,8 @@ public class CentralStation {
 			}
 		}
 		object.setColor(getColor(cameraImage));
+		object.addCoordinates(center);
 		fileServer.addObject(object);
-		
-		if (goalColor.detectColor() == object.getColor().detectColor())
-			System.out.println("Found " + object.getColor().detectColor() + " Object at Coordinates: " + center.x + ", " + center.y);
 	}
 	/**
 	 * 
@@ -318,7 +326,6 @@ public class CentralStation {
 	 * @return 
 	 */
 	private Color getColor(BufferedImage cameraImage) {
-		
 		int rgbValue = cameraImage.getRGB(cameraImage.getHeight() - 1, cameraImage.getWidth()/2);
 		
 		int blue = rgbValue & 0xff;
@@ -333,7 +340,7 @@ public class CentralStation {
 	 * @param coordinates
 	 * @param prevCoordinates
 	 * 
-	 * Checks which coordinates around the robot are unvisited and turns robot in the accroding direction
+	 * Checks which coordinates around the robot are unvisited and turns robot in the according direction
 	 */
     public void isFree(Robot robot, Coordinates coordinates, Coordinates prevCoordinates) {
     	Coordinates left = getLeftCoordinates(coordinates, prevCoordinates);
@@ -424,7 +431,7 @@ public class CentralStation {
 		behaviorPatterns[0] = "followWall";
 		behaviorPatterns[1] = "spiral";
 		behaviorPatterns[2] = "stop";
-		behaviorPatterns[3] = "finished";
+		behaviorPatterns[3] = "aroundObstacle";
 		behaviorPatterns[4] = "moveTo";
 		
 		//getting instance of File Server
@@ -439,12 +446,13 @@ public class CentralStation {
 		robots[0].setBehavior(behaviorPatterns[2]);
 		robots[1].setBehavior(behaviorPatterns[2]);
 		fileServer.count();
+		fileServer.foundObject(goalColor);
 	}
 	/**
 	 * 
 	 */
 	public void stopMission() {
-		doneMapping();
 		System.out.println("Mission Stopped.");
+		doneMapping();
 	}
 };
