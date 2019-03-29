@@ -25,7 +25,7 @@
       <transition xmi:type="uml:Transition" xmi:id="_NQyrcFF_Eemr0vQgMo_Umg" source="_2RdB4FF-Eemr0vQgMo_Umg" target="_Xr1jcFF-Eemr0vQgMo_Umg"/>
       <transition xmi:type="uml:Transition" xmi:id="_oS6N8FF_Eemr0vQgMo_Umg" name="incoming data from CentralStation" source="_Xr1jcFF-Eemr0vQgMo_Umg" target="_QDSBMFF_Eemr0vQgMo_Umg"/>
       <transition xmi:type="uml:Transition" xmi:id="_0dZN0FF_Eemr0vQgMo_Umg" source="_QDSBMFF_Eemr0vQgMo_Umg" target="_Xr1jcFF-Eemr0vQgMo_Umg"/>
-      <transition xmi:type="uml:Transition" xmi:id="_572akFF_Eemr0vQgMo_Umg" name="finished mapping" source="_Xr1jcFF-Eemr0vQgMo_Umg" target="_4BdKcFF_Eemr0vQgMo_Umg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_572akFF_Eemr0vQgMo_Umg" name="mission ended by CentralStation" source="_Xr1jcFF-Eemr0vQgMo_Umg" target="_4BdKcFF_Eemr0vQgMo_Umg"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_DlsKAFF9Eemq6dE8VI9ZCg" name="Initial"/>
       <subvertex xmi:type="uml:State" xmi:id="_M4fVoFF-Eemr0vQgMo_Umg" name="init">
         <doActivity xmi:type="uml:Activity" xmi:id="_SBQmQFF-Eemr0vQgMo_Umg" name="initialize arrays"/>
@@ -55,10 +55,10 @@
         </ownedRule>
         <effect xmi:type="uml:Activity" xmi:id="_PKd7IFGFEemr0vQgMo_Umg" name="start mission"/>
       </transition>
+      <transition xmi:type="uml:Transition" xmi:id="_Qh5EYFJyEemo06XL_S4nhQ" source="_jHyXcFGAEemr0vQgMo_Umg" target="_N-sH0FJyEemo06XL_S4nhQ"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_En01EFGAEemr0vQgMo_Umg" name="Initial"/>
       <subvertex xmi:type="uml:State" xmi:id="_Idv9wFGAEemr0vQgMo_Umg" name="init">
-        <doActivity xmi:type="uml:Activity" xmi:id="_Z-6HYFGAEemr0vQgMo_Umg" name="get instance of FileServer"/>
-        <entry xmi:type="uml:Activity" xmi:id="_VXvvAFGAEemr0vQgMo_Umg" name="create 2 robots"/>
+        <entry xmi:type="uml:Activity" xmi:id="_VXvvAFGAEemr0vQgMo_Umg" name="create 2 robots and get instance of FileServer"/>
       </subvertex>
       <subvertex xmi:type="uml:State" xmi:id="_jHyXcFGAEemr0vQgMo_Umg" name="mission running">
         <region xmi:type="uml:Region" xmi:id="_j6IaYFGAEemr0vQgMo_Umg" name="Region1">
@@ -68,35 +68,41 @@
           <transition xmi:type="uml:Transition" xmi:id="_ggFDcFGCEemr0vQgMo_Umg" name="Robot visited new coordinate" source="_95F2wFGAEemr0vQgMo_Umg" target="_M5gsgFGCEemr0vQgMo_Umg"/>
           <transition xmi:type="uml:Transition" xmi:id="_m3Qn8FGCEemr0vQgMo_Umg" source="_j6LdsFGAEemr0vQgMo_Umg" target="_95F2wFGAEemr0vQgMo_Umg"/>
           <transition xmi:type="uml:Transition" xmi:id="_rOuXcFGCEemr0vQgMo_Umg" source="_M5gsgFGCEemr0vQgMo_Umg" target="_95F2wFGAEemr0vQgMo_Umg"/>
-          <transition xmi:type="uml:Transition" xmi:id="_8ouwMFGCEemr0vQgMo_Umg" name="Robot reached starting position (while following wall)" source="_95F2wFGAEemr0vQgMo_Umg" target="_j6LdsFGAEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_8ouwMFGCEemr0vQgMo_Umg" name="Robot reached starting position" guard="_9l4uMFJBEem1gpesRY_u1A" source="_95F2wFGAEemr0vQgMo_Umg" target="_j6LdsFGAEemr0vQgMo_Umg">
+            <ownedRule xmi:type="uml:Constraint" xmi:id="_9l4uMFJBEem1gpesRY_u1A" name="while following wall">
+              <specification xmi:type="uml:LiteralString" xmi:id="_9l4uMVJBEem1gpesRY_u1A" name="while following wall" value="while following wall"/>
+            </ownedRule>
+          </transition>
           <transition xmi:type="uml:Transition" xmi:id="_ici6sFGDEemr0vQgMo_Umg" name="Robot finished spiraling" source="_95F2wFGAEemr0vQgMo_Umg" target="_WctEkFGDEemr0vQgMo_Umg"/>
           <transition xmi:type="uml:Transition" xmi:id="_oOz0QFGDEemr0vQgMo_Umg" source="_WctEkFGDEemr0vQgMo_Umg" target="_j6LdsFGAEemr0vQgMo_Umg"/>
-          <transition xmi:type="uml:Transition" xmi:id="_vqpTsFGDEemr0vQgMo_Umg" guard="_4l6lkFGDEemr0vQgMo_Umg" source="_WctEkFGDEemr0vQgMo_Umg" target="_sg3fUFGDEemr0vQgMo_Umg">
+          <transition xmi:type="uml:Transition" xmi:id="_vqpTsFGDEemr0vQgMo_Umg" name="mapping done" source="_WctEkFGDEemr0vQgMo_Umg" target="_sg3fUFGDEemr0vQgMo_Umg">
             <ownedRule xmi:type="uml:Constraint" xmi:id="_4l6lkFGDEemr0vQgMo_Umg" name="mapping done">
               <specification xmi:type="uml:LiteralString" xmi:id="_YaPS0FGEEemr0vQgMo_Umg" name="done_mapping" value="mapping done"/>
             </ownedRule>
+            <effect xmi:type="uml:Activity" xmi:id="_Nl4soFJ6Eem1U5j2mPgA8A" name="stop mission"/>
           </transition>
           <transition xmi:type="uml:Transition" xmi:id="_DFRosFI6Eem5QoswbqW8zA" name="Robot encountered wall" source="_95F2wFGAEemr0vQgMo_Umg" target="_j6LdsFGAEemr0vQgMo_Umg"/>
           <subvertex xmi:type="uml:State" xmi:id="_j6LdsFGAEemr0vQgMo_Umg" name="update Robot behavior">
-            <entry xmi:type="uml:Activity" xmi:id="_6e0IQFGAEemr0vQgMo_Umg" name="assign Robot new behavior pattern"/>
+            <doActivity xmi:type="uml:Activity" xmi:id="_-n4eEFI-Eem1gpesRY_u1A" name="assign Robot new behavior pattern"/>
           </subvertex>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_wsDNsFGAEemr0vQgMo_Umg" name=""/>
           <subvertex xmi:type="uml:State" xmi:id="_95F2wFGAEemr0vQgMo_Umg" name="wait for message from Robot">
             <doActivity xmi:type="uml:Activity" xmi:id="_Mr8AAFGBEemr0vQgMo_Umg" name="wait for Robot"/>
           </subvertex>
           <subvertex xmi:type="uml:State" xmi:id="_hpzhEFGBEemr0vQgMo_Umg" name="image processing">
-            <entry xmi:type="uml:Activity" xmi:id="_FKgZcFGCEemr0vQgMo_Umg" name="process image to identify color of encountered object"/>
+            <doActivity xmi:type="uml:Activity" xmi:id="_h6EHYFJBEem1gpesRY_u1A" name="process image to identify color of encountered object"/>
           </subvertex>
           <subvertex xmi:type="uml:State" xmi:id="_M5gsgFGCEemr0vQgMo_Umg" name="update FileServer">
-            <entry xmi:type="uml:Activity" xmi:id="_Sg06UFGCEemr0vQgMo_Umg" name="update unvisited or blocked array"/>
+            <doActivity xmi:type="uml:Activity" xmi:id="_kWr60FJBEem1gpesRY_u1A" name="update unvisited or blocked array"/>
           </subvertex>
           <subvertex xmi:type="uml:State" xmi:id="_WctEkFGDEemr0vQgMo_Umg" name="read FileServer">
             <entry xmi:type="uml:Activity" xmi:id="_eOwEkFGDEemr0vQgMo_Umg" name="retrieve unvisited coordinates"/>
           </subvertex>
-          <subvertex xmi:type="uml:FinalState" xmi:id="_sg3fUFGDEemr0vQgMo_Umg" name="Regular FinalState"/>
+          <subvertex xmi:type="uml:FinalState" xmi:id="_sg3fUFGDEemr0vQgMo_Umg" name="FinalSubState"/>
         </region>
       </subvertex>
       <subvertex xmi:type="uml:FinalState" xmi:id="_j0wOUFGEEemr0vQgMo_Umg" name="Alternative FinalState"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_N-sH0FJyEemo06XL_S4nhQ" name="Regular FinalState"/>
     </region>
   </packagedElement>
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_k74ZAFGFEemr0vQgMo_Umg" name="Robot">
@@ -106,8 +112,7 @@
       <transition xmi:type="uml:Transition" xmi:id="_dZMYwFGHEemr0vQgMo_Umg" name="mission stopped by CentralStation" source="_BodSMFGGEemr0vQgMo_Umg" target="_bIIVEFGHEemr0vQgMo_Umg"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_pwWNkFGFEemr0vQgMo_Umg" name="Initial"/>
       <subvertex xmi:type="uml:State" xmi:id="_q0z7QFGFEemr0vQgMo_Umg" name="init">
-        <doActivity xmi:type="uml:Activity" xmi:id="_6dhVgFGFEemr0vQgMo_Umg" name="get instance from CentralStation"/>
-        <entry xmi:type="uml:Activity" xmi:id="_37alIFGFEemr0vQgMo_Umg" name="initialize sensors"/>
+        <doActivity xmi:type="uml:Activity" xmi:id="_6dhVgFGFEemr0vQgMo_Umg" name="initialize sensors and get instance from CentralStation"/>
       </subvertex>
       <subvertex xmi:type="uml:State" xmi:id="_BodSMFGGEemr0vQgMo_Umg" name="mission running">
         <region xmi:type="uml:Region" xmi:id="_CwQAslGGEemr0vQgMo_Umg" name="Region1">
