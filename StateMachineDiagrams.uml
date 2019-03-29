@@ -63,9 +63,6 @@
       <subvertex xmi:type="uml:State" xmi:id="_jHyXcFGAEemr0vQgMo_Umg" name="mission running">
         <region xmi:type="uml:Region" xmi:id="_j6IaYFGAEemr0vQgMo_Umg" name="Region1">
           <transition xmi:type="uml:Transition" xmi:id="_ygCT0FGAEemr0vQgMo_Umg" source="_wsDNsFGAEemr0vQgMo_Umg" target="_j6LdsFGAEemr0vQgMo_Umg"/>
-          <transition xmi:type="uml:Transition" xmi:id="_RjJmkFGBEemr0vQgMo_Umg" name="Robot encountered wall" source="_95F2wFGAEemr0vQgMo_Umg" target="_95F2wFGAEemr0vQgMo_Umg">
-            <effect xmi:type="uml:Activity" xmi:id="_fTRukFGBEemr0vQgMo_Umg" name="adjust Robot's direction"/>
-          </transition>
           <transition xmi:type="uml:Transition" xmi:id="_In5tYFGCEemr0vQgMo_Umg" name="Robot encountered object" source="_95F2wFGAEemr0vQgMo_Umg" target="_hpzhEFGBEemr0vQgMo_Umg"/>
           <transition xmi:type="uml:Transition" xmi:id="_eH318FGCEemr0vQgMo_Umg" source="_hpzhEFGBEemr0vQgMo_Umg" target="_M5gsgFGCEemr0vQgMo_Umg"/>
           <transition xmi:type="uml:Transition" xmi:id="_ggFDcFGCEemr0vQgMo_Umg" name="Robot visited new coordinate" source="_95F2wFGAEemr0vQgMo_Umg" target="_M5gsgFGCEemr0vQgMo_Umg"/>
@@ -79,6 +76,7 @@
               <specification xmi:type="uml:LiteralString" xmi:id="_YaPS0FGEEemr0vQgMo_Umg" name="done_mapping" value="mapping done"/>
             </ownedRule>
           </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_DFRosFI6Eem5QoswbqW8zA" name="Robot encountered wall" source="_95F2wFGAEemr0vQgMo_Umg" target="_j6LdsFGAEemr0vQgMo_Umg"/>
           <subvertex xmi:type="uml:State" xmi:id="_j6LdsFGAEemr0vQgMo_Umg" name="update Robot behavior">
             <entry xmi:type="uml:Activity" xmi:id="_6e0IQFGAEemr0vQgMo_Umg" name="assign Robot new behavior pattern"/>
           </subvertex>
@@ -118,9 +116,10 @@
           <transition xmi:type="uml:Transition" xmi:id="_wTeG4FGGEemr0vQgMo_Umg" source="_UKYVQFGGEemr0vQgMo_Umg" target="_CwRO0FGGEemr0vQgMo_Umg"/>
           <transition xmi:type="uml:Transition" xmi:id="_yz4OIFGGEemr0vQgMo_Umg" name="every &quot;step&quot; in simulator" source="_CwRO0FGGEemr0vQgMo_Umg" target="_CwRO0FGGEemr0vQgMo_Umg"/>
           <transition xmi:type="uml:Transition" xmi:id="_N0qT4FGHEemr0vQgMo_Umg" name="found wall" source="_CwRO0FGGEemr0vQgMo_Umg" target="__--WcFGGEemr0vQgMo_Umg"/>
-          <transition xmi:type="uml:Transition" xmi:id="_YLchgFGHEemr0vQgMo_Umg" source="__--WcFGGEemr0vQgMo_Umg" target="_CwRO0FGGEemr0vQgMo_Umg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_8PxbYFI3Eem5QoswbqW8zA" source="__--WcFGGEemr0vQgMo_Umg" target="_CwRO0FGGEemr0vQgMo_Umg"/>
           <subvertex xmi:type="uml:State" xmi:id="_CwRO0FGGEemr0vQgMo_Umg" name="perform behavior">
-            <doActivity xmi:type="uml:Activity" xmi:id="_M31UsFGGEemr0vQgMo_Umg" name="explore environment according to given behavior pattern"/>
+            <doActivity xmi:type="uml:Activity" xmi:id="_FOjUQFI4Eem5QoswbqW8zA" name="explore environment according to given behavior pattern"/>
+            <entry xmi:type="uml:Activity" xmi:id="_DEcNIFI4Eem5QoswbqW8zA" name="check current behavior pattern"/>
           </subvertex>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_FeFf8FGGEemr0vQgMo_Umg" name=""/>
           <subvertex xmi:type="uml:State" xmi:id="_UKYVQFGGEemr0vQgMo_Umg" name="report encountered object">
@@ -130,6 +129,14 @@
           </subvertex>
           <subvertex xmi:type="uml:State" xmi:id="__--WcFGGEemr0vQgMo_Umg" name="report encountered wall">
             <doActivity xmi:type="uml:Activity" xmi:id="_HrU-IFGHEemr0vQgMo_Umg" name="send data of sensors to CentralStation"/>
+          </subvertex>
+        </region>
+        <region xmi:type="uml:Region" xmi:id="_6DAo4FI3Eem5QoswbqW8zA" name="Region2">
+          <transition xmi:type="uml:Transition" xmi:id="_QSYOEFI4Eem5QoswbqW8zA" source="_GbMtkFI4Eem5QoswbqW8zA" target="_HlhLoFI4Eem5QoswbqW8zA"/>
+          <transition xmi:type="uml:Transition" xmi:id="_Q-EPYFI4Eem5QoswbqW8zA" name="every half meter moved" source="_HlhLoFI4Eem5QoswbqW8zA" target="_HlhLoFI4Eem5QoswbqW8zA"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_GbMtkFI4Eem5QoswbqW8zA" name=""/>
+          <subvertex xmi:type="uml:State" xmi:id="_HlhLoFI4Eem5QoswbqW8zA" name="report current position">
+            <doActivity xmi:type="uml:Activity" xmi:id="_O3uN8FI4Eem5QoswbqW8zA" name="send current coordinates to CentralStation"/>
           </subvertex>
         </region>
       </subvertex>
