@@ -122,7 +122,15 @@ public class Robot extends Agent {
 				centralStation.foundObstacle(this, sonars);
 			}
 		}
-			
+		
+		//In case object was recognized too late, turn in the appropriate direction to avoid crashing into it
+		if (sonars.hasHit(0) && sonars.getMeasurement(0) < 0.1)
+			turnLeft();
+		else if (sonars.hasHit(1) && sonars.getMeasurement(1) < 0.2)
+			turnRight();
+		else if (sonars.hasHit(7) && sonars.getMeasurement(7) < 0.2)
+			turnLeft();
+		
 		//Following along wall with wall on the robot's left side
 		if(behaviorPattern == "followWall") {
 			//turn left when possible
