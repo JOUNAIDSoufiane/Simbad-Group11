@@ -38,6 +38,104 @@ public class CentralStation {
 	 */
 	private Color goalColor;
 	/**
+	 * 
+	 * @param color  
+	 */
+	public void startMission(Color color) {
+		//Set each robot's behavior pattern
+		robots[0].setBehavior(behaviorPatterns[0]);
+		robots[1].setBehavior(behaviorPatterns[0]);
+		goalColor = color; 
+	}
+	/**
+	 * 
+	 * @param robot
+	 * @param sonars
+	 * 
+	 * Coordinates all possible encounters with objects and walls
+	 */
+	public void foundObstacle(Robot robot, RangeSensorBelt sonars){
+		
+		// Hitting dead end 
+		if (sonars.hasHit(2) && sonars.hasHit(6) && sonars.hasHit(0)){
+			// If there's no space on either side, turn around
+			if (sonars.getMeasurement(6) < 0.5 && sonars.getMeasurement(2) < 0.5)
+				robot.turnAround();
+			// If enough space on right, turn right
+			else if (sonars.getMeasurement(6) > 0.5)
+				robot.turnRight();
+			// If enough space on left, turn left
+			else if (sonars.getMeasurement(2) > 0.5)
+				robot.turnLeft();
+		}
+		// When left is blocked, turn right
+		else if (sonars.hasHit(2) && !sonars.hasHit(6)){
+			robot.turnRight();
+		}
+		// When right is blocked, turn left
+		else if (!sonars.hasHit(2) && sonars.hasHit(6)){
+			robot.turnLeft();
+		}
+		// When front is blocked
+		else if (!sonars.hasHit(2) && !sonars.hasHit(6))
+		{	
+			
+			/*	    _________
+			 * 	   |
+			 * 	    O
+			 * 	   |			turns right before wall
+			 */
+			if(sonars.hasHit(1) && !sonars.hasHit(4))
+				robot.turnRight();
+			
+			/*  _________
+			 *    	     |
+			 *  	    O	
+			 * 	    	 |		turns left before wall
+			 */
+			else if(sonars.hasHit(7) && !sonars.hasHit(4))
+				robot.turnLeft();
+			// When front left is blocked, turn right (there's a gap in the wall on the front right)
+			else if(sonars.hasHit(1) && !sonars.hasHit(7))
+				robot.turnRight();
+			// When front right is blocked, turn left (there's a gap in the wall on the front left)
+			else if(sonars.hasHit(7) && !sonars.hasHit(1))
+				robot.turnLeft();
+		}
+	}
+	/**
+	 * 
+	 */
+	private CentralStation() {
+		// Instantiating the robots array to hold maximum of 2 robots
+		robots = new Robot[2];
+		
+		// Instantiating array to store current position of robots as coordinates for maximum of 2 robots
+		startingPositions = new Coordinates[2];
+		
+		// Instantiating array with all possible behavior patterns
+		behaviorPatterns = new String[5];
+		behaviorPatterns[0] = "followWall";
+		behaviorPatterns[1] = "spiral";
+		behaviorPatterns[2] = "stop";
+		behaviorPatterns[3] = "aroundObstacle";
+		behaviorPatterns[4] = "moveTo";
+		
+		// Getting instance of File Server
+		fileServer = FileServer.getInstance();
+	}
+	/**
+	 * 
+	 */
+	public void doneMapping() {
+		robots[0].stop();
+		robots[1].stop();
+		robots[0].setBehavior(behaviorPatterns[2]);
+		robots[1].setBehavior(behaviorPatterns[2]);
+		fileServer.count();
+		fileServer.foundObject(goalColor);
+	}
+	/**
 	 * @return
 	 */
 	public static CentralStation getInstance() {
@@ -50,17 +148,17 @@ public class CentralStation {
 	 * @return
 	 */
 	public Robot deployRobot(Vector3d position, String name) {
-		//parse name to find robot's number
+		// Parse name to find robot's number
 		int robotsNumber = Integer.parseInt(name.replaceAll("\\D", ""));
 	
-		//instantiate new robot and add it to the robots array
+		// Instantiate new robot and add it to the robots array
 		robots[robotsNumber - 1] = new Robot(position, name);
 		robots[robotsNumber - 1].initBehavior();
 
-		//store robot's position
+		// Store robot's position
 		startingPositions[robotsNumber - 1] = new Coordinates(position.x, position.z);
 		
-		//remove the robot's current position 
+		// Remove the robot's current position 
 		fileServer.removeCoordinates(new Coordinates(position.x, position.z));
 		return robots[robotsNumber - 1];
 	}
@@ -75,32 +173,31 @@ public class CentralStation {
 	 */
 	public boolean isObject(Coordinates coordinates, Coordinates prevCoordinates) {
 		Coordinates right;
+		
+		// If robot is traveling up x axis (towards higher values), the robot's right coordinate is 0.5 added to y
 		if(coordinates.x - prevCoordinates.x > 0) 
 			right =  new Coordinates(prevCoordinates.x, prevCoordinates.y + 0.5);
+		
+		// If robot is traveling down x axis (towards lower values), right coordinate is 0.5 subtracted from y
 		else if(coordinates.x - prevCoordinates.x < 0)
 			right =  new Coordinates(prevCoordinates.x, prevCoordinates.y - 0.5);
+		
+		// If robot is traveling up y axis (towards higher values), right coordinate is 0.5 subtracted from x
 		else if(coordinates.y - prevCoordinates.y > 0)
 			right =  new Coordinates(prevCoordinates.x - 0.5, prevCoordinates.y);
+		
+		// If robot is traveling down y axis (towards lower values), right coordinate is 0.5 added to x
 		else
 			right = new Coordinates(prevCoordinates.x + 0.5, prevCoordinates.y);
 		
 		return fileServer.isObject(right);
 	}
-	
-	/**
-	 * 
-	 * @param color  
-	 */
-	public void startMission(Color color) {
-		//Set each robot's behavior pattern
-		robots[0].setBehavior(behaviorPatterns[0]);
-		robots[1].setBehavior(behaviorPatterns[0]);
-		goalColor = color; 
-	}
 	/**
 	 * 
 	 * @param coordinates 
 	 * @return
+	 * 
+	 * Checks to see if any robot has reached another robot's starting coordinates
 	 */
 	public boolean reachedStartingPositions(Coordinates coordinates) {
 		for(int i = 0; i < startingPositions.length; i++){
@@ -114,13 +211,20 @@ public class CentralStation {
 	 * @param robot
 	 * @param coordinates
 	 * @param prevCoordinates
+	 * 
+	 * Coordinates the robot to spiral in an inward motion
 	 */
 	public void spiral(Robot robot, Coordinates coordinates, Coordinates prevCoordinates) {
 		Coordinates nextCoordinates = getNextCoordinates(coordinates, prevCoordinates), left = getLeftCoordinates(coordinates, prevCoordinates);
-
+		
+		// If all coordinates around the robot at the current coordinate have been visited, a different behavior will be initiated
 		if(fileServer.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && fileServer.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
 				&& fileServer.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && fileServer.visited(new Coordinates(coordinates.x, coordinates.y - 0.5)))
-			cleanUp();
+			coverUnvisited();
+		
+		/** The robot will move straight until the coordinate in front of it was already visited or the coordinates to its left are unvisited,
+		* at which point the robot will turn either right or left, respectively
+		*/
 		else {
 			if (!fileServer.visited(left))
 				robot.turnLeft();
@@ -132,16 +236,18 @@ public class CentralStation {
 	 * 
 	 * @param coordinates
 	 * @param prevCoordinates
+	 * 
+	 * Stores blocked coordinates, which are no accessible to the robot, on the file server
 	 */
 	public void addBlocked(Coordinates coordinates, Coordinates prevCoordinates) {
 		fileServer.addBlocked(getLeftCoordinates(coordinates, prevCoordinates));
 	}
 	/**
 	 * 
-	 * Give coordinate to move to for next spiral
+	 * Finds an unvisited coordinates and instructs the robots to drive towards those coordinates
 	 */
-	public void cleanUp() {
-		//remove all unvisited coordinates that don't have any adjacent unvisited coordinates, since boxes need to occupy at least 2 adjacent coordinates
+	public void coverUnvisited() {
+		// Remove all unvisited coordinates that don't have any adjacent unvisited coordinates, since boxes need to occupy at least 2 adjacent coordinates
 		for(double i = -12; i <= 12; i+=0.5) {
 			for(double j = -12; j <= 12; j+=0.5) {
 				Coordinates coordinates = new Coordinates(i,j);
@@ -154,6 +260,7 @@ public class CentralStation {
 			}
 		}
 		
+		// Goes through every possible coordinates and check if they were visited, if not the robots get instructed to drive to those coordinates
 		outerloop:
 		for(double i = -12.5; i <= 12.5; i+=0.5) {  
 			for(double j = -12.5; j <= 12.5; j+=0.5) {
@@ -166,6 +273,8 @@ public class CentralStation {
 					break outerloop;
 				}
 			}
+			
+			// When all coordinates have been visited, the entire environment has been mapped and the mission is finished
 			if(i == 12) {
 				doneMapping();
 			}
@@ -194,10 +303,11 @@ public class CentralStation {
 		
 		return true;
 	}
-	
 	/**
 	 * 
 	 * @param coordinates
+	 * 
+	 * Marks coordinates as visited on file server
 	 */
 	public void updateCoordinates(Coordinates coordinates) {
 		fileServer.removeCoordinates(coordinates);
@@ -263,6 +373,7 @@ public class CentralStation {
 			
 		fileServer.removeCoordinates(left);
 		
+		// To not go out of bounds for removing coordinates on the outermost walls
 		if(leftOfLeft.x >= -12.5 && leftOfLeft.x <= 12.5 && leftOfLeft.y >= -12.5 && leftOfLeft.y <= 12.5 )
 			fileServer.removeCoordinates(leftOfLeft);
 	}
@@ -276,20 +387,21 @@ public class CentralStation {
 	 */
 	public void mapObject(Coordinates[] coordinates, BufferedImage cameraImage) {
 		
-		//   OBJECT IN INVERTED SIMBAD AXIS (Origin,(vector) y, (vector) x)
-		//
-		//      x  _______
-		//        |       | 
-		//        | Object| length  
-		//        |       |
-		// origin |_______| y 
-		//          width
-		//
+		/**   OBJECT IN INVERTED SIMBAD AXIS (Origin,(vector) y, (vector) x)
+		*
+		*      x  _______
+		*        |       | 
+		*        | Object| length  
+		*        |       |
+		* origin |_______| y 
+		*          width
+		*/
 		Coordinates origin = coordinates[0], x = new Coordinates(0,0), y = new Coordinates(0,0);
 		double length = 0, width = 0;
 		int directionx, directiony;
 		
-		for (int i = 1; i < 4; i++) { // getting the values of x and y
+		// getting the values of x and y
+		for (int i = 1; i < 4; i++) {
 			if(origin.x == coordinates[i].x) {
 				x = coordinates[i];
 				length = Math.abs(Math.abs(origin.y) - Math.abs(x.y));
@@ -300,15 +412,18 @@ public class CentralStation {
 			}
 		}
 		
-		
+		// Find the direction in which the object's coordinates were mapped for both axes
 		directiony = origin.y > x.y ? -1 : 1;
 		directionx = origin.x > y.x ? -1 : 1;
 		
 		Object object = new Object();
+		
+		// Calculating one of the center coordinates of each object
 		Coordinates center = new Coordinates((coordinates[0].x + coordinates[1].x +coordinates[2].x +coordinates[3].x)/4,
 				(coordinates[0].y + coordinates[1].y +coordinates[2].y +coordinates[3].y)/4);
 		
-		for (double i = 0; i <= width; i+= 0.5){ // removing the coordinates occupied by the object from the unvisited array
+		// removing the coordinates occupied by the object from the unvisited array, adding them to the blocked array, and adding them to the object's coordinates
+		for (double i = 0; i <= width; i+= 0.5){
 			for (double j = 0; j <= length; j+=0.5){
 				Coordinates newCoordinates = new Coordinates(origin.x +i * directionx, origin.y + j * directiony);
 				fileServer.removeCoordinates(newCoordinates);
@@ -316,14 +431,20 @@ public class CentralStation {
 				object.addCoordinates(newCoordinates);
 			}
 		}
+		
+		// getting the color of the object
 		object.setColor(getColor(cameraImage));
 		object.addCoordinates(center);
+		
+		//Storing the object on the file server
 		fileServer.addObject(object);
 	}
 	/**
 	 * 
 	 * @param cameraImage
 	 * @return 
+	 * 
+	 * Analyzes the picture of the object and returns the object's color
 	 */
 	private Color getColor(BufferedImage cameraImage) {
 		int rgbValue = cameraImage.getRGB(cameraImage.getHeight() - 1, cameraImage.getWidth()/2);
@@ -360,94 +481,6 @@ public class CentralStation {
     	else if(!fileServer.visited(right))
     		robot.turnRight();
     }
-    /**
-	 * 
-	 * @param robot
-	 * @param sonars
-	 * 
-	 * Coordinates all possible encounters with objects and walls
-	 */
-	public void foundObstacle(Robot robot, RangeSensorBelt sonars){
-		
-		//Hitting dead end 
-		if (sonars.hasHit(2) && sonars.hasHit(6) && sonars.hasHit(0)){
-			//If there's no space on either side, turn around
-			if (sonars.getMeasurement(6) < 0.5 && sonars.getMeasurement(2) < 0.5)
-				robot.turnAround();
-			//if enough space on right, turn right
-			else if (sonars.getMeasurement(6) > 0.5)
-				robot.turnRight();
-			//if enough space on left, turn left
-			else if (sonars.getMeasurement(2) > 0.5)
-				robot.turnLeft();
-		}
-		//When left is blocked, turn right
-		else if (sonars.hasHit(2) && !sonars.hasHit(6)){
-			robot.turnRight();
-		}
-		//When right is blocked, turn left
-		else if (!sonars.hasHit(2) && sonars.hasHit(6)){
-			robot.turnLeft();
-		}
-		//When front is blocked
-		else if (!sonars.hasHit(2) && !sonars.hasHit(6))
-		{	
-			
-			/*	    _________
-			 * 	   |
-			 * 	    O
-			 * 	   |			turns right before wall
-			 */
-			if(sonars.hasHit(1) && !sonars.hasHit(4))
-				robot.turnRight();
-			
-			/*  _________
-			 *    	     |
-			 *  	    O	
-			 * 	    	 |		turns left before wall
-			 */
-			else if(sonars.hasHit(7) && !sonars.hasHit(4))
-				robot.turnLeft();
-			//When front left is blocked, turn right (there's a gap in the wall on the front right)
-			else if(sonars.hasHit(1) && !sonars.hasHit(7))
-				robot.turnRight();
-			//When front right is blocked, turn left (there's a gap in the wall on the front left)
-			else if(sonars.hasHit(7) && !sonars.hasHit(1))
-				robot.turnLeft();
-		}
-	}
-	/**
-	 * 
-	 */
-	private CentralStation() {
-		//instantiating the robots array to hold maximum of 2 robots
-		robots = new Robot[2];
-		
-		//instantiating array to store current position of robots as coordinates for maximum of 2 robots
-		startingPositions = new Coordinates[2];
-		
-		//Instantiating array with all possible behavior patterns
-		behaviorPatterns = new String[5];
-		behaviorPatterns[0] = "followWall";
-		behaviorPatterns[1] = "spiral";
-		behaviorPatterns[2] = "stop";
-		behaviorPatterns[3] = "aroundObstacle";
-		behaviorPatterns[4] = "moveTo";
-		
-		//getting instance of File Server
-		fileServer = FileServer.getInstance();
-	}
-	/**
-	 * 
-	 */
-	public void doneMapping() {
-		robots[0].stop();
-		robots[1].stop();
-		robots[0].setBehavior(behaviorPatterns[2]);
-		robots[1].setBehavior(behaviorPatterns[2]);
-		fileServer.count();
-		fileServer.foundObject(goalColor);
-	}
 	/**
 	 * 
 	 */

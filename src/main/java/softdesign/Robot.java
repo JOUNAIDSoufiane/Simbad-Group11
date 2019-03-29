@@ -77,7 +77,6 @@ public class Robot extends Agent {
         // reserve space for image capture
         cameraImage = camera.createCompatibleImage();
 	}
-	
 	/**
 	 * 
 	 * @return 
@@ -87,22 +86,25 @@ public class Robot extends Agent {
 	}
 	/**
 	 * 
-	 */
-	public void setGoal(Coordinates coordinates) {
-		this.goal = coordinates;
-	}
-	/**
-	 * 
-	 */
-    public void initBehavior() {
-        System.out.println("I exist and my name is " + this.getName());
-    }
-    /**
-	 * 
 	 * @param behavior
 	 */  
     public void setBehavior(String behavior) {
     	behaviorPattern = behavior;
+    }
+	public String getBehavior() {
+		return behaviorPattern;
+	}
+	/**
+	 * 
+	 */
+	public void setGoal(Coordinates coordinates) {
+		this.goal = coordinates;
+	}
+    /**
+	 * 
+	 */
+    public void initBehavior() {
+        System.out.println("I exist and my name is " + this.getName());
     }
     /**
 	 * sets a positive translational velocity, coordinates all different behavior patterns and obstacle avoidance
@@ -273,9 +275,4 @@ public class Robot extends Agent {
 			}
 		}
 	}
-    
-	public String getBehavior() {
-		return behaviorPattern;
-	}
-
 };

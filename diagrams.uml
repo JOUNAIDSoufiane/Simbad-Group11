@@ -127,7 +127,7 @@
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_hslzgFF6EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_i7BVgFF6EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_kIFlkFF6EemAo9mRLFmeKQ" name="cleanUp"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_kIFlkFF6EemAo9mRLFmeKQ" name="coverUnvisited"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_mvu9QFF6EemAo9mRLFmeKQ" name="nothingBetween">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_p2RQYFF6EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_rfOLMFF6EemAo9mRLFmeKQ" name="goal" type="_tVNFEDw0EemgBaKBb33t8g"/>
