@@ -12,11 +12,11 @@ public class Color {
 	/**
 	 * 
 	 */
-	public int red;
+	private int red;
 	/**
 	 * 
 	 */
-	public int green;
+	private int green;
 	/**
 	 * 
 	 */
