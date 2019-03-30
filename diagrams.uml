@@ -127,7 +127,7 @@
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_hslzgFF6EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_i7BVgFF6EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_kIFlkFF6EemAo9mRLFmeKQ" name="cleanUp"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_kIFlkFF6EemAo9mRLFmeKQ" name="coverUnvisited"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_mvu9QFF6EemAo9mRLFmeKQ" name="nothingBetween">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_p2RQYFF6EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_rfOLMFF6EemAo9mRLFmeKQ" name="goal" type="_tVNFEDw0EemgBaKBb33t8g"/>
@@ -252,6 +252,7 @@
     <ownedOperation xmi:type="uml:Operation" xmi:id="_GdkDIFGKEemAo9mRLFmeKQ" name="contains">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_Jm2vUFGKEemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_UF1GAFJCEemERONHkwSEXg" name="getCenterCoordinates"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_eaKk0D3DEemHvZj1G01vhw" name="FileServer">
     <ownedAttribute xmi:type="uml:Property" xmi:id="_o0M5sD6SEemMj_xw1Pw9FA" name="unvisited" visibility="private" type="_tVNFEDw0EemgBaKBb33t8g">
@@ -288,6 +289,9 @@
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_pzkj4FGJEemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_q8O1EFGJEemAo9mRLFmeKQ" name="count"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_LXp08FJCEemERONHkwSEXg" name="foundObject">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_QsucMFJCEemERONHkwSEXg" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
+    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_ibjWoD3DEemHvZj1G01vhw" name="RobotFactory (Template)">
     <ownedOperation xmi:type="uml:Operation" xmi:id="_-1G9YD6YEemMj_xw1Pw9FA" name="addBumperbeltsensor">

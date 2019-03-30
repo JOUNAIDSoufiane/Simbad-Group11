@@ -29,16 +29,56 @@ public class FileServer {
 	private ArrayList<Coordinates> blocked = new ArrayList<Coordinates>();
 	/**
 	 * 
-	 * @return
-	 */
-	public static FileServer getInstance() {
-		return fileServer;
-	}
-	/**
 	 * @param coordinates
 	 */
 	public void addBlocked(Coordinates coordinates) {
 		blocked.add(coordinates);
+	}
+	/**
+	 * 
+	 *
+	 */
+	private FileServer() {
+		//initialize unvisited array with all possible coordinates
+		int count = 0;
+		double x = -12.5;
+		while (x <= 12.5) {
+			double y = -12.5;
+			while (y <= 12.5) {
+				unvisited[count] = new Coordinates(x,y);
+				y += 0.5;
+				count++;
+			}
+			x += 0.5;
+		}
+		
+		//removing coordinates for outer walls from unvisited array
+		for(double i = -12.5; i <= 12.5; i+=0.5) {
+			removeCoordinates(new Coordinates(12.5, i));
+			removeCoordinates(new Coordinates(-12.5, i));
+			removeCoordinates(new Coordinates(i, 12.5));
+			removeCoordinates(new Coordinates(i, -12.5));
+		}
+	}
+	/**
+	 * 
+	 * @param coordinates
+	 * 
+	 * Marks coordinates as visited
+	 */
+	public void removeCoordinates(Coordinates coordinates) {
+		//replace already visited coordinate in array with coordinate 99,99
+		int location = (int) (((12.5 + coordinates.x) / 0.5 * 51) + (12.5 + coordinates.y) / 0.5); 
+
+		unvisited[location].x = 99;
+		unvisited[location].y = 99;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public static FileServer getInstance() {
+		return fileServer;
 	}
 	/**
 	 * @param object
@@ -64,7 +104,7 @@ public class FileServer {
 	 * @param coordinates
 	 * @return
 	 * 
-	 * Checks if coordinates are a wall's or an object's coordinates
+	 * Checks if coordinates are blocked, meaning they are not accessible
 	 */
 	public boolean isblocked(Coordinates coordinates) {
 		for(int i = 0; i < blocked.size(); i++) {
@@ -73,19 +113,6 @@ public class FileServer {
 				return true;
 		}
 		return false;
-	}
-	/**
-	 * 
-	 * @param coordinates
-	 * 
-	 * Marks coordinates as visited
-	 */
-	public void removeCoordinates(Coordinates coordinates) {
-		//replace already visited coordinate in array with coordinate 99,99
-		int location = (int) (((12.5 + coordinates.x) / 0.5 * 51) + (12.5 + coordinates.y) / 0.5); 
-
-		unvisited[location].x = 99;
-		unvisited[location].y = 99;
 	}
 	/**
 	 * 
@@ -113,28 +140,19 @@ public class FileServer {
 	}
 	/**
 	 * 
-	 *
+	 * @param color
+	 * Checks if an object of the given color has been found and outputs its color and coordinates, if found
 	 */
-	private FileServer() {
-		//initialize unvisited array with all possible coordinates
-		int count = 0;
-		double x = -12.5;
-		while (x <= 12.5) {
-			double y = -12.5;
-			while (y <= 12.5) {
-				unvisited[count] = new Coordinates(x,y);
-				y += 0.5;
-				count++;
+	public void foundObject(Color color) {
+		boolean found = false;
+		for(int i = 0; i < objects.size(); i++) {
+			Object object = objects.get(i);
+			if(object.getColor().detectColor() == color.detectColor()) {
+				System.out.println("Found " + color.detectColor() + " Object at Coordinates: " + object.getCenterCoordinates().x + ", " + object.getCenterCoordinates().y );
+				found = true;
 			}
-			x += 0.5;
 		}
-		
-		//removing coordinates for outer walls from unvisited array
-		for(double i = -12.5; i <= 12.5; i+=0.5) {
-			removeCoordinates(new Coordinates(12.5, i));
-			removeCoordinates(new Coordinates(-12.5, i));
-			removeCoordinates(new Coordinates(i, 12.5));
-			removeCoordinates(new Coordinates(i, -12.5));
-		}
+		if(!found)
+			System.out.println("Did not find " + color.detectColor() + " Object.");
 	}
 };

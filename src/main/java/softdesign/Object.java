@@ -45,8 +45,24 @@ public class Object {
 	 * 
 	 * @param coordinates
 	 * @return
+	 * 
+	 * Checks if any object occupies the given coordinates in the parameter
 	 */
 	public boolean contains(Coordinates coordinates) {
-		return this.coordinates.contains(coordinates);
+		for(int i = 0; i < this.coordinates.size(); i++) {
+			Coordinates coords = this.coordinates.get(i);
+			if(coords.x == coordinates.x && coords.y == coordinates.y)
+				return true;
+		}
+		return false;
+	}
+	/**
+	 * 
+	 * @return
+	 * 
+	 * Returns the coordinates of the center of the object, which are saved at the end of the list
+	 */
+	public Coordinates getCenterCoordinates(){
+		return coordinates.get(coordinates.size() - 1);
 	}
 };

@@ -22,6 +22,17 @@ public class Color {
 	 */
 	public int blue;
 	/**
+	 * 
+	 * @param red 
+	 * @param green 
+	 * @param blue 
+	 */
+	public Color(int red, int green, int blue) {
+		this.red = red;
+		this.green = green;
+		this.blue = blue;
+	}
+	/**
 	 * @return
 	 * 
 	 * Detects color given and returns corresponding color name as string
@@ -43,16 +54,5 @@ public class Color {
 			return "Black";
 		else
 			return "Unknown Color";
-	}
-	/**
-	 * 
-	 * @param red 
-	 * @param green 
-	 * @param blue 
-	 */
-	public Color(int red, int green, int blue) {
-		this.red = red;
-		this.green = green;
-		this.blue = blue;
 	}
 };
