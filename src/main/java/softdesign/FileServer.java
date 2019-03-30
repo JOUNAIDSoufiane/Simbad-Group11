@@ -39,7 +39,7 @@ public class FileServer {
 	 *
 	 */
 	private FileServer() {
-		//initialize unvisited array with all possible coordinates
+		//initialize unvisited array with all coordinates of the environment
 		int count = 0;
 		double x = -12.5;
 		while (x <= 12.5) {

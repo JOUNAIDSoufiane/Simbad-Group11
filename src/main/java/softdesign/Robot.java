@@ -68,15 +68,14 @@ public class Robot extends Agent {
 		super(position,name);
 		this.name = name;
 		this.leftCounter = 0;
-		// Getting instance of central station
 		this.centralStation = CentralStation.getInstance();
+		
 		// Saving starting coordinates as previous coordinates, since no previous coordinates exist yet
 		prevCoordinates = new Coordinates(position.x, position.z);
-        // Add sonars
         sonars = RobotFactory.addSonarBeltSensor(this, 8);
         sonars.setUpdatePerSecond(1000);
-        // Add camera
         camera = RobotFactory.addCameraSensor(this);
+        
         // Reserve space for image capture
         cameraImage = camera.createCompatibleImage();
 	}
@@ -130,6 +129,7 @@ public class Robot extends Agent {
 		}
 		
 		// In case object was recognized too late, turn in the appropriate direction to avoid crashing into it
+		
 		if (sonars.hasHit(0) && sonars.getMeasurement(0) < 0.1)
 			turnLeft();
 		else if (sonars.hasHit(1) && sonars.getMeasurement(1) < 0.2)
@@ -137,7 +137,8 @@ public class Robot extends Agent {
 		else if (sonars.hasHit(7) && sonars.getMeasurement(7) < 0.2)
 			turnLeft();
 		
-		// Following along the walls with the wall on the robot's left side
+		// Robot follows the wall on its left
+		
 		if(behaviorPattern == "followWall") {
 			// Turn left when possible
 			if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4))
@@ -156,10 +157,11 @@ public class Robot extends Agent {
 			}
 		}
 		
-		// Coordinates the inward spiral
+		// inward spiral behavior
+		
 		else if(behaviorPattern == "spiral") {
 
-			// When obstacle encountered take picture, turn right, and change behavior pattern to go around the obstacle
+			// When obstacle encountered take picture, turn right, and change behavior pattern in order to collect the object angle coordinates
 			if(sonars.hasHit(7) && sonars.getMeasurement(7) <= 0.9) {
 				if(leftCounter == 0)
 					camera.copyVisionImage(cameraImage);
@@ -167,16 +169,16 @@ public class Robot extends Agent {
 				behaviorPattern = "aroundObstacle";
 			}
 			
-			/* As soon as robot reaches new coordinates, calls central station to coordinate robot's spiral
+			/* As soon as robot reaches new coordinates, calls central station to receive new instructions
 			 * (This is to avoid calling central station every step and rather only call it when the rover has moved to new coordinates)
 			 */
 			if((coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y))
 				centralStation.spiral(this, coordinates, prevCoordinates);
 		}
 		
-		// Coordinates the robot circling around the obstacle once
+		// Robot goes around the object collecting angle points to form an area
 		else if(behaviorPattern == "aroundObstacle") {
-			// Turn towards the object when distance to it is getting larger (used to maintain perfect distance of 0.5m to the object)
+			// Slight adjustment of the robot so it can remain in parallel to the wall at a  0.5 meters distance
 			if(sonars.hasHit(2) && sonars.getMeasurement(2) > 0.5 && sonars.hasHit(3))
 				turnLeft();
 			
@@ -188,7 +190,7 @@ public class Robot extends Agent {
 				// Count left turns and store corner coordinates of object in array
 				tempMemory[leftCounter-1] = coordinates;
 				
-				// Once full cycle around obstacle completed, send data to central station to analyze, return to spiral behavior
+				// Once full cycle around obstacle completed, send data to central station, return to spiral behavior
 				if(leftCounter == 4){
 					centralStation.mapObject(tempMemory, cameraImage);
 					leftCounter = 0;
@@ -196,23 +198,22 @@ public class Robot extends Agent {
 				}
 			}
 			
-			// When going towards obstacle to decrease distance to it, turn right once distance is 0.5m to be going parallel to the objects' walls again
+			// Slight adjustment of the robot so it can remain in parallel to the wall at a  0.5 meters distance
 			else if(sonars.hasHit(0) && sonars.getMeasurement(0) <= 0.5)
 				turnRight();
 		}
 		
-		// Coordinates robots to move to given coordinates set in the goal coordinates variable
 		else if(behaviorPattern == "moveTo")
 			moveTo();
     }
 	/**
-	 * 
+	 * Behavior pattern moveTo : starts cleaning up the remaining coordinates by setting a goal unvisited area and then initiating spiral behavior in that area to clean it up.
 	 */
     private void moveTo() {
     	this.getCoords(position);
 		Coordinates coordinates = new Coordinates(position.x, position.z);
 		
-		// If known obstacle is to left of robot, turn right to not circle around known objects
+		// If known obstacle is to left of robot, turn right to not map known objects
 		if(sonars.hasHit(3) && sonars.getMeasurement(3) >= 0.9 && !sonars.hasHit(4)){
 			if(centralStation.isObject(coordinates, prevCoordinates))
 				turnRight();
@@ -270,10 +271,9 @@ public class Robot extends Agent {
 	 */
 	public void performBehavior() {
 		if(behaviorPattern != "stop") {
-			//Robot starts moving straight
 			move();
 			
-			//robot sends its position to central station whenever its position has changed coordinates so central station can mark those coordinates as visited
+			//robot sends its position to central station whenever its position has changed so central station can mark those coordinates as visited
 			this.getCoords(position);
 			Coordinates coordinates = new Coordinates(position.x, position.z);
 			if(coordinates.x != prevCoordinates.x || coordinates.y != prevCoordinates.y) {
