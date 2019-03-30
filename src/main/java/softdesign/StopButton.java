@@ -9,10 +9,12 @@ import javax.swing.JFrame;
 class StopButton implements ActionListener {
 	/**
 	 * 
+	 * Creating instance of the new Window
 	 */
 	private JFrame window = new JFrame();
 	/**
 	 * 
+	 * Creating instance of the new Button
 	 */
 	private JButton button = new JButton("Stop Mission");
 	/**
@@ -24,6 +26,7 @@ class StopButton implements ActionListener {
 	}
 	/**
 	 * 
+	 * Initializes the window with a title, layout, certain properties, and a size
 	 */
 	private void initializeWindow() {
 		 window.setTitle("Mission Control");
@@ -34,6 +37,7 @@ class StopButton implements ActionListener {
 	}
 	/**
 	 * 
+	 * Initializes the Button with a size, color, adds it to the window, and adds the action listener for clicking the button
 	 */
 	private void initializeButton(){
         button.setBounds(25,50,150,40);

@@ -104,7 +104,7 @@ public class FileServer {
 	 * @param coordinates
 	 * @return
 	 * 
-	 * Checks if coordinates are a wall's or an object's coordinates
+	 * Checks if coordinates are blocked, meaning they are not accessible
 	 */
 	public boolean isblocked(Coordinates coordinates) {
 		for(int i = 0; i < blocked.size(); i++) {

@@ -45,6 +45,8 @@ public class Object {
 	 * 
 	 * @param coordinates
 	 * @return
+	 * 
+	 * Checks if any object occupies the given coordinates in the parameter
 	 */
 	public boolean contains(Coordinates coordinates) {
 		for(int i = 0; i < this.coordinates.size(); i++) {

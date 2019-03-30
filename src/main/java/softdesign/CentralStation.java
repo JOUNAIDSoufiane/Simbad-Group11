@@ -165,25 +165,25 @@ public class CentralStation {
 	 * @param prevCoordinates
 	 * @return
 	 * 
-	 * Checks if Coordinates to the left behind the robot are an Object's coordinates
+	 * Checks if Coordinates to the left behind the robot are an Objects' coordinates
 	 * To get the left coordinates behind the robot, it gets the right coordinates of the robot's inverted travel direction
 	 */
 	public boolean isObject(Coordinates coordinates, Coordinates prevCoordinates) {
 		Coordinates right;
 		
-		// If robot is traveling up x axis (towards higher values), the robot's right coordinate is 0.5 added to y
+		// If inverted travel direction is going up the x-axis (towards higher x-values), the right coordinate is 0.5 added to y
 		if(coordinates.x - prevCoordinates.x > 0) 
 			right =  new Coordinates(prevCoordinates.x, prevCoordinates.y + 0.5);
 		
-		// If robot is traveling down x axis (towards lower values), right coordinate is 0.5 subtracted from y
+		//  If inverted travel direction is going down the x-axis (towards lower x-values), the right coordinate is 0.5 subtracted from y
 		else if(coordinates.x - prevCoordinates.x < 0)
 			right =  new Coordinates(prevCoordinates.x, prevCoordinates.y - 0.5);
 		
-		// If robot is traveling up y axis (towards higher values), right coordinate is 0.5 subtracted from x
+		// If inverted travel direction is going up the y-axis (towards higher y-values), the right coordinate is 0.5 subtracted from x
 		else if(coordinates.y - prevCoordinates.y > 0)
 			right =  new Coordinates(prevCoordinates.x - 0.5, prevCoordinates.y);
 		
-		// If robot is traveling down y axis (towards lower values), right coordinate is 0.5 added to x
+		// If inverted travel direction is going down the y-axis (towards lower y-values), the right coordinate is 0.5 added to x
 		else
 			right = new Coordinates(prevCoordinates.x + 0.5, prevCoordinates.y);
 		
@@ -241,7 +241,7 @@ public class CentralStation {
 	}
 	/**
 	 * 
-	 * Finds an unvisited coordinates and instructs the robots to drive towards those coordinates
+	 * Finds unvisited coordinates and instructs the robots to drive towards those coordinates
 	 */
 	public void coverUnvisited() {
 		// Remove all unvisited coordinates that don't have any adjacent unvisited coordinates, since boxes need to occupy at least 2 adjacent coordinates
@@ -257,7 +257,7 @@ public class CentralStation {
 			}
 		}
 		
-		// Goes through every possible coordinates and check if they were visited, if not the robots get instructed to drive to those coordinates
+		// Goes through all possible coordinates and checks if they were visited, if not the robots get instructed to drive to those coordinates
 		outerloop:
 		for(double i = -12.5; i <= 12.5; i+=0.5) {  
 			for(double j = -12.5; j <= 12.5; j+=0.5) {
@@ -273,6 +273,7 @@ public class CentralStation {
 			
 			// When all coordinates have been visited, the entire environment has been mapped and the mission is finished
 			if(i == 12) {
+				System.out.println("Finished Mapping Environment.");
 				doneMapping();
 			}
 		}
@@ -315,16 +316,23 @@ public class CentralStation {
 	 * @param prevCoordinates
 	 * @return
 	 * 
-	 * Calculates coordinates to left of robot
+	 * Calculates coordinates to left of robot using the robot's current and previous coordinates for calculating its travel direction
 	 */
 	private Coordinates getLeftCoordinates(Coordinates coordinates, Coordinates prevCoordinates) {
-
+		
+		// If robot's direction is going up the x-axis (towards higher x-values), the robot's left coordinate is 0.5 subtracted from y
 		if(coordinates.x - prevCoordinates.x > 0) 
 			return new Coordinates(coordinates.x, coordinates.y - 0.5);
+		// If robot's direction is going down the x-axis (towards lower x-values), the robot's left coordinate is 0.5 added to y
 		else if(coordinates.x - prevCoordinates.x < 0)
 			return new Coordinates(coordinates.x, coordinates.y + 0.5);
+		// If robot's direction is going up the y-axis (towards higher y-values), the robot's left coordinate is 0.5 added to x
 		else if(coordinates.y - prevCoordinates.y > 0)
 			return new Coordinates(coordinates.x + 0.5, coordinates.y);
+		/*
+		 *  Only possibility left, therefore no if statement needed
+		 *  If robot's direction is going down the y-axis (towards lower y-values), the robot's left coordinate is 0.5 subtracted from x
+		 */
 		else
 			return new Coordinates(coordinates.x - 0.5, coordinates.y);
 		
@@ -336,6 +344,8 @@ public class CentralStation {
 	 * @return
 	 * 
 	 * Calculates coordinates in front of robot
+	 * (Logic works in the same way as previously mentioned in getLeftCoordinates, only calculation differs, since the coordinates in front
+	 * of the robot are calculated instead of the left coordinates)
 	 */
 	private Coordinates getNextCoordinates(Coordinates coordinates, Coordinates prevCoordinates) {
 	
@@ -355,6 +365,8 @@ public class CentralStation {
 	 * @param prevCoordinates
 	 * 
 	 * Marks the next two coordinates to left of robot as visited (since walls cover 2 coordinates and robot is 1 coordinate from wall)
+	 * (Logic for getting leftOfLeft coordinates works in the same way as previously mentioned in getLeftCoordinates, only calculation 
+	 *  differs, since the coordinates to the left of the robot's left coordinates are calculated instead of the left coordinates)
 	 */
 	public void removeLeftCoordinates(Coordinates coordinates, Coordinates prevCoordinates) {
 		Coordinates left = getLeftCoordinates(coordinates, prevCoordinates), leftOfLeft;
@@ -397,7 +409,7 @@ public class CentralStation {
 		double length = 0, width = 0;
 		int directionx, directiony;
 		
-		// getting the values of x and y
+		// Getting the values of x and y
 		for (int i = 1; i < 4; i++) {
 			if(origin.x == coordinates[i].x) {
 				x = coordinates[i];
@@ -409,17 +421,17 @@ public class CentralStation {
 			}
 		}
 		
-		// Find the direction in which the object's coordinates were mapped for both axes
+		// Find the direction in which the object's coordinates were mapped for both axes to calculate the correct coordinates
 		directiony = origin.y > x.y ? -1 : 1;
 		directionx = origin.x > y.x ? -1 : 1;
 		
 		Object object = new Object();
 		
-		// Calculating one of the center coordinates of each object
+		// Calculating one of the center coordinates of the object
 		Coordinates center = new Coordinates((coordinates[0].x + coordinates[1].x +coordinates[2].x +coordinates[3].x)/4,
 				(coordinates[0].y + coordinates[1].y +coordinates[2].y +coordinates[3].y)/4);
 		
-		// removing the coordinates occupied by the object from the unvisited array, adding them to the blocked array, and adding them to the object's coordinates
+		// Removing the coordinates occupied by the object from the unvisited array, adding them to the blocked array, and adding them to the object's coordinates
 		for (double i = 0; i <= width; i+= 0.5){
 			for (double j = 0; j <= length; j+=0.5){
 				Coordinates newCoordinates = new Coordinates(origin.x +i * directionx, origin.y + j * directiony);
@@ -429,11 +441,11 @@ public class CentralStation {
 			}
 		}
 		
-		// getting the color of the object
+		// Getting the color of the object
 		object.setColor(getColor(cameraImage));
 		object.addCoordinates(center);
 		
-		//Storing the object on the file server
+		// Storing the object on the file server
 		fileServer.addObject(object);
 	}
 	/**
@@ -459,6 +471,8 @@ public class CentralStation {
 	 * @param prevCoordinates
 	 * 
 	 * Checks which coordinates around the robot are unvisited and turns robot in the according direction
+	 * (Logic for getting right coordinates works in the same way as previously mentioned in getLeftCoordinates, only calculation 
+	 *  differs, since the coordinates to the right of the robot are calculated instead of the left coordinates)
 	 */
     public void isFree(Robot robot, Coordinates coordinates, Coordinates prevCoordinates) {
     	Coordinates left = getLeftCoordinates(coordinates, prevCoordinates);
@@ -473,6 +487,7 @@ public class CentralStation {
 		else
 			right = new Coordinates(coordinates.x + 0.5, coordinates.y);
     	
+    	// Checks if the left or right coordinates of the robot are unvisited, then turns the robot the corresponding direction
     	if(!fileServer.visited(left))
     		robot.turnLeft();
     	else if(!fileServer.visited(right))
