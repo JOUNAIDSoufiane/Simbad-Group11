@@ -96,7 +96,9 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_IWGacFF8EemAo9mRLFmeKQ" value="2"/>
     </ownedAttribute>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_KhqTEFF8EemAo9mRLFmeKQ" name="goalColor" visibility="private" type="_4p4PcD3CEemHvZj1G01vhw"/>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_GAYnEEJkEemeiqsZ2UFmDQ" name="getInstance" isStatic="true"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_GAYnEEJkEemeiqsZ2UFmDQ" name="getInstance" isStatic="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_wk460FL2EemERONHkwSEXg" name="instance" type="_J7oS8Dw1EemgBaKBb33t8g" direction="return"/>
+    </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_fL3qUD6OEemMj_xw1Pw9FA" name="startMission" visibility="public">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_1r6TUD6PEemMj_xw1Pw9FA" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
     </ownedOperation>
@@ -106,17 +108,24 @@
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_U3tWED6SEemMj_xw1Pw9FA" name="CentralStation"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_83HOYD6SEemMj_xw1Pw9FA" name="doneMapping"/>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_F-1cAEJxEem97IxHPBydwA" name="deployRobot">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_F-1cAEJxEem97IxHPBydwA" name="deployRobot" visibility="public">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_ubqQIEJxEem97IxHPBydwA" name="position" type="_tVNFEDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_xTjDQEJxEem97IxHPBydwA" name="name">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_nd2IsFL0EemERONHkwSEXg" name="robot" type="_C6dywDw0EemgBaKBb33t8g" direction="return"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_mauMAFF5EemAo9mRLFmeKQ" name="isObject">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_3cN-IFF5EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_BZCfYFL1EemERONHkwSEXg" name="isObject" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
+      </ownedParameter>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_AVwKoFF6EemAo9mRLFmeKQ" name="reachedStartingPosition">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_LOE_EFF6EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_F7mEkFL1EemERONHkwSEXg" name="reachedPosition" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
+      </ownedParameter>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_OZ_hcFF6EemAo9mRLFmeKQ" name="spiral">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_V2MNQFF6EemAo9mRLFmeKQ" name="robot" type="_C6dywDw0EemgBaKBb33t8g"/>
@@ -131,6 +140,9 @@
     <ownedOperation xmi:type="uml:Operation" xmi:id="_mvu9QFF6EemAo9mRLFmeKQ" name="nothingBetween">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_p2RQYFF6EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_rfOLMFF6EemAo9mRLFmeKQ" name="goal" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_M89OgFL1EemERONHkwSEXg" name="nothingBetween" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
+      </ownedParameter>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_y_wkcFF6EemAo9mRLFmeKQ" name="updateCoordinates">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_2uLW8FF6EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
@@ -138,10 +150,12 @@
     <ownedOperation xmi:type="uml:Operation" xmi:id="_85tFEFF6EemAo9mRLFmeKQ" name="getLeftCoordinates" visibility="private">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_FbhVIFF7EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_GqDk0FF7EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_Q8KPAFL1EemERONHkwSEXg" name="nextCoordinates" type="_tVNFEDw0EemgBaKBb33t8g" direction="return"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_I1bQMFF7EemAo9mRLFmeKQ" name="getNextCoordinates" visibility="private">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_Me_X4FF7EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_NnhGMFF7EemAo9mRLFmeKQ" name="prevCoordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_VckfIFL1EemERONHkwSEXg" name="nextCoordinates" type="_tVNFEDw0EemgBaKBb33t8g" direction="return"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_OT3O0FF7EemAo9mRLFmeKQ" name="removeLeftCoordinates" visibility="public">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_Ty3OIFF7EemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
@@ -153,6 +167,7 @@
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_jeCGgFF7EemAo9mRLFmeKQ" name="getColor" visibility="private">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_mtEOUFF7EemAo9mRLFmeKQ" name="cameraImage" type="_JZbvYDw2EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_aolRAFL1EemERONHkwSEXg" name="color" type="_4p4PcD3CEemHvZj1G01vhw" direction="return"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_sKqfcFF7EemAo9mRLFmeKQ" name="isFree">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_vspYcFF7EemAo9mRLFmeKQ" name="robot" type="_C6dywDw0EemgBaKBb33t8g"/>
@@ -234,7 +249,11 @@
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
       </ownedParameter>
     </ownedOperation>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_PUb9MFGKEemAo9mRLFmeKQ" name="detectColor"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_PUb9MFGKEemAo9mRLFmeKQ" name="detectColor">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_EG4wQFL2EemERONHkwSEXg" name="color" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      </ownedParameter>
+    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_KqofID3DEemHvZj1G01vhw" name="Object">
     <ownedAttribute xmi:type="uml:Property" xmi:id="_P6RMwD3DEemHvZj1G01vhw" name="coordinates" visibility="private" type="_tVNFEDw0EemgBaKBb33t8g">
@@ -248,11 +267,18 @@
     <ownedOperation xmi:type="uml:Operation" xmi:id="_-ZPAUFGJEemAo9mRLFmeKQ" name="setColor" visibility="public">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_CnMOgFGKEemAo9mRLFmeKQ" name="color" type="_4p4PcD3CEemHvZj1G01vhw"/>
     </ownedOperation>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_EWUp0FGKEemAo9mRLFmeKQ" name="getColor"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_EWUp0FGKEemAo9mRLFmeKQ" name="getColor">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_J5-wQFL2EemERONHkwSEXg" name="color" type="_4p4PcD3CEemHvZj1G01vhw" direction="return"/>
+    </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_GdkDIFGKEemAo9mRLFmeKQ" name="contains">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_Jm2vUFGKEemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_PcTwYFL2EemERONHkwSEXg" name="contains" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
+      </ownedParameter>
     </ownedOperation>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_UF1GAFJCEemERONHkwSEXg" name="getCenterCoordinates"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_UF1GAFJCEemERONHkwSEXg" name="getCenterCoordinates">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_SbZ-wFL2EemERONHkwSEXg" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g" direction="return"/>
+    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_eaKk0D3DEemHvZj1G01vhw" name="FileServer">
     <ownedAttribute xmi:type="uml:Property" xmi:id="_o0M5sD6SEemMj_xw1Pw9FA" name="unvisited" visibility="private" type="_tVNFEDw0EemgBaKBb33t8g">
@@ -275,18 +301,29 @@
     <ownedOperation xmi:type="uml:Operation" xmi:id="_KXcjkEKIEem97IxHPBydwA" name="removeCoordinates" visibility="public">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_dVErMEKIEem97IxHPBydwA" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
     </ownedOperation>
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_Fh0MMEKaEem97IxHPBydwA" name="getInstance" isStatic="true"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_Fh0MMEKaEem97IxHPBydwA" name="getInstance" isStatic="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_qssYYFL2EemERONHkwSEXg" name="instance" type="_eaKk0D3DEemHvZj1G01vhw" direction="return"/>
+    </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_TLyesFGJEemAo9mRLFmeKQ" name="addObject">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_XdhZoFGJEemAo9mRLFmeKQ" name="object" type="_KqofID3DEemHvZj1G01vhw"/>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_ZC6qIFGJEemAo9mRLFmeKQ" name="isObject">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_cVfOIFGJEemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_x7y40FL1EemERONHkwSEXg" name="isObject" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
+      </ownedParameter>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_g8_kwFGJEemAo9mRLFmeKQ" name="isBlocked">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_kVt0EFGJEemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_4EbrAFL1EemERONHkwSEXg" name="isBlocked" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
+      </ownedParameter>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_l_dZEFGJEemAo9mRLFmeKQ" name="visited">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_pzkj4FGJEemAo9mRLFmeKQ" name="coordinates" type="_tVNFEDw0EemgBaKBb33t8g"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_7fOW4FL1EemERONHkwSEXg" name="visited" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EBoolean"/>
+      </ownedParameter>
     </ownedOperation>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_q8O1EFGJEemAo9mRLFmeKQ" name="count"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_LXp08FJCEemERONHkwSEXg" name="foundObject">
