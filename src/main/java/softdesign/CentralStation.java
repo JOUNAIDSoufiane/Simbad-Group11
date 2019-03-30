@@ -38,11 +38,10 @@ public class CentralStation {
 	 */
 	private Color goalColor;
 	/**
-	 * 
+	 * Start mission sets the goal color given by the user and sets the robots on the search
 	 * @param color  
 	 */
 	public void startMission(Color color) {
-		//Set each robot's behavior pattern
 		robots[0].setBehavior(behaviorPatterns[0]);
 		robots[1].setBehavior(behaviorPatterns[0]);
 		goalColor = color; 
@@ -101,16 +100,14 @@ public class CentralStation {
 		}
 	}
 	/**
-	 * 
+	 * CentralStation Constructor
 	 */
 	private CentralStation() {
-		// Instantiating the robots array to hold maximum of 2 robots
-		robots = new Robot[2];
+		// MAX ROBOTS = 2 
+		robots = new Robot[2]; 
 		
-		// Instantiating array to store current position of robots as coordinates for maximum of 2 robots
 		startingPositions = new Coordinates[2];
 		
-		// Instantiating array with all possible behavior patterns
 		behaviorPatterns = new String[5];
 		behaviorPatterns[0] = "followWall";
 		behaviorPatterns[1] = "spiral";
@@ -118,11 +115,11 @@ public class CentralStation {
 		behaviorPatterns[3] = "aroundObstacle";
 		behaviorPatterns[4] = "moveTo";
 		
-		// Getting instance of File Server
 		fileServer = FileServer.getInstance();
 	}
+	
 	/**
-	 * 
+	 * Stops mission and returns the findings
 	 */
 	public void doneMapping() {
 		robots[0].stop();
@@ -148,7 +145,6 @@ public class CentralStation {
 		// Parse name to find robot's number
 		int robotsNumber = Integer.parseInt(name.replaceAll("\\D", ""));
 	
-		// Instantiate new robot and add it to the robots array
 		robots[robotsNumber - 1] = new Robot(position, name);
 		robots[robotsNumber - 1].initBehavior();
 
@@ -209,18 +205,19 @@ public class CentralStation {
 	 * @param coordinates
 	 * @param prevCoordinates
 	 * 
-	 * Coordinates the robot to spiral in an inward motion
+	 * Guides the robot in an inward spiraling motion
 	 */
 	public void spiral(Robot robot, Coordinates coordinates, Coordinates prevCoordinates) {
+		
 		Coordinates nextCoordinates = getNextCoordinates(coordinates, prevCoordinates), left = getLeftCoordinates(coordinates, prevCoordinates);
 		
-		// If all coordinates around the robot at the current coordinate have been visited, a different behavior will be initiated
+		// If all coordinates around the robot at the current coordinate have been visited, a different behavior pattern will be loaded.
 		if(fileServer.visited(new Coordinates(coordinates.x + 0.5, coordinates.y)) && fileServer.visited(new Coordinates(coordinates.x - 0.5, coordinates.y)) 
 				&& fileServer.visited(new Coordinates(coordinates.x, coordinates.y + 0.5)) && fileServer.visited(new Coordinates(coordinates.x, coordinates.y - 0.5)))
 			coverUnvisited();
 		
-		/** The robot will move straight until the coordinate in front of it was already visited or the coordinates to its left are unvisited,
-		* at which point the robot will turn either right or left, respectively
+		/** 
+		*  The robot will move straight until either of the following conditions are met.
 		*/
 		else {
 			if (!fileServer.visited(left))
@@ -234,17 +231,17 @@ public class CentralStation {
 	 * @param coordinates
 	 * @param prevCoordinates
 	 * 
-	 * Stores blocked coordinates, which are no accessible to the robot, on the file server
+	 * Stores blocked coordinates, which are not accessible to the robot, on the file server
 	 */
 	public void addBlocked(Coordinates coordinates, Coordinates prevCoordinates) {
 		fileServer.addBlocked(getLeftCoordinates(coordinates, prevCoordinates));
 	}
 	/**
 	 * 
-	 * Finds unvisited coordinates and instructs the robots to drive towards those coordinates
+	 * Finds remaining unvisited coordinates after first round of spirals and instructs the robots to drive towards those coordinates
 	 */
 	public void coverUnvisited() {
-		// Remove all unvisited coordinates that don't have any adjacent unvisited coordinates, since boxes need to occupy at least 2 adjacent coordinates
+		// Remove all unvisited coordinates that don't have any adjacent unvisited coordinates, since objects need to occupy at least 2 adjacent coordinates
 		for(double i = -12; i <= 12; i+=0.5) {
 			for(double j = -12; j <= 12; j+=0.5) {
 				Coordinates coordinates = new Coordinates(i,j);
@@ -256,8 +253,6 @@ public class CentralStation {
 				}
 			}
 		}
-		
-		// Goes through all possible coordinates and checks if they were visited, if not the robots get instructed to drive to those coordinates
 		outerloop:
 		for(double i = -12.5; i <= 12.5; i+=0.5) {  
 			for(double j = -12.5; j <= 12.5; j+=0.5) {
@@ -270,8 +265,6 @@ public class CentralStation {
 					break outerloop;
 				}
 			}
-			
-			// When all coordinates have been visited, the entire environment has been mapped and the mission is finished
 			if(i == 12) {
 				System.out.println("Finished Mapping Environment.");
 				doneMapping();
@@ -392,7 +385,7 @@ public class CentralStation {
 	 * @param cameraImage
 	 * 
 	 * Maps objects by calculating all coordinates it's covering and getting the color of the object 
-	 * Stores data on file server
+	 * Stores object data on the file server
 	 */
 	public void mapObject(Coordinates[] coordinates, BufferedImage cameraImage) {
 		
@@ -409,7 +402,6 @@ public class CentralStation {
 		double length = 0, width = 0;
 		int directionx, directiony;
 		
-		// Getting the values of x and y
 		for (int i = 1; i < 4; i++) {
 			if(origin.x == coordinates[i].x) {
 				x = coordinates[i];
@@ -422,12 +414,12 @@ public class CentralStation {
 		}
 		
 		// Find the direction in which the object's coordinates were mapped for both axes to calculate the correct coordinates
+		
 		directiony = origin.y > x.y ? -1 : 1;
 		directionx = origin.x > y.x ? -1 : 1;
 		
 		Object object = new Object();
 		
-		// Calculating one of the center coordinates of the object
 		Coordinates center = new Coordinates((coordinates[0].x + coordinates[1].x +coordinates[2].x +coordinates[3].x)/4,
 				(coordinates[0].y + coordinates[1].y +coordinates[2].y +coordinates[3].y)/4);
 		
@@ -441,11 +433,9 @@ public class CentralStation {
 			}
 		}
 		
-		// Getting the color of the object
 		object.setColor(getColor(cameraImage));
 		object.addCoordinates(center);
-		
-		// Storing the object on the file server
+
 		fileServer.addObject(object);
 	}
 	/**

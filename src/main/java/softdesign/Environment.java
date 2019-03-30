@@ -12,17 +12,11 @@ import simbad.sim.Wall;
 
 public class Environment extends EnvironmentDescription {
 	public Environment() {
-		
-		// turn on the lights
+
         this.light1IsOn = true;
         this.light2IsOn = true;
-        
-        // enable the physics engine in order to have better physics effects on the objects
         this.setUsePhysics(true);
-        
-        // show the axes so that we know where things are
         this.showAxis(true);
-        
         this.setWorldSize(25);
         
         Wall w1 = new Wall(new Vector3d(-12.5, 0, 0), 25, 2, this);
